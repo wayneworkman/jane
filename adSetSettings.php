@@ -231,7 +231,7 @@ div{width:250px;padding:10px;border:5px solid gray;margin:0}
         </span><br>
         <input type="radio" name="ChangePasswordAtLogon" value="1"<?php if ($_REQUEST['ChangePasswordAtLogon'] == 1 ) { echo " checked"; }?>>True<br>
         <input type="radio" name="ChangePasswordAtLogon" value="0"<?php if ($_REQUEST['ChangePasswordAtLogon'] == 0 ) { echo " checked"; }?>>False<br>
-        <input type="radio" name="ChangePasswordAtLogon" value=""<?php if ($_REQUEST[''] == "ChangePasswordAtLogon" ) { echo " checked"; }?>>Not Specified<br>
+        <input type="radio" name="ChangePasswordAtLogon" value=""<?php if ($_REQUEST['ChangePasswordAtLogon'] == "" ) { echo " checked"; }?>>Not Specified<br>
     </div>
     <div>
         <span style="color:blue;" title="City
