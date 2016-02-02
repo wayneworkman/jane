@@ -3,7 +3,7 @@
 // Database connect settings.
 $servername = 'localhost';
 $username = 'jane';
-$password = 'harddrive';
+$password = 'janepassword';
 $database = 'jane';
 ?>
 

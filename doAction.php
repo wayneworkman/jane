@@ -41,9 +41,9 @@ if ($result->num_rows > 0) {
 }
 
 
-$SettingsPassword = sha1($SettingsPassword);
 
-if ($StoredPassword == $SettingsPassword) {
+if (password_verify($SettingsPassword, $StoredPassword)) {
+$SettingsPassword = password_hash("$SettingsPassword", PASSWORD_DEFAULT);
 
 
 
@@ -55,7 +55,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         
-	$SettingsPassword = $row["SettingsPassword"];
+	
 	$Name = $row["Name"];
 	$AccountExpirationDate = $row["AccountExpirationDate"];
 	$AccountNotDelegated = $row["AccountNotDelegated"];
@@ -168,10 +168,7 @@ if ($result->num_rows > 0) {
 }
 
 
-$SettingsPassword = sha1($SettingsPassword);
-
-if ($StoredPassword == $SettingsPassword) {
-
+if (password_verify($SettingsPassword, $StoredPassword)) {
 
 
 $sql = "DELETE FROM janeAD WHERE SettingsNickName = '$SettingsNickName'";
