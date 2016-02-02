@@ -78,23 +78,67 @@ $WhatIf = $link->real_escape_string($_REQUEST['WhatIf']);
 
 
 
-// Encrypt password with sha1
-$SettingsPassword = sha1($SettingsPassword);
 
 
-// attempt insert query execution
+// attempt query execution
 
 
 switch ($Action) {
 
 case "new":
 
+// Encrypt password with sha1
+$SettingsPassword = sha1($SettingsPassword);
+
+
+
 $sql = "INSERT INTO `janeAD` (`SettingsNickName`, `SettingsPassword`, `Name`, `AccountExpirationDate`, `AccountNotDelegated`, `AccountPassword`, `AllowReversiblePasswordEncryption`, `AuthType`, `CannotChangePassword`, `Certificates`, `ChangePasswordAtLogon`, `City`, `Company`, `Country`, `Credential`, `Department`, `Description`, `DisplayName`, `Division`, `EmailAddress`, `EmployeeID`, `EmployeeNumber`, `Enabled`, `Fax`, `GivenName`, `HomeDirectory`, `HomeDrive`, `HomePage`, `HomePhone`, `Initials`, `Instance`, `LogonWorkstations`, `Manager`, `MobilePhone`, `Office`, `OfficePhone`, `Organization`, `OtherAttributes`, `OtherName`, `PassThru`, `PasswordNeverExpires`, `PasswordNotRequired`, `Path`, `POBox`, `PostalCode`, `ProfilePath`, `SamAccountName`, `ScriptPath`, `Server`, `ServicePrincipalNames`, `SmartcardLogonRequired`, `State`, `StreetAddress`, `Surname`, `Title`, `TrustedForDelegation`, `Type`, `UserPrincipalName`, `Confirm`, `WhatIf`) VALUES ('$SettingsNickName','$SettingsPassword','$Name','$AccountExpirationDate','$AccountNotDelegated','$AccountPassword','$AllowReversiblePasswordEncryption','$AuthType','$CannotChangePassword','$Certificates','$ChangePasswordAtLogon','$City','$Company','$Country','$Credential','$Department','$Description','$DisplayName','$Division','$EmailAddress','$EmployeeID','$EmployeeNumber','$Enabled','$Fax','$GivenName','$HomeDirectory','$HomeDrive','$HomePage','$HomePhone','$Initials','$Instance','$LogonWorkstations','$Manager','$MobilePhone','$Office','$OfficePhone','$Organization','$OtherAttributes','$OtherName','$PassThru','$PasswordNeverExpires','$PasswordNotRequired','$Path','$POBox','$PostalCode','$ProfilePath','$SamAccountName','$ScriptPath','$Server','$ServicePrincipalNames','$SmartcardLogonRequired','$State','$StreetAddress','$Surname','$Title','$TrustedForDelegation','$Type','$UserPrincipalName','$Confirm','$WhatIf');";
 break;
 
 case "edit":
 
+
+$sql = "SELECT SettingsPassword FROM janeAD WHERE SettingsNickName = '$SettingsNickName' LIMIT 1";
+
+$result = $link->query($sql);
+$StoredPassword = "";
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $StoredPassword = $row["SettingsPassword"];
+    }
+} else { 
+    echo "0 results";
+}
+
+
+echo "$SettingsPassword";
+echo "<br>";
+echo "$StoredPassword";
+echo "<br>";
+if ( $SettingsPassword == $StoredPassword ) {
+
+
+//not updating the password.
+
+$sql = "UPDATE `janeAD` SET `SettingsNickName`='$SettingsNickName', `Name`='$Name', `AccountExpirationDate`='$AccountExpirationDate', `AccountNotDelegated`='$AccountNotDelegated', `AccountPassword`='$AccountPassword', `AllowReversiblePasswordEncryption`='$AllowReversiblePasswordEncryption', `AuthType`='$AuthType', `CannotChangePassword`='$CannotChangePassword', `Certificates`='$Certificates', `ChangePasswordAtLogon`='$ChangePasswordAtLogon', `City`='$City', `Company`='$Company', `Country`='$Country', `Credential`='$Credential', `Department`='$Department', `Description`='$Description', `DisplayName`='$DisplayName', `Division`='$Division', `EmailAddress`='$EmailAddress', `EmployeeID`='$EmployeeID', `EmployeeNumber`='$EmployeeNumber', `Enabled`='$Enabled', `Fax`='$Fax', `GivenName`='$GivenName', `HomeDirectory`='$HomeDirectory', `HomeDrive`='$HomeDrive', `HomePage`='$HomePage', `HomePhone`='$HomePhone', `Initials`='$Initials', `Instance`='$Instance', `LogonWorkstations`='$LogonWorkstations', `Manager`='$Manager', `MobilePhone`='$MobilePhone', `Office`='$Office', `OfficePhone`='$OfficePhone', `Organization`='$Organization', `OtherAttributes`='$OtherAttributes', `OtherName`='$OtherName', `PassThru`='$PassThru', `PasswordNeverExpires`='$PasswordNeverExpires', `PasswordNotRequired`='$PasswordNotRequired', `Path`='$Path', `POBox`='$POBox', `PostalCode`='$PostalCode', `ProfilePath`='$ProfilePath', `SamAccountName`='$SamAccountName', `ScriptPath`='$ScriptPath', `Server`='$Server', `ServicePrincipalNames`='$ServicePrincipalNames', `SmartcardLogonRequired`='$SmartcardLogonRequired', `State`='$State', `StreetAddress`='$StreetAddress', `Surname`='$Surname', `Title`='$Title', `TrustedForDelegation`='$TrustedForDelegation', `Type`='$Type', `UserPrincipalName`='$UserPrincipalName', `Confirm`='$Confirm', `WhatIf`='$WhatIf' WHERE `SettingsNickName` = '$OldSettingsNickName';";
+
+} else {
+
+// Updating the password.
+
+
+$SettingsPassword = sha1($SettingsPassword);
+
 $sql = "UPDATE `janeAD` SET `SettingsNickName`='$SettingsNickName', `SettingsPassword`='$SettingsPassword', `Name`='$Name', `AccountExpirationDate`='$AccountExpirationDate', `AccountNotDelegated`='$AccountNotDelegated', `AccountPassword`='$AccountPassword', `AllowReversiblePasswordEncryption`='$AllowReversiblePasswordEncryption', `AuthType`='$AuthType', `CannotChangePassword`='$CannotChangePassword', `Certificates`='$Certificates', `ChangePasswordAtLogon`='$ChangePasswordAtLogon', `City`='$City', `Company`='$Company', `Country`='$Country', `Credential`='$Credential', `Department`='$Department', `Description`='$Description', `DisplayName`='$DisplayName', `Division`='$Division', `EmailAddress`='$EmailAddress', `EmployeeID`='$EmployeeID', `EmployeeNumber`='$EmployeeNumber', `Enabled`='$Enabled', `Fax`='$Fax', `GivenName`='$GivenName', `HomeDirectory`='$HomeDirectory', `HomeDrive`='$HomeDrive', `HomePage`='$HomePage', `HomePhone`='$HomePhone', `Initials`='$Initials', `Instance`='$Instance', `LogonWorkstations`='$LogonWorkstations', `Manager`='$Manager', `MobilePhone`='$MobilePhone', `Office`='$Office', `OfficePhone`='$OfficePhone', `Organization`='$Organization', `OtherAttributes`='$OtherAttributes', `OtherName`='$OtherName', `PassThru`='$PassThru', `PasswordNeverExpires`='$PasswordNeverExpires', `PasswordNotRequired`='$PasswordNotRequired', `Path`='$Path', `POBox`='$POBox', `PostalCode`='$PostalCode', `ProfilePath`='$ProfilePath', `SamAccountName`='$SamAccountName', `ScriptPath`='$ScriptPath', `Server`='$Server', `ServicePrincipalNames`='$ServicePrincipalNames', `SmartcardLogonRequired`='$SmartcardLogonRequired', `State`='$State', `StreetAddress`='$StreetAddress', `Surname`='$Surname', `Title`='$Title', `TrustedForDelegation`='$TrustedForDelegation', `Type`='$Type', `UserPrincipalName`='$UserPrincipalName', `Confirm`='$Confirm', `WhatIf`='$WhatIf' WHERE `SettingsNickName` = '$OldSettingsNickName';";
+
+
+}
+
+
+
+
 
 break;
 default:
