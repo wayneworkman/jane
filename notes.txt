@@ -1,0 +1,26 @@
+mysql -ujane -pjanepassword -ss -e "select SettingsNickName, SettingsPassword from jane.janeAD"
+
+SettingsNickName don't allow spaces or special characters.
+
+
+IP address allowed per share for smb access
+smb password for share based on settings password 
+share name based on settings name.
+
+samba configuraiton
+
+List available variables in settings editing area.
+
+
+Protect creating "New" settings with admin password.
+Allow admin to reset settings passwords
+
+Admin must define data matching to limit data available to each share.
+
+
+add field to DB for import data matching.
+
+make variables used in settings be interpreted correctly
+
+
+
