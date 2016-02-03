@@ -18,6 +18,8 @@ Allow admin to reset settings passwords
 Admin must define data matching to limit data available to each share.
 
 
+Make all pages use sessions for verificaion - get rid of post variables.
+
 add field to DB for import data matching.
 
 make variables used in settings be interpreted correctly
