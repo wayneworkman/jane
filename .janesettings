@@ -1,0 +1,5 @@
+servername='localhost'
+username='jane'
+password='janepassword'
+database='jane'
+
