@@ -1,5 +1,19 @@
+
+
 CREATE DATABASE IF NOT EXISTS jane;
 USE jane;
+CREATE TABLE Users(
+UsersID int NOT NULL AUTO_INCREMENT,
+#  Category,StudentID,StudentFirstName,StudentMiddleName,StudentLastName,BIRTHDATE,SchoolName
+Category VARCHAR(255),
+StudentID int,
+StudentFirstName VARCHAR(255),
+StudentMiddleName VARCHAR(255),
+StudentLastName VARCHAR(255),
+BIRTHDATE VARCHAR(50),
+SchoolName VARCHAR(255),
+PRIMARY KEY (UsersID)
+);
 CREATE TABLE janeAD(
 SettingsID int NOT NULL AUTO_INCREMENT,
 SettingsNickName VARCHAR(255) NOT NULL UNIQUE,
