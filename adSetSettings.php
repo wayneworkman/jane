@@ -41,6 +41,16 @@ div{width:250px;padding:10px;border:5px solid gray;margin:0}
 
 
 
+<span style="color:blue;" title="SettingsWHERE
+            This is the SQL matching set by Jane's Administrator. 
+It determines what data will be selected for import using the below settings.
+This field can only be changed by Jane's Administrator.">
+            SettingsWHERE
+        </span><br>
+        <input type="text" name="SettingsWHERE" value="<?php echo ($_REQUEST['SettingsWHERE']); ?>" readonly></br>
+
+<br>
+
    
         <span style="color:blue;" title="Name
             Specifies the name of the object. This parameter sets the Name property of the Active Directory object. The LDAP Display Name (ldapDisplayName) of this property is &quot;name&quot;.
