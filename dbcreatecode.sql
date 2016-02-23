@@ -5,6 +5,20 @@ CREATE DATABASE IF NOT EXISTS jane;
 
 USE jane;
 
+CREATE TABLE userDataToImport(
+userID int NOT NULL AUTO_INCREMENT,
+userAction VARCHAR(255),
+userOrgID VARCHAR(255) UNIQUE,
+userFirstName VARCHAR(255),
+userMiddleName VARCHAR(255),
+userLastName VARCHAR(255),
+userGroup VARCHAR(255),
+userUserName VARCHAR(255),
+userPassword VARCHAR(255),
+userMiddleInitial VARCHAR(1),
+PRIMARY KEY (userID)
+);
+
 CREATE TABLE janeUsers(
 JaneUserID int NOT NULL AUTO_INCREMENT,
 JaneUsername VARCHAR(255) NOT NULL UNIQUE,
@@ -60,19 +74,6 @@ PRIMARY KEY (BlockedID)
 
 CREATE UNIQUE INDEX BlockedIP_Indes
 ON blockedIPs (BlockedIP);
-CREATE TABLE Users(
-UsersID int NOT NULL AUTO_INCREMENT,
-Category VARCHAR(255),
-StudentID int,
-StudentFirstName VARCHAR(255),
-StudentMiddleName VARCHAR(255),
-StudentLastName VARCHAR(255),
-StudentUserName VARCHAR(255),
-StudentMiddleInitial VARCHAR(1),
-BIRTHDATE VARCHAR(50),
-SchoolName VARCHAR(255),
-PRIMARY KEY (UsersID)
-);
 
 CREATE TABLE janeSettingsTypes(
 SettingsTypeID int NOT NULL AUTO_INCREMENT,
