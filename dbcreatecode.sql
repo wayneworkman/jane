@@ -1,24 +1,105 @@
-
+drop user 'jane'@'localhost';
+drop database jane;
 
 CREATE DATABASE IF NOT EXISTS jane;
+
 USE jane;
+
+CREATE TABLE janeUsers(
+JaneUserID int NOT NULL AUTO_INCREMENT,
+JaneUsername VARCHAR(255) NOT NULL UNIQUE,
+JanePassword VARCHAR(255) NOT NULL,
+JaneUserEnabled VARCHAR(1) NOT NULL,
+PRIMARY KEY (JaneUserID)
+);
+
+CREATE TABLE janeGroups(
+JaneGroupID int NOT NULL AUTO_INCREMENT,
+JaneGroupName VARCHAR(255) NOT NULL UNIQUE,
+PRIMARY KEY (JaneGroupID)
+);
+
+CREATE TABLE janeUserGroupAssociation(
+uID int NOT NULL,
+gID int NOT NULL,
+JaneUserGroupAssociationID int NOT NULL AUTO_INCREMENT,
+FOREIGN KEY (uID) REFERENCES janeUsers(JaneUserID),
+FOREIGN KEY (gID) REFERENCES janeGroups(JaneGroupID),
+PRIMARY KEY (JaneUserGroupAssociationID)
+);
+
+CREATE TABLE Sessions(
+SessionID int NOT NULL AUTO_INCREMENT,
+REQUEST_TIME int NOT NULL,
+SessionUserID int NOT NULL,
+FOREIGN KEY (SessionUserID) REFERENCES janeUsers(JaneUserID),
+REMOTE_ADDR VARCHAR(255) NOT NULL,
+HTTP_USER_AGENT VARCHAR(255) NOT NULL,
+Random_String VARCHAR(8) NOT NULL,
+fingerprint VARCHAR(255) NOT NULL UNIQUE,
+PRIMARY KEY (SessionID)
+);
+
+CREATE UNIQUE INDEX fingerprint_index
+ON Sessions (fingerprint);
+
+CREATE TABLE badLoginAttempts(
+badLoginID int NOT NULL AUTO_INCREMENT,
+badREQUEST_TIME int NOT NULL,
+badUsername VARCHAR(255) NOT NULL,
+badREMOTE_ADDR VARCHAR(255) NOT NULL,
+badHTTP_USER_AGENT VARCHAR(255) NOT NULL,
+PRIMARY KEY (badLoginID)
+);
+
+CREATE TABLE blockedIPs(
+BlockedID int NOT NULL AUTO_INCREMENT,
+BlockedIP VARCHAR(255) NOT NULL UNIQUE,
+PRIMARY KEY (BlockedID)
+);
+
+CREATE UNIQUE INDEX BlockedIP_Indes
+ON blockedIPs (BlockedIP);
 CREATE TABLE Users(
 UsersID int NOT NULL AUTO_INCREMENT,
-#  Category,StudentID,StudentFirstName,StudentMiddleName,StudentLastName,BIRTHDATE,SchoolName
 Category VARCHAR(255),
 StudentID int,
 StudentFirstName VARCHAR(255),
 StudentMiddleName VARCHAR(255),
 StudentLastName VARCHAR(255),
+StudentUserName VARCHAR(255),
+StudentMiddleInitial VARCHAR(1),
 BIRTHDATE VARCHAR(50),
 SchoolName VARCHAR(255),
 PRIMARY KEY (UsersID)
 );
+
+CREATE TABLE janeSettingsTypes(
+SettingsTypeID int NOT NULL AUTO_INCREMENT,
+SettingsTypeName VARCHAR(255) NOT NULL,
+SettingsTypeDescription VARCHAR(255),
+PRIMARY KEY (SettingsTypeID)
+);
+
+CREATE TABLE janeSettings(
+JaneSettingsID int NOT NULL AUTO_INCREMENT,
+JaneSettingsNickName VARCHAR(255) NOT NULL UNIQUE,
+JaneSettingsWHERE VARCHAR(255) NOT NULL,
+JaneSettingsGroupID int NOT NULL,
+FOREIGN KEY (JaneSettingsGroupID) REFERENCES janeGroups(JaneGroupID),
+JaneSettingsTypeID int NOT NULL,
+FOREIGN KEY (JaneSettingsTypeID) REFERENCES janeSettingsTypes(SettingsTypeID),
+JaneSettingsSMBusername VARCHAR(255) NOT NULL,
+JaneSettingsSMBpassword VARCHAR(255) NOT NULL,
+JaneSettingsSMBlocalPath VARCHAR(255) NOT NULL,
+JaneSettingsSMBallowedIP VARCHAR(255) NOT NULL,
+PRIMARY KEY (JaneSettingsID)
+);
+
 CREATE TABLE janeAD(
-SettingsID int NOT NULL AUTO_INCREMENT,
-SettingsNickName VARCHAR(255) NOT NULL UNIQUE,
-SettingsPassword VARCHAR(255) NOT NULL,
-SettingsWHERE VARCHAR(255) NOT NULL,
+janeADid int NOT NULL AUTO_INCREMENT,
+janeADSettingsID int NOT NULL UNIQUE,
+FOREIGN KEY (janeADSettingsID) REFERENCES janeSettings(JaneSettingsID),
 Name VARCHAR(255),
 AccountExpirationDate VARCHAR(255),
 AccountNotDelegated VARCHAR(1),
@@ -77,9 +158,29 @@ Type VARCHAR(255),
 UserPrincipalName VARCHAR(255),
 Confirm VARCHAR(255),
 WhatIf VARCHAR(255),
-PRIMARY KEY (SettingsID)
+PRIMARY KEY (janeADid)
 );
 
+insert into janeUsers (JaneUsername,JanePassword,JaneUserEnabled) values ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','1');
+#administrator default password is changeme
+
+insert into janeGroups (JaneGroupName) values ('administrators');
+
+insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'administrator'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'administrators'));
+
+
+insert into janeUsers (JaneUsername,JanePassword,JaneUserEnabled) values ('tech','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','1');
+#tech default password is changeme
+
+insert into janeGroups (JaneGroupName) values ('techs');
+
+insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'tech'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'techs'));
+
+INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription) VALUES ('Active Directory','Standard Active Directory settings type.');
+
 CREATE USER 'jane'@'localhost' IDENTIFIED BY 'janepassword';
+
 GRANT ALL ON jane.* TO 'jane'@'localhost';
+
+
 
