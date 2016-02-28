@@ -28,6 +28,7 @@ if ($result->num_rows == 0) {
 	// No matching session info, send to login screen.
 	session_unset();
 	session_destroy();
+	$link->close();
 	$NextURL="login.php";
 	header("Location: $NextURL");
 	}
@@ -42,6 +43,7 @@ if ($result->num_rows == 0) {
 	// FIY this particular bit of code should never even be executed logically.
 	session_unset();
 	session_destroy();
+	$link->close();
 	$NextURL="login.php";
 	header("Location: $NextURL");
 	}
@@ -71,7 +73,7 @@ if ($result->num_rows == 0) {
 			// Couldn't insert new session data into DB.
 			$SessionIsVerified="0";
 			$link->close();
-			die ("ERROR: There is a site issue.");
+			die ($SiteErrorMessage);
 		}
 	} else {
 		// Session is not verified or timed out.
@@ -79,11 +81,13 @@ if ($result->num_rows == 0) {
 		//redirect to login screen.
 		session_unset();
 		session_destroy();
+		$link->close();
 		$NextURL="login.php";
 		header("Location: $NextURL");
 	}
 } else {
 // IP is blocked.
+$link->close();
 session_unset();
 session_destroy();
 session_start();
@@ -92,5 +96,4 @@ $_SESSION['ErrorMessage'] = $IPBlockedMessage;
 $NextURL="login.php";
 header("Location: $NextURL");
 }
-$link->close();
 ?>

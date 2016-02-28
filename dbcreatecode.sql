@@ -1,4 +1,4 @@
-drop user 'jane'@'localhost';
+#drop user 'jane'@'localhost';
 drop database jane;
 
 CREATE DATABASE IF NOT EXISTS jane;
@@ -23,8 +23,15 @@ CREATE TABLE janeUsers(
 JaneUserID int NOT NULL AUTO_INCREMENT,
 JaneUsername VARCHAR(255) NOT NULL UNIQUE,
 JanePassword VARCHAR(255) NOT NULL,
+JaneSMBPassword VARCHAR(255) NOT NULL,
 JaneUserEnabled VARCHAR(1) NOT NULL,
 PRIMARY KEY (JaneUserID)
+);
+
+CREATE TABLE LocalUsersNotToDelete(
+SystemUserID int NOT NULL AUTO_INCREMENT,
+SystemUsername VARCHAR(255) NOT NULL UNIQUE,
+PRIMARY KEY (SystemUserID)
 );
 
 CREATE TABLE janeGroups(
@@ -77,7 +84,7 @@ ON blockedIPs (BlockedIP);
 
 CREATE TABLE janeSettingsTypes(
 SettingsTypeID int NOT NULL AUTO_INCREMENT,
-SettingsTypeName VARCHAR(255) NOT NULL,
+SettingsTypeName VARCHAR(255) NOT NULL UNIQUE,
 SettingsTypeDescription VARCHAR(255),
 PRIMARY KEY (SettingsTypeID)
 );
@@ -90,9 +97,6 @@ JaneSettingsGroupID int NOT NULL,
 FOREIGN KEY (JaneSettingsGroupID) REFERENCES janeGroups(JaneGroupID),
 JaneSettingsTypeID int NOT NULL,
 FOREIGN KEY (JaneSettingsTypeID) REFERENCES janeSettingsTypes(SettingsTypeID),
-JaneSettingsSMBusername VARCHAR(255) NOT NULL,
-JaneSettingsSMBpassword VARCHAR(255) NOT NULL,
-JaneSettingsSMBlocalPath VARCHAR(255) NOT NULL,
 JaneSettingsSMBallowedIP VARCHAR(255) NOT NULL,
 PRIMARY KEY (JaneSettingsID)
 );
@@ -162,8 +166,8 @@ WhatIf VARCHAR(255),
 PRIMARY KEY (janeADid)
 );
 
-insert into janeUsers (JaneUsername,JanePassword,JaneUserEnabled) values ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','1');
-#administrator default password is changeme
+insert into janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) values ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
+#administrator default password  and default SMB password is changeme
 
 insert into janeGroups (JaneGroupName) values ('administrators');
 

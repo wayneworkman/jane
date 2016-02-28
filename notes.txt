@@ -1,0 +1,2 @@
+Fill the "LocalUsersNotToDelete" table during install with 
+cut -d: -f1 /etc/passwd
