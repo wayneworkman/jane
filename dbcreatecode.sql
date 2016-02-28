@@ -1,4 +1,4 @@
-#drop user 'jane'@'localhost';
+drop user 'jane'@'localhost';
 drop database jane;
 
 CREATE DATABASE IF NOT EXISTS jane;
@@ -86,6 +86,7 @@ CREATE TABLE janeSettingsTypes(
 SettingsTypeID int NOT NULL AUTO_INCREMENT,
 SettingsTypeName VARCHAR(255) NOT NULL UNIQUE,
 SettingsTypeDescription VARCHAR(255),
+SettingsTableName VARCHAR(255) NOT NULL UNIQUE,
 PRIMARY KEY (SettingsTypeID)
 );
 
@@ -103,8 +104,8 @@ PRIMARY KEY (JaneSettingsID)
 
 CREATE TABLE janeAD(
 janeADid int NOT NULL AUTO_INCREMENT,
-janeADSettingsID int NOT NULL UNIQUE,
-FOREIGN KEY (janeADSettingsID) REFERENCES janeSettings(JaneSettingsID),
+JaneSettingsID int NOT NULL UNIQUE,
+FOREIGN KEY (janeSettingsID) REFERENCES janeSettings(JaneSettingsID),
 Name VARCHAR(255),
 AccountExpirationDate VARCHAR(255),
 AccountNotDelegated VARCHAR(1),
@@ -181,7 +182,7 @@ insert into janeGroups (JaneGroupName) values ('techs');
 
 insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'tech'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'techs'));
 
-INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription) VALUES ('Active Directory','Standard Active Directory settings type.');
+INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('Active Directory','Standard Active Directory settings type.','janeAD');
 
 CREATE USER 'jane'@'localhost' IDENTIFIED BY 'janepassword';
 

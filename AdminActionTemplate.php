@@ -13,15 +13,15 @@ if ($SessionIsVerified == "1") {
 		$sql = "INSERT INTO SomeTable (ColumnName1,ColumnName2) VALUES ('$MyVar1','$MyVar2)";
 
 
-                if ($link->query($sql)) {
-                        // good, send back to jane.php
-                        $NextURL="jane.php";
-                        header("Location: $NextURL");
-                } else {
-                        // Error
-                        $link->close();
-                        die ($SiteErrorMessage);
-                }	
+		if ($link->query($sql)) {
+			// good, send back to jane.php
+			$NextURL="jane.php";
+			header("Location: $NextURL");
+		} else {
+			// Error
+			$link->close();
+			die ($SiteErrorMessage);
+		}	
 
 
 

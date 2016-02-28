@@ -23,7 +23,8 @@ if ($SessionIsVerified == "1") {
 	echo "Edit or Delete Settings<br>";
 	echo "<p class=\"tab\">";
 	echo "<input type=\"radio\" name=\"Action\" value=\"EditSettings\" checked>Edit Settings<br>";
-        echo "<input type=\"radio\" name=\"Action\" value=\"DeleteSettings\">Delete Settings<br>";
+        echo "<input type=\"radio\" name=\"Action\" value=\"DeleteSettings\">Delete Settings";
+	echo "<label><input type=\"checkbox\" id=\"ConfirmDelete\" value=\"Confirmed\">Confirm Delete</label><br><br>";
 	echo "<p class=\"tab\">";
 	echo "<select name='SettingsNickName'>";
 	echo "<option value='0'>Pick Settings NickName</option>";
