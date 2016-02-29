@@ -1,11 +1,11 @@
 <?PHP
-$sql = "SELECT JaneSettingsNickName,JaneSettingsWhere,JaneSettingsGroupID,JaneSettingsSMBallowedIP FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
+$sql = "SELECT JaneSettingsNickName,JaneSettingsWHERE,JaneSettingsGroupID,JaneSettingsSMBallowedIP FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
 		$_SESSION['JaneSettingsNickName'] = $row["JaneSettingsNickName"];
-		$_SESSION['JaneSettingsWhere'] = $row["JaneSettingsWhere"];
+		$_SESSION['JaneSettingsWHERE'] = $row["JaneSettingsWHERE"];
 		$JaneSettingsGroupID = $row["JaneSettingsGroupID"];
 		$_SESSION['JaneSettingsSMBallowedIP'] = $row["JaneSettingsSMBallowedIP"];
 	}
