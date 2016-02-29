@@ -1,4 +1,36 @@
 <?PHP
+$sql = "SELECT JaneSettingsNickName,JaneSettingsWhere,JaneSettingsGroupID,JaneSettingsSMBallowedIP FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
+$result = $link->query($sql);
+if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+		$_SESSION['JaneSettingsNickName'] = $row["JaneSettingsNickName"];
+		$_SESSION['JaneSettingsWhere'] = $row["JaneSettingsWhere"];
+		$JaneSettingsGroupID = $row["JaneSettingsGroupID"];
+		$_SESSION['JaneSettingsSMBallowedIP'] = $row["JaneSettingsSMBallowedIP"];
+	}
+} else {
+	//NO settings? This should never happen at this point.
+	$link->close();
+	$NextURL="jane.php";
+	header("Location: $NextURL");
+}
+
+$sql = "SELECT JaneGroupName FROM janeGroups WHERE JaneGroupID = '$JaneSettingsGroupID' LIMIT 1";
+$result = $link->query($sql);
+if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+                $_SESSION['JaneSettingsGroupName'] = $row["JaneGroupName"];
+        }
+} else {
+        //NO Group Name? This should never happen at this point.
+        $link->close();
+        $NextURL="jane.php";
+        header("Location: $NextURL");
+}
+
+
 
 
 $sql = "SELECT * FROM janeAD WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";

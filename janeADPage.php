@@ -20,39 +20,46 @@ div{width:300px;padding:10px;border:5px solid gray;margin:0}
 <form action="ad.php" method="post">
 
     <div>
-	<font color="red"><b>Required</b></font><br><br>    
+	<font color="red"><b>Jane Settings</b></font><br><br>    
 
 
-	<input type="hidden" name="Action" value="<?php echo ($_SESSION['Action']); ?>">
 
-
-    <span style="color:blue;" title="SettingsNickName
+    <span style="color:blue;" title="Settings NickName
             This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
-            SettingsNickName
+            Settings NickName
         </span><br>
-        <input type="text" name="SettingsNickName" value="<?php echo ($_SESSION['SettingsNickName']); ?>"></br>
+        <input type="text" name="JaneSettingsNickName" value="<?php echo ($_SESSION['JaneSettingsNickName']); ?>" readonly></br>
     
 <br>
 
  
-
-<span style="color:blue;" title="SettingsPassword
-            This is the password that will secure these settings against changes and deletion. The password is stored using a non-reversible hasing function. The password can be cleared by Jane's administrator.">
-            SettingsPassword
+<span style="color:blue;" title="Group Name
+            This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
+            Group Name
         </span><br>
-        <input type="text" name="SettingsPassword" value="<?php echo ($_SESSION['SettingsPassword']); ?>"></br>
-    
+        <input type="text" name="JaneSettingsGroupName" value="<?php echo ($_SESSION['JaneSettingsGroupName']); ?>" readonly></br>
+
 <br>
 
 
 
-<span style="color:blue;" title="SettingsWHERE
+<span style="color:blue;" title="SMB Allowed IP
+            This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
+            SMB Allowed IP
+        </span><br>
+        <input type="text" name="JaneSettingsSMBallowedIP" value="<?php echo ($_SESSION['JaneSettingsSMBallowedIP']); ?>" readonly></br>
+
+<br>
+
+
+
+<span style="color:blue;" title="WHERE
             This is the SQL matching set by Jane's Administrator. 
 It determines what data will be selected for import using the below settings.
 This field can only be changed by Jane's Administrator.">
-            SettingsWHERE
+            WHERE
         </span><br>
-        <input type="text" name="SettingsWHERE" value="<?php echo ($_SESSION['SettingsWHERE']); ?>" readonly></br>
+        <input type="text" name="JaneSettingsWHERE" value="<?php echo ($_SESSION['JaneSettingsWHERE']); ?>" readonly></br>
 
 </div>
 <div>
