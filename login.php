@@ -4,8 +4,10 @@
   <form name="Jane"action="authenticate.php" method="post">
 <?php
 session_start();
-if ( $_SESSION['badLoginAttempt'] == "1" ) {
-	echo $_SESSION['ErrorMessage'] . "<p>";
+if (isset($_SESSION['badLoginAttempt'])) {
+	if ( $_SESSION['badLoginAttempt'] == "1" ) {
+		echo $_SESSION['ErrorMessage'] . "<p>";
+	}
 }
 ?>
   username<input type="text"name="username">

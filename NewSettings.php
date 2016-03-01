@@ -15,7 +15,6 @@ if ($SessionIsVerified == "1") {
                         // good, send back to jane.php
                 	$NextURL="jane.php";
 			header("Location: $NextURL");
-			$link->close()
 		} else {
                         // Error
                         $link->close();

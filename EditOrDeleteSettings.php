@@ -6,7 +6,9 @@ if ($SessionIsVerified == "1") {
 	// Do actions here.
 	$Action = $link->real_escape_string($_REQUEST['Action']);
 	$JaneSettingsID = $link->real_escape_string($_REQUEST['SettingsNickName']);
-	$ConfirmDelete = $link->real_escape_string($_REQUEST['ConfirmDelete']);
+	if (isset($_REQUEST['ConfirmDelete'])) {
+		$ConfirmDelete = $link->real_escape_string($_REQUEST['ConfirmDelete']);
+	}
 	if ($isAdministrator == 1) {
 		$sql = "SELECT JaneSettingsID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID'";
 	} else {
@@ -47,14 +49,14 @@ if ($SessionIsVerified == "1") {
 				include 'janeAD.php';
 				$NextURL="janeADPage.php";
 				header("Location: $NextURL");
-			} // elseif (next settings check) { 
+			} 
 
 
 
 
 
 
-			//-------------------------------END----------------------------------
+			//---------------------------------END----------------------------------
 		} elseif ($Action == "DeleteSettings" && $ConfirmDelete == "Confirmed") {
 			// Query settings table name.
 			$sql = "SELECT SettingsTableName FROM janeSettingsTypes WHERE SettingsTypeID = (SELECT JaneSettingsTypeID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID')";

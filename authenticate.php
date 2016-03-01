@@ -70,7 +70,6 @@ if ($result->num_rows == 0) {
                         	if ($link->query($sql)) {$link->close();} else {$link->close();}
 				//Bad login, send back to login screen - with an error.
 				session_unset();
-				session_destroy();
 				session_start();
 				$_SESSION['badLoginAttempt'] = "1";
 				$_SESSION['ErrorMessage'] = $BadLoginError;
@@ -91,18 +90,15 @@ if ($result->num_rows == 0) {
 		$sql = "INSERT INTO badLoginAttempts (badREQUEST_TIME,badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT) VALUES ('$REQUEST_TIME','$JaneUsername','$REMOTE_ADDR','$HTTP_USER_AGENT')";
 		if ($link->query($sql)) {$link->close();} else {$link->close();}
 		session_unset();
-		session_destroy();
 		session_start();
 		$_SESSION['badLoginAttempt'] = "1";
 		$_SESSION['ErrorMessage'] = $BadLoginError;
 		$NextURL="login.php";
 		header("Location: $NextURL");
-		$link->close();
 	}
 } else {
 // IP is blocked.
 session_unset();
-session_destroy();
 session_start();
 $_SESSION['badLoginAttempt'] = "1";
 $_SESSION['ErrorMessage'] = $IPBlockedMessage;

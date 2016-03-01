@@ -1,8 +1,4 @@
 <?php
-if ($SessionIsVerified != "1") {
-        $NextURL="login.php";
-        header("Location: $NextURL");
-}
 // Create connection
 $link = new mysqli($servername, $username, $password, $database);
 // Check connection
