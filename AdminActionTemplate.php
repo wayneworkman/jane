@@ -33,5 +33,9 @@ if ($SessionIsVerified == "1") {
 		$NextURL="jane.php";
 		header("Location: $NextURL");
 	}
+} else {
+	$NextURL="login.php";
+	header("Location: $NextURL");
 }
 ?>
+

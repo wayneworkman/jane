@@ -1,6 +1,11 @@
 <?php
 include 'vars.php';
 include 'verifysession.php';
+
+if ($SessionIsVerified != "1") {
+	$NextURL="login.php";
+	header("Location: $NextURL");
+}
 ?>
 
 <!DOCTYPE html>

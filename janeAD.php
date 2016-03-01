@@ -1,4 +1,7 @@
 <?PHP
+include 'vars.php';
+include 'verifysession.php';
+
 $sql = "SELECT JaneSettingsNickName,JaneSettingsWHERE,JaneSettingsGroupID,JaneSettingsSMBallowedIP FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
