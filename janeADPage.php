@@ -22,7 +22,7 @@ div{width:300px;padding:10px;border:5px solid gray;margin:0}
 
 </head>
 <body>
-<form action="ad.php" method="post">
+<form action="janeADPostProcessing.php" method="post">
 
     <div>
 	<font color="red"><b>Jane Settings</b></font><br><br>    

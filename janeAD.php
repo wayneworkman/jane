@@ -2,14 +2,14 @@
 include 'vars.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
-
+	$_SESSION['JaneSettingsID'] = $JaneSettingsID;
 
 
 	$sql = "SELECT JaneSettingsNickName,JaneSettingsWHERE,JaneSettingsGroupID,JaneSettingsSMBallowedIP FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
-        	// output data of each row
-        	while($row = $result->fetch_assoc()) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
 			$_SESSION['JaneSettingsNickName'] = $row["JaneSettingsNickName"];
 			$_SESSION['JaneSettingsWHERE'] = $row["JaneSettingsWHERE"];
 			$JaneSettingsGroupID = $row["JaneSettingsGroupID"];
@@ -25,15 +25,15 @@ if ($SessionIsVerified == "1") {
 	$sql = "SELECT JaneGroupName FROM janeGroups WHERE JaneGroupID = '$JaneSettingsGroupID' LIMIT 1";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
-        	// output data of each row
+		// output data of each row
 		while($row = $result->fetch_assoc()) {
 			$_SESSION['JaneSettingsGroupName'] = $row["JaneGroupName"];
 		}
 	} else {
-        	//NO Group Name? This should never happen at this point.
-        	$link->close();
-        	$NextURL="jane.php";
-        	header("Location: $NextURL");
+		//NO Group Name? This should never happen at this point.
+		$link->close();
+		$NextURL="jane.php";
+		header("Location: $NextURL");
 	}
 
 
@@ -92,7 +92,6 @@ if ($SessionIsVerified == "1") {
 			$_SESSION['ScriptPath'] = $row["ScriptPath"];
 			$_SESSION['Server'] = $row["Server"];
 			$_SESSION['ServicePrincipalNames'] = $row["ServicePrincipalNames"];
-			$_SESSION['SettingsWHERE'] = $row["SettingsWHERE"];
 			$_SESSION['SmartcardLogonRequired'] = $row["SmartcardLogonRequired"];
 			$_SESSION['State'] = $row["State"];
 			$_SESSION['StreetAddress'] = $row["StreetAddress"];
@@ -154,7 +153,6 @@ if ($SessionIsVerified == "1") {
 		$_SESSION['ScriptPath'] = "";
 		$_SESSION['Server'] = "";
 		$_SESSION['ServicePrincipalNames'] = "";
-		$_SESSION['SettingsWHERE'] = "";
 		$_SESSION['SmartcardLogonRequired'] = "";
 		$_SESSION['State'] = "";
 		$_SESSION['StreetAddress'] = "";
@@ -166,5 +164,7 @@ if ($SessionIsVerified == "1") {
 		$_SESSION['Confirm'] = "";
 		$_SESSION['WhatIf'] = "";
 	}
+	$NextURL="janeADPage.php";
+	header("Location: $NextURL");
 }
 ?>

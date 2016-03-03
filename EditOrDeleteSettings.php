@@ -47,8 +47,6 @@ if ($SessionIsVerified == "1") {
 			//janeAD
 			if ($SettingsTableName == "janeAD") {
 				include 'janeAD.php';
-				$NextURL="janeADPage.php";
-				header("Location: $NextURL");
 			} 
 
 
