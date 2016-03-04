@@ -8,14 +8,12 @@ USE jane;
 CREATE TABLE userDataToImport(
 userID int NOT NULL AUTO_INCREMENT,
 userAction VARCHAR(255),
-userOrgID VARCHAR(255) UNIQUE,
 userFirstName VARCHAR(255),
 userMiddleName VARCHAR(255),
 userLastName VARCHAR(255),
 userGroup VARCHAR(255),
 userUserName VARCHAR(255),
 userPassword VARCHAR(255),
-userMiddleInitial VARCHAR(1),
 PRIMARY KEY (userID)
 );
 
@@ -106,6 +104,9 @@ CREATE TABLE janeAD(
 janeADid int NOT NULL AUTO_INCREMENT,
 JaneSettingsID int NOT NULL UNIQUE,
 FOREIGN KEY (janeSettingsID) REFERENCES janeSettings(JaneSettingsID),
+Group1Name VARCHAR(255),
+Group2Name VARCHAR(255),
+Group3Name VarChar(255),
 Name VARCHAR(255),
 AccountExpirationDate VARCHAR(255),
 AccountNotDelegated VARCHAR(1),

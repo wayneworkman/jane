@@ -1,5 +1,28 @@
 #!/bin/bash
 
+#----- MySQL Credentials -----#
+snmysqluser="jane"
+snmysqlpass="janepassword"
+snmysqlhost=""
+snmysqldatabase="jane" #Database name is required.
+
+
+options=""
+if [[ $snmysqlhost != "" ]]; then
+	options="$options-h$snmysqlhost "
+fi
+if [[ $snmysqluser != "" ]]; then
+        options="$options-u$snmysqluser "
+fi
+if [[ $snmysqlpass != "" ]]; then
+        options="$options-p$snmysqlpass "
+fi
+options="$options-D $snmysqldatabase -e"
+
+
+
+
+
 INPUT=/root/testdata.csv
 OLDIFS=$IFS
 IFS=,
@@ -7,17 +30,21 @@ IFS=,
 while read Category StudentID StudentFirstName StudentMiddleName StudentLastName BIRTHDATE SchoolName
 do
 
-                echo "-------------------------------------------------"
-                echo "Category : $Category"
-                echo "StudentID : $StudentID"
-                echo "StudentFirstName : $StudentFirstName"
-                echo "StudentMiddleName : $StudentMiddleName"
-                echo "StudentLastName : $StudentLastName"
-                echo "BIRTHDATE : $BIRTHDATE"
-                echo "SchoolName : $SchoolName"
-                echo "Username : ${StudentFirstName:0:1}${StudentMiddleName:0:1}${StudentLastName:0:1}${StudentID:5:4}" | tr '[:upper:]' '[:lower:]'
-                echo "Password : ${BIRTHDATE///}"
-                echo "Fullname : ${StudentFirstName} ${StudentMiddleName} ${StudentLastName}"
+                
+		userAction=$Category
+		userFirstName=$StudentFirstName
+		userMiddleName=$StudentMiddleName
+		userLastName=$StudentLastName
+		userGroup=$SchoolName
+		userPassword=${BIRTHDATE///}
+		userUserName=$(echo "${StudentFirstName:0:1}${StudentMiddleName:0:1}${StudentLastName:0:1}${StudentID:5:4}" | tr '[:upper:]' '[:lower:]')
+		
+
+		sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword')"
+
+		if [[ $userAction != "Category" ]]; then
+			mysql -ujane -pjanepassword -D jane -e "$sql"
+		fi
 
 done < $INPUT
 IFS=$OLDIFS
