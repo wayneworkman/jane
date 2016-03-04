@@ -67,6 +67,52 @@ This field can only be changed by Jane's Administrator.">
         <input type="text" name="JaneSettingsWHERE" value="<?php echo ($_SESSION['JaneSettingsWHERE']); ?>" readonly></br>
 
 </div>
+
+
+
+<div>
+
+
+        <span style="color:blue;" title="Group 1 Name
+            Specifies a group that users should be placed into after account creation.">
+	Group 1 Name
+        </span><br>
+        <input type="text" name="Group1Name" value="<?php echo ($_SESSION['Group1Name']); ?>"></br>
+    </div>
+
+
+
+
+
+
+
+<div>
+
+
+        <span style="color:blue;" title="Group 2 Name
+            Specifies a group that users should be placed into after account creation.">
+            Group 2 Name
+        </span><br>
+        <input type="text" name="Group2Name" value="<?php echo ($_SESSION['Group2Name']); ?>"></br>
+    </div>
+
+
+
+
+
+<div>
+
+
+        <span style="color:blue;" title="Group 3 Name
+            Specifies a group that users should be placed into after account creation.">
+            Group 3 Name
+        </span><br>
+        <input type="text" name="Group3Name" value="<?php echo ($_SESSION['Group3Name']); ?>"></br>
+    </div>
+
+
+
+
 <div>
 
    

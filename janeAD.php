@@ -44,6 +44,9 @@ if ($SessionIsVerified == "1") {
 	if ($result->num_rows > 0) {
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
+			$_SESSION['Group1Name'] = $row["Group1Name"];
+			$_SESSION['Group2Name'] = $row["Group2Name"];
+			$_SESSION['Group3Name'] = $row["Group3Name"];
 			$_SESSION['Name'] = $row["Name"];
 			$_SESSION['AccountExpirationDate'] = $row["AccountExpirationDate"];
 			$_SESSION['AccountNotDelegated'] = $row["AccountNotDelegated"];
@@ -105,6 +108,9 @@ if ($SessionIsVerified == "1") {
 		}
 	} else {
 		// no rows, set all fields as empty.
+		$_SESSION['Group1Name'] = "";
+		$_SESSION['Group2Name'] = "";
+		$_SESSION['Group3Name'] = "";
 		$_SESSION['Name'] = "";
 		$_SESSION['AccountExpirationDate'] = "";
 		$_SESSION['AccountNotDelegated'] = "";
