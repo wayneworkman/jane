@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #----- MySQL Credentials -----#
-snmysqluser="jane"
-snmysqlpass="janepassword"
+snmysqluser="janeSystem"
+snmysqlpass="janesystempassword"
 snmysqlhost=""
 snmysqldatabase="jane" #Database name is required.
 

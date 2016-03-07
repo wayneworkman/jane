@@ -1,4 +1,5 @@
-drop user 'jane'@'localhost';
+drop user 'janeWeb'@'localhost';
+drop user 'janeSystem'@'localhost';
 drop database jane;
 
 CREATE DATABASE IF NOT EXISTS jane;
@@ -7,6 +8,7 @@ USE jane;
 
 CREATE TABLE userDataToImport(
 userID int NOT NULL AUTO_INCREMENT,
+userImportedID VARCHAR(255),
 userAction VARCHAR(255),
 userFirstName VARCHAR(255),
 userMiddleName VARCHAR(255),
@@ -15,6 +17,13 @@ userGroup VARCHAR(255),
 userUserName VARCHAR(255),
 userPassword VARCHAR(255),
 PRIMARY KEY (userID)
+);
+
+CREATE TABLE availableVariables(
+VariableID int NOT NULL AUTO_INCREMENT,
+VariableName VARCHAR(255) NOT NULL UNIQUE,
+VariableSample VARCHAR(255),
+PRIMARY KEY (VariableID)
 );
 
 CREATE TABLE janeUsers(
@@ -185,9 +194,36 @@ insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from j
 
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('Active Directory','Standard Active Directory settings type.','janeAD');
 
-CREATE USER 'jane'@'localhost' IDENTIFIED BY 'janepassword';
 
-GRANT ALL ON jane.* TO 'jane'@'localhost';
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$Action','Add');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$FirstName','Jane');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$MiddleName','Marie');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$MiddleInitial','M');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$LastName','Smith');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$School','Mayberry - South HS');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$StudentID','123456789');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$UserName','jms6789');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$Password','05252000');
 
+
+CREATE USER 'janeWeb'@'localhost' IDENTIFIED BY 'janewebpassword';
+CREATE USER 'janeSystem'@'localhost' IDENTIFIED BY 'janesystempassword';
+
+GRANT ALL ON jane.Sessions TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.badLoginAttempts TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.janeAD TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.janeGroups TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.janeSettings TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.janeSettingsTypes TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.UserGroupAssociation TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.Users TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
+
+GRANT ALL ON jane.LocalUsersNotToDelete TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.blockedIPs TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.janeAD TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.janeSettings TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.janeSettingsTypes TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.userDataToImport TO 'janeSystem'@'localhost';
 
 

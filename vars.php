@@ -2,8 +2,8 @@
 
 // Database connect settings.
 $servername = 'localhost';
-$username = 'jane';
-$password = 'janepassword';
+$username = 'janeWeb';
+$password = 'janewebpassword';
 $database = 'jane';
 $SessionTimeout = 300; // measured in seconds.
 $SiteErrorMessage = "ERROR: There was a site problem. Report this to your Jane administrator and try again later.";
