@@ -44,6 +44,12 @@ if ($SessionIsVerified == "1") {
 	if ($result->num_rows > 0) {
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
+			$_SESSION['ActionCreate'] = $row["ActionCreate"];
+			$_SESSION['ActionDisable'] = $row["ActionDisable"];
+			$_SESSION['ActionDelete'] = $row["ActionDelete"];
+			$_SESSION['ActionCreateText'] = $row["ActionCreateText"];
+                        $_SESSION['ActionDisableText'] = $row["ActionDisableText"];
+                        $_SESSION['ActionDeleteText'] = $row["ActionDeleteText"];
 			$_SESSION['Group1Name'] = $row["Group1Name"];
 			$_SESSION['Group2Name'] = $row["Group2Name"];
 			$_SESSION['Group3Name'] = $row["Group3Name"];
@@ -108,6 +114,12 @@ if ($SessionIsVerified == "1") {
 		}
 	} else {
 		// no rows, set all fields as empty.
+		$_SESSION['ActionCreate'] = "";
+		$_SESSION['ActionDisable'] = "";
+		$_SESSION['ActionDelete'] = "";
+		$_SESSION['ActionCreateText'] = "";
+		$_SESSION['ActionDisableText'] = "";
+		$_SESSION['ActionDeleteText'] = "";
 		$_SESSION['Group1Name'] = "";
 		$_SESSION['Group2Name'] = "";
 		$_SESSION['Group3Name'] = "";

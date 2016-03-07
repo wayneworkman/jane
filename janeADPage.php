@@ -5,6 +5,19 @@ include 'verifysession.php';
 if ($SessionIsVerified != "1") {
 	$NextURL="login.php";
 	header("Location: $NextURL");
+} else {
+include 'connect2db.php';
+$sql = "SELECT SettingsTypeID,SettingsTypeName from janeSettingsTypes";
+                $result = $link->query($sql);
+                if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['SettingsTypeID'] . "'>" . $row['SettingsTypeName'] . "</option>";
+                        }
+                } else {
+                        echo "<option value='no_users'>no_settings</option>";
+                }
+
+
 }
 ?>
 
@@ -16,7 +29,8 @@ if ($SessionIsVerified != "1") {
 
 
 <style>
-div{width:300px;padding:10px;border:5px solid gray;margin:0}
+div{padding:10px;border:5px solid gray;margin:0}
+//div{width:600px;padding:10px;border:5px solid gray;margin:0}
 </style>
 
 
@@ -69,10 +83,71 @@ This field can only be changed by Jane's Administrator.">
 </div>
 
 
+<div>
+<span style="color:blue;" title="Variables
+            This is the list of available variables for use in the below settings. These variables are defined by the Jane system administrator and are currently defined in the back-end of the system. You may use these variables anywhere throughout settings as many times as is needed.
+
+            Example:
+            Name:
+            $FullName
+
+            Home Directory:
+            \\server1\userdata\$UserName
+
+            Employee Number:
+            $ID
+
+            Given Name:
+            $FirstName">
+        Variables
+        </span><br>
+<table border="1">
+  <tr>
+    <th>Variable Names</th>
+    <th>Variable Sample Data</th>
+  </tr>
+<?php
+include 'vars.php';
+include 'connect2db.php';
+if ($SessionIsVerified == 1) {
+	$sql = "SELECT VariableName,VariableSample from availableVariables";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			echo "<tr><td>" . $row['VariableName'] . "</td><td>" . $row['VariableSample'] . "</td</tr>";
+		}
+	} else {
+		echo "<option value='no_users'>no_settings</option>";
+	}
+}
+?>
+</table> 
+</div>
+
+
+
+
+
 
 <div>
+        <span style="color:blue;" title="Actions
+            This is where you define what variables cause what actions to occur. You may use one variable for all fields or one variable for each field, or a combination thereof. In Active Directory, the three main actions that Jane is concerened with automating are creating accounts, deleting accounts, and disabling accounts. In order to get this right, you need to communicate with the Jane Administrator about what the variables will contain.
 
+            Example for adding and disabling based on one variable:
 
+            Create when [$Action] equals [Add]
+            Disable when [$Action] equals [Drop]
+            Delete when []
+
+            Note: The only characters allowed in these fields are lowercase and uppercase Alhpha characters, and the '$' symbol. All other input will be parsed, never even being stored.">
+        Actions
+        </span><br>
+        Create when <input type="text" name="ActionCreate" value="<?php echo ($_SESSION['ActionCreate']); ?>"> equals <input type="text" name="ActionCreateText" value="<?php echo ($_SESSION['ActionCreateText']); ?>"></br>
+	Disable when <input type="text" name="ActionDisable" value="<?php echo ($_SESSION['ActionDisable']); ?>"> equals <input type="text" name="ActionDisableText" value="<?php echo ($_SESSION['ActionDisableText']); ?>"></br>
+	Delete when <input type="text" name="ActionDelete" value="<?php echo ($_SESSION['ActionDelete']); ?>"> equals <input type="text" name="ActionDeleteText" value="<?php echo ($_SESSION['ActionDeleteText']); ?>"></br>
+    </div>
+
+<div>
         <span style="color:blue;" title="Group 1 Name
             Specifies a group that users should be placed into after account creation.">
 	Group 1 Name

@@ -35,7 +35,7 @@ JaneUserEnabled VARCHAR(1) NOT NULL,
 PRIMARY KEY (JaneUserID)
 );
 
-CREATE TABLE LocalUsersNotToDelete(
+CREATE TABLE LocalUsersNotToDisturb(
 SystemUserID int NOT NULL AUTO_INCREMENT,
 SystemUsername VARCHAR(255) NOT NULL UNIQUE,
 PRIMARY KEY (SystemUserID)
@@ -113,6 +113,12 @@ CREATE TABLE janeAD(
 janeADid int NOT NULL AUTO_INCREMENT,
 JaneSettingsID int NOT NULL UNIQUE,
 FOREIGN KEY (janeSettingsID) REFERENCES janeSettings(JaneSettingsID),
+ActionCreate VARCHAR(255),
+ActionDisable VARCHAR(255),
+ActionDelete VARCHAR(255),
+ActionCreateText VARCHAR(255),
+ActionDisableText VARCHAR(255),
+ActionDeleteText VARCHAR(255),
 Group1Name VARCHAR(255),
 Group2Name VARCHAR(255),
 Group3Name VarChar(255),
@@ -185,7 +191,7 @@ insert into janeGroups (JaneGroupName) values ('administrators');
 insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'administrator'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'administrators'));
 
 
-insert into janeUsers (JaneUsername,JanePassword,JaneUserEnabled) values ('tech','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','1');
+insert into janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) values ('tech','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
 #tech default password is changeme
 
 insert into janeGroups (JaneGroupName) values ('techs');
@@ -209,18 +215,20 @@ INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$Password'
 CREATE USER 'janeWeb'@'localhost' IDENTIFIED BY 'janewebpassword';
 CREATE USER 'janeSystem'@'localhost' IDENTIFIED BY 'janesystempassword';
 
+
+
+GRANT ALL ON jane.blockedIPs TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.Sessions TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.badLoginAttempts TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeAD TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeGroups TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeSettings TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeSettingsTypes TO 'janeWeb'@'localhost';
-GRANT ALL ON jane.UserGroupAssociation TO 'janeWeb'@'localhost';
-GRANT ALL ON jane.Users TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.janeUserGroupAssociation TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.janeUsers TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
 
 GRANT ALL ON jane.LocalUsersNotToDelete TO 'janeSystem'@'localhost';
-GRANT ALL ON jane.blockedIPs TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeAD TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettings TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettingsTypes TO 'janeSystem'@'localhost';
