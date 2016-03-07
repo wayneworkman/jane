@@ -1,23 +1,23 @@
 #!/bin/bash
 
 #----- MySQL Credentials -----#
-snmysqluser="janeSystem"
-snmysqlpass="janesystempassword"
-snmysqlhost=""
-snmysqldatabase="jane" #Database name is required.
+mysqluser="janeSystem"
+mysqlpass="janesystempassword"
+mysqlhost=""
+mysqldatabase="jane" #Database name is required.
 
 
 options=""
-if [[ $snmysqlhost != "" ]]; then
-	options="$options-h$snmysqlhost "
+if [[ $mysqlhost != "" ]]; then
+	options="$options-h$mysqlhost "
 fi
-if [[ $snmysqluser != "" ]]; then
-        options="$options-u$snmysqluser "
+if [[ $mysqluser != "" ]]; then
+        options="$options-u$mysqluser "
 fi
-if [[ $snmysqlpass != "" ]]; then
-        options="$options-p$snmysqlpass "
+if [[ $mysqlpass != "" ]]; then
+        options="$options-p$mysqlpass "
 fi
-options="$options-D $snmysqldatabase -e"
+options="$options-D $mysqldatabase -e"
 
 
 
@@ -38,12 +38,13 @@ do
 		userGroup=$SchoolName
 		userPassword=${BIRTHDATE///}
 		userUserName=$(echo "${StudentFirstName:0:1}${StudentMiddleName:0:1}${StudentLastName:0:1}${StudentID:5:4}" | tr '[:upper:]' '[:lower:]')
+		userImportedID=$StudentID
 		
 
-		sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword')"
+		sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')"
 
 		if [[ $userAction != "Category" ]]; then
-			mysql -ujane -pjanepassword -D jane -e "$sql"
+			mysql -u$mysqluser -p$mysqlpass -D $mysqldatabase -e "$sql"
 		fi
 
 done < $INPUT
