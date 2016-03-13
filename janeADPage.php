@@ -90,11 +90,11 @@ This field can only be changed by Jane's Administrator.">
 
             Example for adding and disabling based on one variable:
 
-            Create when [$Action] equals [Add]
-            Disable when [$Action] equals [Drop]
+            Create when [Action] equals [Add]
+            Disable when [Action] equals [Drop]
             Delete when []
 
-            Note: The only characters allowed in these fields are lowercase and uppercase Alhpha characters, and the '$' symbol. All other input will be parsed, never even being stored.">
+            Note: The only characters allowed in these fields are lowercase and uppercase Alhpha characters, and numeric 0 through 9. All other input will be parsed, never even being stored.">
         Actions
         </span><br>
         Create when <input type="text" name="ActionCreate" value="<?php echo ($_SESSION['ActionCreate']); ?>"> equals <input type="text" name="ActionCreateText" value="<?php echo ($_SESSION['ActionCreateText']); ?>"></br>

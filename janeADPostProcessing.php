@@ -20,15 +20,30 @@ if ($SessionIsVerified == "1") {
 		$JaneSettingsWHERE = $link->real_escape_string($_REQUEST['JaneSettingsNickName']);
 
 
+		$symbols = array();
+		$symbols += range('a', 'z');
+		$symbols += range('A', 'Z');
+		$symbols += range('0', '9');
+
+
+		$ActionCreate = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionCreate']);
+		$ActionDisable = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDisable']);
+		$ActionDelete = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDelete']);
+		$ActionCreateText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionCreateText']);
+                $ActionDisableText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDisableText']);
+                $ActionDeleteText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDeleteText']);
+		
 
 
 
-		$ActionCreate = $link->real_escape_string($_REQUEST['ActionCreate']);
-		$ActionDisable = $link->real_escape_string($_REQUEST['ActionDisable']);
-		$ActionDelete = $link->real_escape_string($_REQUEST['ActionDelete']);
-		$ActionCreateText = $link->real_escape_string($_REQUEST['ActionCreateText']);
-		$ActionDisableText = $link->real_escape_string($_REQUEST['ActionDisableText']);
-		$ActionDeleteText = $link->real_escape_string($_REQUEST['ActionDeleteText']);
+		$ActionCreate = $link->real_escape_string($ActionCreate);
+		$ActionDisable = $link->real_escape_string($ActionDisable);
+		$ActionDelete = $link->real_escape_string($ActionDelete);
+		$ActionCreateText = $link->real_escape_string($ActionCreateText);
+		$ActionDisableText = $link->real_escape_string($ActionDisableText);
+		$ActionDeleteText = $link->real_escape_string($ActionDeleteText);
+		
+
 		$Group1Name = $link->real_escape_string($_REQUEST['Group1Name']);
 		$Group2Name = $link->real_escape_string($_REQUEST['Group2Name']);
 		$Group3Name = $link->real_escape_string($_REQUEST['Group3Name']);
