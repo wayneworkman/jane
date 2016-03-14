@@ -45,6 +45,7 @@ if ($SessionIsVerified == "1") {
 		
 
 		$Group1Name = $link->real_escape_string($_REQUEST['Group1Name']);
+		echo $Group1Name;
 		$Group2Name = $link->real_escape_string($_REQUEST['Group2Name']);
 		$Group3Name = $link->real_escape_string($_REQUEST['Group3Name']);
 		$Name = $link->real_escape_string($_REQUEST['Name']);
