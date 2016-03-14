@@ -3,7 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
-	$JaneSettingsID = $link->real_escape_string($_SESSION['JaneSettingsID']);
+	$JaneSettingsID = $link->real_escape_string(htmlspecialchars_decode($_SESSION['JaneSettingsID']));
 
 	if ($isAdministrator == 1) {
 		$sql = "SELECT * FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID'";
@@ -14,10 +14,10 @@ if ($SessionIsVerified == "1") {
 	if ($result->num_rows > 0) {
 
 		// Escape user inputs for security
-		$JaneSettingsNickName = $link->real_escape_string($_REQUEST['JaneSettingsNickName']);
-		$JaneSettingsGroupName = $link->real_escape_string($_REQUEST['JaneSettingsGroupName']);
-		$JaneSettingsSMBallowedIP = $link->real_escape_string($_REQUEST['JaneSettingsSMBallowedIP']);
-		$JaneSettingsWHERE = $link->real_escape_string($_REQUEST['JaneSettingsNickName']);
+		$JaneSettingsNickName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['JaneSettingsNickName']));
+		$JaneSettingsGroupName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['JaneSettingsGroupName']));
+		$JaneSettingsSMBallowedIP = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['JaneSettingsSMBallowedIP']));
+		$JaneSettingsWHERE = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['JaneSettingsNickName']));
 
 
 		$symbols = array();
@@ -26,12 +26,12 @@ if ($SessionIsVerified == "1") {
 		$symbols += range('0', '9');
 
 
-		$ActionCreate = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionCreate']);
-		$ActionDisable = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDisable']);
-		$ActionDelete = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDelete']);
-		$ActionCreateText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionCreateText']);
-                $ActionDisableText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDisableText']);
-                $ActionDeleteText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $_REQUEST['ActionDeleteText']);
+		$ActionCreate = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode($_REQUEST['ActionCreate']));
+		$ActionDisable = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode($_REQUEST['ActionDisable']));
+		$ActionDelete = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode($_REQUEST['ActionDelete']));
+		$ActionCreateText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode($_REQUEST['ActionCreateText']));
+                $ActionDisableText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode($_REQUEST['ActionDisableText']));
+                $ActionDeleteText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode($_REQUEST['ActionDeleteText']));
 		
 
 
@@ -44,68 +44,70 @@ if ($SessionIsVerified == "1") {
 		$ActionDeleteText = $link->real_escape_string($ActionDeleteText);
 		
 
-		$Group1Name = $link->real_escape_string($_REQUEST['Group1Name']);
-		echo $Group1Name;
-		$Group2Name = $link->real_escape_string($_REQUEST['Group2Name']);
-		$Group3Name = $link->real_escape_string($_REQUEST['Group3Name']);
-		$Name = $link->real_escape_string($_REQUEST['Name']);
-		$AccountExpirationDate = $link->real_escape_string($_REQUEST['AccountExpirationDate']);
-		$AccountNotDelegated = $link->real_escape_string($_REQUEST['AccountNotDelegated']);
-		$AccountPassword = $link->real_escape_string($_REQUEST['AccountPassword']);
-		$AllowReversiblePasswordEncryption = $link->real_escape_string($_REQUEST['AllowReversiblePasswordEncryption']);
-		$AuthType = $link->real_escape_string($_REQUEST['AuthType']);
-		$CannotChangePassword = $link->real_escape_string($_REQUEST['CannotChangePassword']);
-		$ChangePasswordAtLogon = $link->real_escape_string($_REQUEST['ChangePasswordAtLogon']);
-		$City = $link->real_escape_string($_REQUEST['City']);
-		$Company = $link->real_escape_string($_REQUEST['Company']);
-		$Country = $link->real_escape_string($_REQUEST['Country']);
-		$Credential  = $link->real_escape_string($_REQUEST['Credential']);
-		$Certificates = $link->real_escape_string($_REQUEST['Certificates']);
-		$Department = $link->real_escape_string($_REQUEST['Department']);
-		$Description = $link->real_escape_string($_REQUEST['Description']);
-		$DisplayName = $link->real_escape_string($_REQUEST['DisplayName']);
-		$Division = $link->real_escape_string($_REQUEST['Division']);
-		$EmailAddress = $link->real_escape_string($_REQUEST['EmailAddress']);
-		$EmployeeID = $link->real_escape_string($_REQUEST['EmployeeID']);
-		$EmployeeNumber = $link->real_escape_string($_REQUEST['EmployeeNumber']);
-		$Enabled = $link->real_escape_string($_REQUEST['Enabled']);
-		$Fax = $link->real_escape_string($_REQUEST['Fax']);
-		$GivenName = $link->real_escape_string($_REQUEST['GivenName']);
-		$HomeDirectory = $link->real_escape_string($_REQUEST['HomeDirectory']);
-		$HomeDrive = $link->real_escape_string($_REQUEST['HomeDrive']);
-		$HomePage = $link->real_escape_string($_REQUEST['HomePage']);
-		$HomePhone = $link->real_escape_string($_REQUEST['HomePhone']);
-		$Initials = $link->real_escape_string($_REQUEST['Initials']);
-		$Instance = $link->real_escape_string($_REQUEST['Instance']);
-		$LogonWorkstations = $link->real_escape_string($_REQUEST['LogonWorkstations']);
-		$Manager = $link->real_escape_string($_REQUEST['Manager']);
-		$MobilePhone = $link->real_escape_string($_REQUEST['MobilePhone']);
-		$Office = $link->real_escape_string($_REQUEST['Office']);
-		$OfficePhone = $link->real_escape_string($_REQUEST['OfficePhone']);
-		$Organization = $link->real_escape_string($_REQUEST['Organization']);
-		$OtherAttributes = $link->real_escape_string($_REQUEST['OtherAttributes']);
-		$OtherName = $link->real_escape_string($_REQUEST['OtherName']);
-		$PassThru = $link->real_escape_string($_REQUEST['PassThru']);
-		$PasswordNeverExpires = $link->real_escape_string($_REQUEST['PasswordNeverExpires']);
-		$PasswordNotRequired = $link->real_escape_string($_REQUEST['PasswordNotRequired']);
-		$Path = $link->real_escape_string($_REQUEST['Path']);
-		$POBox = $link->real_escape_string($_REQUEST['POBox']);
-		$PostalCode = $link->real_escape_string($_REQUEST['PostalCode']);
-		$ProfilePath = $link->real_escape_string($_REQUEST['ProfilePath']);
-		$SamAccountName = $link->real_escape_string($_REQUEST['SamAccountName']);
-		$ScriptPath = $link->real_escape_string($_REQUEST['ScriptPath']);
-		$Server = $link->real_escape_string($_REQUEST['Server']);
-		$ServicePrincipalNames = $link->real_escape_string($_REQUEST['ServicePrincipalNames']);
-		$SmartcardLogonRequired = $link->real_escape_string($_REQUEST['SmartcardLogonRequired']);
-		$State = $link->real_escape_string($_REQUEST['State']);
-		$StreetAddress = $link->real_escape_string($_REQUEST['StreetAddress']);
-		$Surname = $link->real_escape_string($_REQUEST['Surname']);
-		$Title = $link->real_escape_string($_REQUEST['Title']);
-		$TrustedForDelegation = $link->real_escape_string($_REQUEST['TrustedForDelegation']);
-		$Type = $link->real_escape_string($_REQUEST['Type']);
-		$UserPrincipalName = $link->real_escape_string($_REQUEST['UserPrincipalName']);
-		$Confirm = $link->real_escape_string($_REQUEST['Confirm']);
-		$WhatIf = $link->real_escape_string($_REQUEST['WhatIf']);
+
+
+
+		$Group1Name = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Group1Name']));
+		$Group2Name = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Group2Name']));
+		$Group3Name = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Group3Name']));
+		$Name = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Name']));
+		$AccountExpirationDate = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['AccountExpirationDate']));
+		$AccountNotDelegated = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['AccountNotDelegated']));
+		$AccountPassword = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['AccountPassword']));
+		$AllowReversiblePasswordEncryption = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['AllowReversiblePasswordEncryption']));
+		$AuthType = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['AuthType']));
+		$CannotChangePassword = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['CannotChangePassword']));
+		$ChangePasswordAtLogon = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['ChangePasswordAtLogon']));
+		$City = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['City']));
+		$Company = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Company']));
+		$Country = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Country']));
+		$Credential  = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Credential']));
+		$Certificates = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Certificates']));
+		$Department = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Department']));
+		$Description = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Description']));
+		$DisplayName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['DisplayName']));
+		$Division = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Division']));
+		$EmailAddress = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['EmailAddress']));
+		$EmployeeID = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['EmployeeID']));
+		$EmployeeNumber = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['EmployeeNumber']));
+		$Enabled = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Enabled']));
+		$Fax = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Fax']));
+		$GivenName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['GivenName']));
+		$HomeDirectory = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['HomeDirectory']));
+		$HomeDrive = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['HomeDrive']));
+		$HomePage = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['HomePage']));
+		$HomePhone = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['HomePhone']));
+		$Initials = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Initials']));
+		$Instance = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Instance']));
+		$LogonWorkstations = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['LogonWorkstations']));
+		$Manager = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Manager']));
+		$MobilePhone = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['MobilePhone']));
+		$Office = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Office']));
+		$OfficePhone = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['OfficePhone']));
+		$Organization = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Organization']));
+		$OtherAttributes = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['OtherAttributes']));
+		$OtherName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['OtherName']));
+		$PassThru = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['PassThru']));
+		$PasswordNeverExpires = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['PasswordNeverExpires']));
+		$PasswordNotRequired = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['PasswordNotRequired']));
+		$Path = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Path']));
+		$POBox = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['POBox']));
+		$PostalCode = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['PostalCode']));
+		$ProfilePath = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['ProfilePath']));
+		$SamAccountName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['SamAccountName']));
+		$ScriptPath = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['ScriptPath']));
+		$Server = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Server']));
+		$ServicePrincipalNames = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['ServicePrincipalNames']));
+		$SmartcardLogonRequired = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['SmartcardLogonRequired']));
+		$State = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['State']));
+		$StreetAddress = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['StreetAddress']));
+		$Surname = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Surname']));
+		$Title = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Title']));
+		$TrustedForDelegation = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['TrustedForDelegation']));
+		$Type = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Type']));
+		$UserPrincipalName = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['UserPrincipalName']));
+		$Confirm = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['Confirm']));
+		$WhatIf = $link->real_escape_string(htmlspecialchars_decode($_REQUEST['WhatIf']));
 
 
 
