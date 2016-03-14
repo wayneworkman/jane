@@ -5,19 +5,6 @@ include 'verifysession.php';
 if ($SessionIsVerified != "1") {
 	$NextURL="login.php";
 	header("Location: $NextURL");
-} else {
-include 'connect2db.php';
-$sql = "SELECT SettingsTypeID,SettingsTypeName from janeSettingsTypes";
-                $result = $link->query($sql);
-                if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                                echo "<option value='" . $row['SettingsTypeID'] . "'>" . $row['SettingsTypeName'] . "</option>";
-                        }
-                } else {
-                        echo "<option value='no_users'>no_settings</option>";
-                }
-
-
 }
 ?>
 

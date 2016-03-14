@@ -199,6 +199,7 @@ insert into janeGroups (JaneGroupName) values ('techs');
 insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'tech'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'techs'));
 
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('Active Directory','Standard Active Directory settings type.','janeAD');
+INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('OpenDirectory','Standard Open Directory settings type.','janeOD');
 
 
 INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$Action','Add');

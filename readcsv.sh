@@ -7,17 +7,20 @@ mysqlhost=""
 mysqldatabase="jane" #Database name is required.
 
 
-options=""
+
+
+options="-sN"
 if [[ $mysqlhost != "" ]]; then
-	options="$options-h$mysqlhost "
+	options="$options -h$mysqlhost"
 fi
 if [[ $mysqluser != "" ]]; then
-        options="$options-u$mysqluser "
+        options="$options -u$mysqluser"
 fi
 if [[ $mysqlpass != "" ]]; then
-        options="$options-p$mysqlpass "
+        options="$options -p$mysqlpass"
 fi
-options="$options-D $mysqldatabase -e"
+options="$options -D $mysqldatabase -e"
+
 
 
 
@@ -44,10 +47,31 @@ do
 		sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')"
 
 		if [[ $userAction != "Category" ]]; then
-			mysql -u$mysqluser -p$mysqlpass -D $mysqldatabase -e "$sql"
+			echo $options "$sql"	
+			mysql $options "$sql"
+			#mysql -u$mysqluser -p$mysqlpass -D $mysqldatabase -e "$sql"
 		fi
 
 done < $INPUT
 IFS=$OLDIFS
 
 
+
+
+#There needs to be one of these written for each settings type (for now).
+sql="SELECT SettingsTypeID FROM janeSettingsTypes WHERE SettingsTypeName = 'Active Directory'"
+SettingsTypeID=$(mysql $options "$sql")
+
+sql="SELECT JaneSettingsID, JaneSettingsWHERE FROM janeSettings WHERE janeSettingsTypeID = '$SettingsTypeID'"
+Settings=$(mysql $options "$sql")
+
+
+previousIFS=$IFS
+IFS=' '
+for p in $SettingsTypeIDs; do
+
+
+
+
+
+done
