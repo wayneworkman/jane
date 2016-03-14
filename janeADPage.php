@@ -111,7 +111,7 @@ This field can only be changed by Jane's Administrator.">
 
             -----Examples-----
             Name:
-            $FullName
+            $FirstName $MiddleName $LastName
 
             Home Directory:
             \\server1\userdata\$UserName
