@@ -106,6 +106,9 @@ This field can only be changed by Jane's Administrator.">
             Employee Number:
             $ID
 
+            AccountPassword:
+            (ConvertTo-SecureString $Password -AsPlainText -force)
+
             Given Name:
             $FirstName">
         Variables
