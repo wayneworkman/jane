@@ -89,7 +89,7 @@ if ($result->num_rows > 0) {
 if ($ActionCreate != "" && $ActionCreateText != "") {
 	//make sure user does NOT exist first (powershell).
 
-	$COMMAND = "new-aduser ";
+	$COMMAND = "Import-Module Activedirectory" . "\r\n\r\n" . "new-aduser ";
 	if ($Name != "") {
 		$COMMAND = $COMMAND . "-Name " . $Name . " ";
 	}
@@ -278,7 +278,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group3Name\" %UserName%" . "\r\n\r\n";
 	}
 
-	$sql = "SELECT * FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
+	$sql = "SELECT DISTINCT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
 	echo $sql;
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
@@ -322,6 +322,8 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;	
+			} else {
+				$current = $ThisCOMMAND;
 			}
 			file_put_contents($file, $current);
 
