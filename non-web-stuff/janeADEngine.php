@@ -89,7 +89,12 @@ if ($result->num_rows > 0) {
 if ($ActionCreate != "" && $ActionCreateText != "") {
 	//make sure user does NOT exist first (powershell).
 
-	$COMMAND = "Import-Module Activedirectory" . "\r\n\r\n" . "new-aduser ";
+	$COMMAND = "if (Get-aduser %UserName%)" . "\r\n\r\n" . "{" . "\r\n\r\n" . "echo \"This user already exists.\"" . "\r\n\r\n" . "}" . "\r\n\r\n" . "else" . "\r\n\r\n" . "{" . "\r\n\r\n";
+	
+
+
+	$COMMAND = $COMMAND . "new-aduser ";
+	
 	if ($Name != "") {
 		$COMMAND = $COMMAND . "-Name " . $Name . " ";
 	}
@@ -277,6 +282,11 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	if ($Group3Name != "") {
 		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group3Name\" %UserName%" . "\r\n\r\n";
 	}
+	
+
+	$COMMAND = $COMMAND . "}" . "\r\n\r\n";
+
+	
 
 	$sql = "SELECT DISTINCT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
 	echo $sql;
