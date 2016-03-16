@@ -5,5 +5,7 @@ $servername = 'localhost';
 $username = 'janeSystem';
 $password = 'janesystempassword';
 $database = 'jane';
+$PathToSMBShares = '\jane';
+
 ?>
 
