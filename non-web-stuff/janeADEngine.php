@@ -315,15 +315,15 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			$ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
 
-			// $PathToSMBShares$JaneSettingsNickName.txt
+	
 
+			// Write commands for this user, for this setting, to the setting's file.
 			$file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
-
-			//$current = file_get_contents($file);
-			// Append the file
-			//$current .= $ThisCOMMAND;
-			// Write the contents back to the file
-			file_put_contents($file, $ThisCOMMAND);
+			if (file_exists($file)) {
+				$current = file_get_contents($file);
+				$current = $current . $ThisCOMMAND;	
+			}
+			file_put_contents($file, $current);
 
 		}
 	}
