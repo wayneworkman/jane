@@ -1,7 +1,6 @@
 <?php
-include 'vars.php';
-include 'verifysession.php';
-
+include 'localVars.php';
+include 'connect2db.php';
 
 $sql = "SELECT SettingsTypeID,SettingsTableName FROM janeSettingsTypes";
 $result0 = $link->query($sql);
@@ -41,5 +40,6 @@ if ($result0->num_rows > 0) {
 		}
 	}
 }
+$link->close();
 ?>
 
