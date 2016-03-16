@@ -89,7 +89,7 @@ if ($result->num_rows > 0) {
 if ($ActionCreate != "" && $ActionCreateText != "") {
 	//make sure user does NOT exist first (powershell).
 
-	$COMMAND = "if (Get-aduser %UserName%)" . "\r\n\r\n" . "{" . "\r\n\r\n" . "echo \"This user already exists.\"" . "\r\n\r\n" . "}" . "\r\n\r\n" . "else" . "\r\n\r\n" . "{" . "\r\n\r\n";
+	$COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "echo \"This user already exists.\"" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n";
 	
 
 
@@ -284,7 +284,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	
 
-	$COMMAND = $COMMAND . "}" . "\r\n\r\n";
+	$COMMAND = $COMMAND . "}" . "\r\n";
 
 	
 
