@@ -12,7 +12,7 @@ if ($result0->num_rows > 0) {
 		$result1 = $link->query($sql);
 		if ($result1->num_rows > 0) {
 			while($row1 = $result1->fetch_assoc()) {
-				$JaneSettingsID = = $row1["JaneSettingsID"];
+				$JaneSettingsID = $row1["JaneSettingsID"];
 
 
 
