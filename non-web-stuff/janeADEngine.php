@@ -264,9 +264,19 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	if ($WhatIf != "") {
 		$COMMAND = $COMMAND . "-WhatIf " . $WhatIf . " ";
 	}
+	$COMMAND = $COMMAND . "\r\n\r\n";
 
 
-
+	// here are some variables that are hard coded. This is the best and easiest way I can think of to do the groups at the moment.
+	if ($Group1Name != "") {
+		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group1Name\" %UserName%" . "\r\n\r\n";
+	}
+	if ($Group2Name != "") {
+		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group2Name\" %UserName%" . "\r\n\r\n";
+	}
+	if ($Group3Name != "") {
+		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group3Name\" %UserName%" . "\r\n\r\n";
+	}
 
 	$sql = "SELECT * FROM userDataToImport WHERE $JaneSettingsWhere AND $ActionCreate = '$ActionCreateText'";
 	$result = $link->query($sql);
@@ -304,7 +314,15 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			$ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
 
+			// $PathToSMBShares$JaneSettingsNickName.txt
 
+			$file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
+
+			$current = file_get_contents($file);
+			// Append the file
+			$current .= $ThisCOMMAND;
+			// Write the contents back to the file
+			file_put_contents($file, $current);
 
 		}
 	}
@@ -315,4 +333,4 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 if ($ActionDelete != "" && $ActionDeleteText != "") {
 	//make sure user exists first (powershell).
 }
-?>
+?$>
