@@ -20,16 +20,21 @@ while($csv_line = fgetcsv($csv)) {
 	// For some reason, this line throws out the entire string.
 	//$userImportedID = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userImportedID);
 	
+	
 	$userFirstName = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userFirstName);
 	$userMiddleName = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userMiddleName);
 	$userLastName = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userLastName);
-	$userPassword = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userPassword);
+	
+	$userPassword = str_replace('/', '', $userPassword);
+	
+	// Below line not removing forward slashes.
+	//$userPassword = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userPassword);
 	$userGroup = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userGroup);
 
-
+	
 	$userUserName = substr($userFirstName, 0, 1) . substr($userMiddleName,0,1) . substr($userLastName,0,1) . substr($userImportedID,5,4);
 	$userUserName = strtolower($userUserName);
-
+	
 
 	$sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')";
 
