@@ -289,7 +289,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	
 
 	$sql = "SELECT DISTINCT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
-	echo $sql;
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		// output data of each row
