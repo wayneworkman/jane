@@ -202,15 +202,15 @@ INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,Settings
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('OpenDirectory','Standard Open Directory settings type.','janeOD');
 
 
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$Action','Add');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$FirstName','Jane');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$MiddleName','Marie');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$MiddleInitial','M');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$LastName','Smith');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$School','Mayberry - South HS');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$StudentID','123456789');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$UserName','jms6789');
-INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('$Password','05252000');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%Action%','Add');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%FirstName%','Jane');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%MiddleName%','Marie');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%MiddleInitial%','M');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%LastName%','Smith');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%School%','Mayberry - South HS');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%StudentID%','123456789');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%UserName%','jms6789');
+INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%Password%','05252000');
 
 
 CREATE USER 'janeWeb'@'localhost' IDENTIFIED BY 'janewebpassword';

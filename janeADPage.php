@@ -98,19 +98,19 @@ This field can only be changed by Jane's Administrator.">
 
             -----Examples-----
             Name:
-            $FirstName $MiddleName $LastName
+            &quot;%FirstName% %MiddleName% %LastName%&quot;
 
             Home Directory:
-            \\server1\userdata\$UserName
+            &quot;\\server1\userdata\%UserName%&quot;
 
             Employee Number:
-            $ID
+            %ID%
 
             AccountPassword:
-            (ConvertTo-SecureString $Password -AsPlainText -force)
+            (ConvertTo-SecureString %Password% -AsPlainText -force)
 
             Given Name:
-            $FirstName">
+            %FirstName%">
         Variables
         </span><br>
 <table border="1">
