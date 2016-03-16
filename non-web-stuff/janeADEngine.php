@@ -278,7 +278,8 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group3Name\" %UserName%" . "\r\n\r\n";
 	}
 
-	$sql = "SELECT * FROM userDataToImport WHERE $JaneSettingsWhere AND $ActionCreate = '$ActionCreateText'";
+	$sql = "SELECT * FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
+	echo $sql;
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		// output data of each row
@@ -303,7 +304,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 			// Replace variables with corresponding custom data.
                         
-			$ThisCOMMAND = $COMMAND
+			$ThisCOMMAND = $COMMAND;
 			$ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
@@ -318,11 +319,11 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 			$file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
 
-			$current = file_get_contents($file);
+			//$current = file_get_contents($file);
 			// Append the file
-			$current .= $ThisCOMMAND;
+			//$current .= $ThisCOMMAND;
 			// Write the contents back to the file
-			file_put_contents($file, $current);
+			file_put_contents($file, $ThisCOMMAND);
 
 		}
 	}
@@ -333,4 +334,4 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 if ($ActionDelete != "" && $ActionDeleteText != "") {
 	//make sure user exists first (powershell).
 }
-?$>
+?>
