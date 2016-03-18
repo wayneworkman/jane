@@ -288,7 +288,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 	
 
-	$sql = "SELECT DISTINCT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
+	$sql = "SELECT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		// output data of each row
@@ -341,8 +341,91 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 }
 if ($ActionDisable != "" && $ActionDisableText != "") {
 	//make sure user exists first (powershell).
+	 $COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "Disable-ADAccount -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n" . "echo \"This user does not exist.\"" . "\r\n" . "}" . "\r\n";
+	$sql = "SELECT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			//Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
+			$userID = $row["userID"];
+			$StudentID = $row["userImportedID"];
+			$Action = $row["userAction"];
+			$FirstName = $row["userFirstName"];
+			$MiddleName = $row["userMiddleName"];
+			$LastName = $row["userLastName"];
+			$School = $row["userGroup"];
+			$UserName = $row["userUserName"];
+			$Password = $row["userPassword"];
+			if ($MiddleName != "") {
+				$MiddleInitial = substr($MiddleName, 0, 1)
+			}
+			// Replace variables with corresponding custom data.			
+			$ThisCOMMAND = $COMMAND;
+			$ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%School%",$School,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
+			// Write commands for this user, for this setting, to the setting's file.
+			$file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
+			if (file_exists($file)) {
+				$current = file_get_contents($file);
+				$current = $current . $ThisCOMMAND;
+			} else {
+				$current = $ThisCOMMAND;
+			}
+			file_put_contents($file, $current);	
+		}
+	}
 }
 if ($ActionDelete != "" && $ActionDeleteText != "") {
 	//make sure user exists first (powershell).
+         $COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "Remove-ADUser -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n" . "echo \"This user does not exist.\"" . "\r\n" . "}" . "\r\n";
+        $sql = "SELECT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
+        $result = $link->query($sql);
+        if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                        //Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
+                        $userID = $row["userID"];
+                        $StudentID = $row["userImportedID"];
+                        $Action = $row["userAction"];
+                        $FirstName = $row["userFirstName"];
+                        $MiddleName = $row["userMiddleName"];
+                        $LastName = $row["userLastName"];
+                        $School = $row["userGroup"];
+                        $UserName = $row["userUserName"];
+                        $Password = $row["userPassword"];
+                        if ($MiddleName != "") {
+                                $MiddleInitial = substr($MiddleName, 0, 1)
+                        }
+                        // Replace variables with corresponding custom data.
+                        $ThisCOMMAND = $COMMAND;
+                        $ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%School%",$School,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
+                        $ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
+                        // Write commands for this user, for this setting, to the setting's file.
+                        $file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
+                        if (file_exists($file)) {
+                                $current = file_get_contents($file);
+                                $current = $current . $ThisCOMMAND;
+                        } else {
+                                $current = $ThisCOMMAND;
+                        }
+                        file_put_contents($file, $current);
+                }
+        }
+
 }
 ?>
