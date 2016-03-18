@@ -358,7 +358,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			$UserName = $row["userUserName"];
 			$Password = $row["userPassword"];
 			if ($MiddleName != "") {
-				$MiddleInitial = substr($MiddleName, 0, 1)
+				$MiddleInitial = substr($MiddleName, 0, 1);
 			}
 			// Replace variables with corresponding custom data.			
 			$ThisCOMMAND = $COMMAND;
@@ -402,7 +402,7 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         $UserName = $row["userUserName"];
                         $Password = $row["userPassword"];
                         if ($MiddleName != "") {
-                                $MiddleInitial = substr($MiddleName, 0, 1)
+                                $MiddleInitial = substr($MiddleName, 0, 1);
                         }
                         // Replace variables with corresponding custom data.
                         $ThisCOMMAND = $COMMAND;
