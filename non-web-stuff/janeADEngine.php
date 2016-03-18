@@ -82,8 +82,14 @@ if ($result->num_rows > 0) {
 		$Confirm = $row["Confirm"];
 		$WhatIf = $row["WhatIf"];
 	}
+} else {
+	$ActionCreate = "";
+	$ActionDisable = "";
+	$ActionDelete = "";
+	$ActionCreateText = "";
+	$ActionDisableText = "";
+	$ActionDeleteText = "";
 }
-
 
 
 if ($ActionCreate != "" && $ActionCreateText != "") {
