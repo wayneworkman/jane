@@ -2,13 +2,14 @@
 include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
-        if ($isAdministrator == 1) {
                 include 'connect2db.php';
 
 
                 // Do actions here.
-                $uID = $link->real_escape_string($_REQUEST['adminResetSMBPass']);
-                $sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$PasswordDefault' WHERE `JaneUserID` = $uID";
+                $OldUsername = $link->real_escape_string($_REQUEST['OldUsername']);
+                $NewUsername = $link->real_escape_string($_REQUEST['NewUsername']);
+
+                $sql = "UPDATE `janeUsers` SET `janeUsername` = '$NewUsername' WHERE `JaneUserID` = $JaneUserID and `JaneUserName`='$OldUsername'";
 
 
                 if ($link->query($sql)) {
@@ -22,17 +23,9 @@ if ($SessionIsVerified == "1") {
                 }
 
 
-
-
-
-
-        } else {
-                // not an admin, redirect to jane.php
-                $NextURL="jane.php";
-                header("Location: $NextURL");
-        }
 } else {
         $NextURL="login.php";
         header("Location: $NextURL");
 }
 ?>
+
