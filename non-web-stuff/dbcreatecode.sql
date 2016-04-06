@@ -1,6 +1,6 @@
-drop user 'janeWeb'@'localhost';
-drop user 'janeSystem'@'localhost';
-drop database jane;
+#drop user 'janeWeb'@'localhost';
+#drop user 'janeSystem'@'localhost';
+#drop database jane;
 
 CREATE DATABASE IF NOT EXISTS jane;
 
