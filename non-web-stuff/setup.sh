@@ -17,9 +17,14 @@ dnf -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php
 
 #CentOS 7
 
-#  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-#  rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
-#  yum install -y libtool-ltdl-2.4.2-20.el7.x86_64.rpm php55w-gd-5.5.31-1.w7.x86_64.rpm php55w-cli-5.5.31-1.w7.x86_64.rpm php55w-common-5.5.31-1.w7.x86_64.rpm php55w-mcrypt-5.5.31-1.w7.x86_64.rpm php55w-mysqlnd-5.5.31-1.w7.x86_64.rpm php55w-pdo-5.5.31-1.w7.x86_64.rpm php55w-5.5.31-1.w7.x86_64.rpm mariadb mariadb-server samba samba-client
+#  yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+#  yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+#  yum install yum-utils
+#  subscription-manager repos --enable=rhel-7-server-optional-rpms
+#  yum-config-manager --enable remi-php70
+#  yum -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client
+
+
 
 
 #apache setup.
