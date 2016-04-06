@@ -139,15 +139,15 @@ if ($SessionIsVerified == "1") {
 				
 		echo "<div>";
 		echo "<form action=\"AdminResetJanePass.php\" method=\"post\">";
-		echo "Reset Users Jane Password to \"changeme\"<br>";
+		echo "Reset Users Jane Password to \"$PasswordDefault\"<br>";
 		echo "<p class=\"tab\">";
 		echo "<select name='adminResetJanePass'>";
 		echo "<option value='0'>Pick User</option>";
-		$sql = "SELECT JaneUsername from janeUsers";
+		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneUsername'] . "'>" . $row['JaneUsername'] . "</option>";
+				echo "<option value='" . $row['JaneUserID'] . "'>" . $row['JaneUsername'] . "</option>";
 			}
 		} else {
 			echo "<option value='no_users'>no_users</option>";
@@ -163,15 +163,15 @@ if ($SessionIsVerified == "1") {
 
 		echo "<div>";
 		echo "<form action=\"AdminResetSMBPass.php\" method=\"post\">";
-		echo "Reset Users SMB Password to \"changeme\"<br>";
+		echo "Reset Users SMB Password to \"$PasswordDefault\"<br>";
 		echo "<p class=\"tab\">";
 		echo "<select name='adminResetSMBPass'>";
 		echo "<option value='0'>Pick User</option>";
-		$sql = "SELECT JaneUsername from janeUsers";
+		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneUsername'] . "'>" . $row['JaneUsername'] . "</option>";
+				echo "<option value='" . $row['JaneUserID'] . "'>" . $row['JaneUsername'] . "</option>";
 			}
 		} else {
 			echo "<option value='no_users'>no_users</option>";
@@ -191,7 +191,7 @@ if ($SessionIsVerified == "1") {
 		echo "Create New User<br>";
 		echo "<p class=\"tab\">";
 		echo "Username:<br><input type=\"text\" name=\"NewUsername\"><br>";
-		echo "Default password is \"changeme\"<br>";
+		echo "Default password is \"$PasswordDefault\"<br>";
 		echo "<br>";
 		echo "<input type=\"submit\">";
 		echo "</form>";
@@ -232,11 +232,11 @@ if ($SessionIsVerified == "1") {
 		echo "Username:<br>";
 		echo "<select name='UserName'>";
 		echo "<option value='0'>Pick User</option>";
-		$sql = "SELECT JaneUsername from janeUsers";
+		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneUsername'] . "'>" . $row['JaneUsername'] . "</option>";
+				echo "<option value='" . $row['JaneUserID'] . "'>" . $row['JaneUsername'] . "</option>";
 			}
 		} else {
 			echo "<option value='no_users'>no_users</option>";

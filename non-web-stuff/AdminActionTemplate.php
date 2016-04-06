@@ -10,7 +10,7 @@ if ($SessionIsVerified == "1") {
 		$MyVar1 = $link->real_escape_string($_REQUEST['MyVar1']);
 		$MyVar2 = $link->real_escape_string($_REQUEST['MyVar2']);
 
-		$sql = "INSERT INTO SomeTable (ColumnName1,ColumnName2) VALUES ('$MyVar1','$MyVar2)";
+		$sql = "INSERT INTO SomeTable (ColumnName1,ColumnName2) VALUES ('$MyVar1','$MyVar2')";
 
 
 		if ($link->query($sql)) {
