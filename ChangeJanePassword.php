@@ -19,7 +19,6 @@ if ($SessionIsVerified == "1") {
 				$StoredPassword = trim($row["JanePassword"]);
 			}
 		}
-		echo "$OldJanePassword  $StoredPassword";
 		if (password_verify($OldJanePassword, $StoredPassword)) {
 
 
