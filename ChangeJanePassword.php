@@ -2,14 +2,14 @@
 include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
-                include 'connect2db.php';
+	include 'connect2db.php';
 
 
-		// Do actions here.
-		$OldJanePassword = $link->real_escape_string(trim($_REQUEST['OldJanePassword']));
-		$NewJanePassword = $link->real_escape_string(trim($_REQUEST['NewJanePassword']));
-
-
+	// Do actions here.
+	$OldJanePassword = $link->real_escape_string(trim($_REQUEST['OldJanePassword']));
+	$NewJanePassword = $link->real_escape_string(trim($_REQUEST['NewJanePassword']));
+	
+	if ($OldJanePassword != "" && $NewJanePassword != "") {
 
 
 		$sql = "SELECT `JanePassword` FROM `janeUsers` WHERE `JaneUserID` = '$JaneUserID'";
@@ -40,6 +40,7 @@ if ($SessionIsVerified == "1") {
 			$link->close();
 			die ($BadLoginError);
 		}
+	}
 } else {
 	$NextURL="login.php";
 	header("Location: $NextURL");
