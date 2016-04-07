@@ -41,6 +41,12 @@ SystemUsername VARCHAR(255) NOT NULL UNIQUE,
 PRIMARY KEY (SystemUserID)
 );
 
+CREATE TABLE LocalGroupsNotToDisturb(
+SystemGroupID int NOT NULL AUTO_INCREMENT,
+SystemGroupname VARCHAR(255) NOT NULL UNIQUE,
+PRIMARY KEY (SystemGroupID)
+);
+
 CREATE TABLE janeGroups(
 JaneGroupID int NOT NULL AUTO_INCREMENT,
 JaneGroupName VARCHAR(255) NOT NULL UNIQUE,
@@ -230,6 +236,7 @@ GRANT ALL ON jane.janeUsers TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
 
 GRANT ALL ON jane.LocalUsersNotToDisturb TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.LocalGroupsNotToDisturb TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeAD TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettings TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettingsTypes TO 'janeSystem'@'localhost';
