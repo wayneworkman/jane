@@ -79,7 +79,7 @@ This field can only be changed by Jane's Administrator.">
 
             Create when [Action] equals [Add]
             Disable when [Action] equals [Drop]
-            Delete when []
+            Delete when [] equals []
 
             Note: The only characters allowed in these fields are lowercase and uppercase Alhpha characters, and numeric 0 through 9. All other input will be parsed, never even being stored.">
         Actions
