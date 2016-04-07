@@ -56,14 +56,15 @@ foreach($JaneUsernames as $JaneUsername) {
 	foreach($SystemLocalUsers as $SystemLocalUser) {
 		if ($JaneUsername == $SystemLocalUser) {
 			$found = "true";
+			// Update password.
+			$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin";
+			echo shell_exec($command);
 			break;
 		} else {
 			$found = "false";
 		}
 	}
 	if ($found == "false") {
-		echo "Username: $JaneUsernames[$i]\n";
-		echo "Password: $JaneSMBPasswords[$i]\n";
 		// Make user here
 		$command = "useradd $JaneUsernames[$i]";
 		echo shell_exec($command);
