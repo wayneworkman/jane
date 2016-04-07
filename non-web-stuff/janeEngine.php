@@ -6,13 +6,13 @@ $sql = "SELECT SettingsTypeID,SettingsTableName FROM janeSettingsTypes";
 $result0 = $link->query($sql);
 if ($result0->num_rows > 0) {
 	while($row0 = $result0->fetch_assoc()) {
-		$SettingsTypeID = $row0["SettingsTypeID"];
-		$SettingsTableName = $row0["SettingsTableName"];
+		$SettingsTypeID = trim($row0["SettingsTypeID"]);
+		$SettingsTableName = trim($row0["SettingsTableName"]);
 		$sql = "SELECT JaneSettingsID FROM janeSettings WHERE JaneSettingsTypeID = '$SettingsTypeID'";
 		$result1 = $link->query($sql);
 		if ($result1->num_rows > 0) {
 			while($row1 = $result1->fetch_assoc()) {
-				$JaneSettingsID = $row1["JaneSettingsID"];
+				$JaneSettingsID = trim($row1["JaneSettingsID"]);
 
 
 

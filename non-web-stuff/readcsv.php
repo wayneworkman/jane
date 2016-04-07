@@ -15,21 +15,13 @@ array_push($symbols,' ','-');
 $csv = fopen($PathToCSV,'r') or die("can't open file");
 while($csv_line = fgetcsv($csv)) {
 	list($userAction, $userImportedID, $userFirstName, $userMiddleName, $userLastName, $userPassword, $userGroup) = $csv_line;
-	$userAction = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userAction);
+	$userAction = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userAction));
+	$userFirstName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userFirstName));
+	$userMiddleName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userMiddleName));
+	$userLastName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userLastName));
 	
-	// For some reason, this line throws out the entire string.
-	//$userImportedID = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userImportedID);
-	
-	
-	$userFirstName = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userFirstName);
-	$userMiddleName = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userMiddleName);
-	$userLastName = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userLastName);
-	
-	$userPassword = str_replace('/', '', $userPassword);
-	
-	// Below line not removing forward slashes.
-	//$userPassword = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userPassword);
-	$userGroup = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userGroup);
+	$userPassword = trim(str_replace('/', '', $userPassword));
+	$userGroup = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userGroup));
 
 	
 	$userUserName = substr($userFirstName, 0, 1) . substr($userMiddleName,0,1) . substr($userLastName,0,1) . substr($userImportedID,5,4);

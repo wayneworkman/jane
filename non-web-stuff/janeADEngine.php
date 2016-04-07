@@ -4,8 +4,8 @@ $result = $link->query($sql);
 if ($result->num_rows > 0) {
 	// output data of each row
 	while($row = $result->fetch_assoc()) {
-		$JaneSettingsNickName = $row["JaneSettingsNickName"];
-		$JaneSettingsWHERE = $row["JaneSettingsWHERE"];
+		$JaneSettingsNickName = trim($row["JaneSettingsNickName"]);
+		$JaneSettingsWHERE = trim($row["JaneSettingsWHERE"]);
 	}
 }
 
@@ -14,73 +14,73 @@ $result = $link->query($sql);
 if ($result->num_rows > 0) {
 	// output data of each row
 	while($row = $result->fetch_assoc()) {
-		$ActionCreate = $row["ActionCreate"];
-		$ActionDisable = $row["ActionDisable"];
-		$ActionDelete = $row["ActionDelete"];
-		$ActionCreateText = $row["ActionCreateText"];
-		$ActionDisableText = $row["ActionDisableText"];
-		$ActionDeleteText = $row["ActionDeleteText"];
-		$Group1Name = $row["Group1Name"];
-		$Group2Name = $row["Group2Name"];
-		$Group3Name = $row["Group3Name"];
-		$Name = $row["Name"];
-		$AccountExpirationDate = $row["AccountExpirationDate"];
-		$AccountNotDelegated = $row["AccountNotDelegated"];
-		$AccountPassword = $row["AccountPassword"];
-		$AllowReversiblePasswordEncryption = $row["AllowReversiblePasswordEncryption"];
-		$AuthType = $row["AuthType"];
-		$CannotChangePassword = $row["CannotChangePassword"];
-		$Certificates = $row["Certificates"];
-		$ChangePasswordAtLogon = $row["ChangePasswordAtLogon"];
-		$City = $row["City"];
-		$Company = $row["Company"];
-		$Country = $row["Country"];
-		$Credential = $row["Credential"];
-		$Department = $row["Department"];
-		$Description = $row["Description"];
-		$DisplayName = $row["DisplayName"];
-		$Division = $row["Division"];
-		$EmailAddress = $row["EmailAddress"];
-		$EmployeeID = $row["EmployeeID"];
-		$EmployeeNumber = $row["EmployeeNumber"];
-		$Enabled = $row["Enabled"];
-		$Fax = $row["Fax"];
-		$GivenName = $row["GivenName"];
-		$HomeDirectory = $row["HomeDirectory"];
-		$HomeDrive = $row["HomeDrive"];
-		$HomePage = $row["HomePage"];
-		$HomePhone = $row["HomePhone"];
-		$Initials = $row["Initials"];
-		$Instance = $row["Instance"];
-		$LogonWorkstations = $row["LogonWorkstations"];
-		$Manager = $row["Manager"];
-		$MobilePhone = $row["MobilePhone"];
-		$Office = $row["Office"];
-		$OfficePhone = $row["OfficePhone"];
-		$Organization = $row["Organization"];
-		$OtherAttributes = $row["OtherAttributes"];
-		$OtherName = $row["OtherName"];
-		$PassThru = $row["PassThru"];
-		$PasswordNeverExpires = $row["PasswordNeverExpires"];
-		$PasswordNotRequired = $row["PasswordNotRequired"];
-		$Path = $row["Path"];
-		$POBox = $row["POBox"];
-		$PostalCode = $row["PostalCode"];
-		$ProfilePath = $row["ProfilePath"];
-		$SamAccountName = $row["SamAccountName"];
-		$ScriptPath = $row["ScriptPath"];
-		$Server = $row["Server"];
-		$ServicePrincipalNames = $row["ServicePrincipalNames"];
-		$SmartcardLogonRequired = $row["SmartcardLogonRequired"];
-		$State = $row["State"];
-		$StreetAddress = $row["StreetAddress"];
-		$Surname = $row["Surname"];
-		$Title = $row["Title"];
-		$TrustedForDelegation = $row["TrustedForDelegation"];
-		$Type = $row["Type"];
-		$UserPrincipalName = $row["UserPrincipalName"];
-		$Confirm = $row["Confirm"];
-		$WhatIf = $row["WhatIf"];
+		$ActionCreate = trim($row["ActionCreate"]);
+		$ActionDisable = trim($row["ActionDisable"]);
+		$ActionDelete = trim($row["ActionDelete"]);
+		$ActionCreateText = trim($row["ActionCreateText"]);
+		$ActionDisableText = trim($row["ActionDisableText"]);
+		$ActionDeleteText = trim($row["ActionDeleteText"]);
+		$Group1Name = trim($row["Group1Name"]);
+		$Group2Name = trim($row["Group2Name"]);
+		$Group3Name = trim($row["Group3Name"]);
+		$Name = trim($row["Name"]);
+		$AccountExpirationDate = trim($row["AccountExpirationDate"]);
+		$AccountNotDelegated = trim($row["AccountNotDelegated"]);
+		$AccountPassword = trim($row["AccountPassword"]);
+		$AllowReversiblePasswordEncryption = trim($row["AllowReversiblePasswordEncryption"]);
+		$AuthType = trim($row["AuthType"]);
+		$CannotChangePassword = trim($row["CannotChangePassword"]);
+		$Certificates = trim($row["Certificates"]);
+		$ChangePasswordAtLogon = trim($row["ChangePasswordAtLogon"]);
+		$City = trim($row["City"]);
+		$Company = trim($row["Company"]);
+		$Country = trim($row["Country"]);
+		$Credential = trim($row["Credential"]);
+		$Department = trim($row["Department"]);
+		$Description = trim($row["Description"]);
+		$DisplayName = trim($row["DisplayName"]);
+		$Division = trim($row["Division"]);
+		$EmailAddress = trim($row["EmailAddress"]);
+		$EmployeeID = trim($row["EmployeeID"]);
+		$EmployeeNumber = trim($row["EmployeeNumber"]);
+		$Enabled = trim($row["Enabled"]);
+		$Fax = trim($row["Fax"]);
+		$GivenName = trim($row["GivenName"]);
+		$HomeDirectory = trim($row["HomeDirectory"]);
+		$HomeDrive = trim($row["HomeDrive"]);
+		$HomePage = trim($row["HomePage"]);
+		$HomePhone = trim($row["HomePhone"]);
+		$Initials = trim($row["Initials"]);
+		$Instance = trim($row["Instance"]);
+		$LogonWorkstations = trim($row["LogonWorkstations"]);
+		$Manager = trim($row["Manager"]);
+		$MobilePhone = trim($row["MobilePhone"]);
+		$Office = trim($row["Office"]);
+		$OfficePhone = trim($row["OfficePhone"]);
+		$Organization = trim($row["Organization"]);
+		$OtherAttributes = trim($row["OtherAttributes"]);
+		$OtherName = trim($row["OtherName"]);
+		$PassThru = trim($row["PassThru"]);
+		$PasswordNeverExpires = trim($row["PasswordNeverExpires"]);
+		$PasswordNotRequired = trim($row["PasswordNotRequired"]);
+		$Path = trim($row["Path"]);
+		$POBox = trim($row["POBox"]);
+		$PostalCode = trim($row["PostalCode"]);
+		$ProfilePath = trim($row["ProfilePath"]);
+		$SamAccountName = trim($row["SamAccountName"]);
+		$ScriptPath = trim($row["ScriptPath"]);
+		$Server = trim($row["Server"]);
+		$ServicePrincipalNames = trim($row["ServicePrincipalNames"]);
+		$SmartcardLogonRequired = trim($row["SmartcardLogonRequired"]);
+		$State = trim($row["State"]);
+		$StreetAddress = trim($row["StreetAddress"]);
+		$Surname = trim($row["Surname"]);
+		$Title = trim($row["Title"]);
+		$TrustedForDelegation = trim($row["TrustedForDelegation"]);
+		$Type = trim($row["Type"]);
+		$UserPrincipalName = trim($row["UserPrincipalName"]);
+		$Confirm = trim($row["Confirm"]);
+		$WhatIf = trim($row["WhatIf"]);
 	}
 } else {
 	$ActionCreate = "";
@@ -302,15 +302,15 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			
 			//Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
 
-			$userID = $row["userID"];
-			$StudentID = $row["userImportedID"];
-			$Action = $row["userAction"];
-			$FirstName = $row["userFirstName"];
-			$MiddleName = $row["userMiddleName"];
-			$LastName = $row["userLastName"];
-			$School = $row["userGroup"];
-			$UserName = $row["userUserName"];
-			$Password = $row["userPassword"];
+			$userID = trim($row["userID"]);
+			$StudentID = trim($row["userImportedID"]);
+			$Action = trim($row["userAction"]);
+			$FirstName = trim($row["userFirstName"]);
+			$MiddleName = trim($row["userMiddleName"]);
+			$LastName = trim($row["userLastName"]);
+			$School = trim($row["userGroup"]);
+			$UserName = trim($row["userUserName"]);
+			$Password = trim($row["userPassword"]);
 			if ($MiddleName != "") {
 				$MiddleInitial = substr($MiddleName, 0, 1);
 			}
@@ -354,15 +354,15 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
 			//Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
-			$userID = $row["userID"];
-			$StudentID = $row["userImportedID"];
-			$Action = $row["userAction"];
-			$FirstName = $row["userFirstName"];
-			$MiddleName = $row["userMiddleName"];
-			$LastName = $row["userLastName"];
-			$School = $row["userGroup"];
-			$UserName = $row["userUserName"];
-			$Password = $row["userPassword"];
+			$userID = trim($row["userID"]);
+			$StudentID = trim($row["userImportedID"]);
+			$Action = trim($row["userAction"]);
+			$FirstName = trim($row["userFirstName"]);
+			$MiddleName = trim($row["userMiddleName"]);
+			$LastName = trim($row["userLastName"]);
+			$School = trim($row["userGroup"]);
+			$UserName = trim($row["userUserName"]);
+			$Password = trim($row["userPassword"]);
 			if ($MiddleName != "") {
 				$MiddleInitial = substr($MiddleName, 0, 1);
 			}
@@ -398,15 +398,15 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
                         //Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
-                        $userID = $row["userID"];
-                        $StudentID = $row["userImportedID"];
-                        $Action = $row["userAction"];
-                        $FirstName = $row["userFirstName"];
-                        $MiddleName = $row["userMiddleName"];
-                        $LastName = $row["userLastName"];
-                        $School = $row["userGroup"];
-                        $UserName = $row["userUserName"];
-                        $Password = $row["userPassword"];
+                        $userID = trim($row["userID"]);
+                        $StudentID = trim($row["userImportedID"]);
+                        $Action = trim($row["userAction"]);
+                        $FirstName = trim($row["userFirstName"]);
+                        $MiddleName = trim($row["userMiddleName"]);
+                        $LastName = trim($row["userLastName"]);
+                        $School = trim($row["userGroup"]);
+                        $UserName = trim($row["userUserName"]);
+                        $Password = trim($row["userPassword"]);
                         if ($MiddleName != "") {
                                 $MiddleInitial = substr($MiddleName, 0, 1);
                         }
