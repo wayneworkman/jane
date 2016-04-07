@@ -19,7 +19,7 @@ if ($SessionIsVerified == "1") {
 
 		if ($StoredSMBPassword == $OldSMBPassword) {
 
-			$sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$PasswordDefault' WHERE `JaneUserID` = $uID";
+			$sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$NewSMBPassword' WHERE `JaneUserID` = $JaneUserID";
 			if ($link->query($sql)) {
 				// good, send back to jane.php
 				$NextURL="jane.php";
