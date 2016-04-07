@@ -12,7 +12,7 @@ if ($result->num_rows > 0) {
                 $DoNotDisturbList[] = trim($row["SystemUsername"]);
         }
 }
-
+$result->free();
 
 
 // Get existing users on local system.
@@ -29,7 +29,6 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $localUsers) as $user){
 	}
 	if ($add == "true") {
 		$SystemLocalUsers[] = $user;
-		echo "$user\n";
 	}
 }
 
@@ -39,7 +38,7 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $localUsers) as $user){
 $JaneUsernames = array();
 $JaneSMBPasswords = array();
 $JaneUserIDs = array();
-$sql = "SELECT `JaneUsername`,`JaneSMBPassword`,`JaneUserID` FROM `janeUsers` WHERE `JaneUserEnabled` = '1'";
+$sql = "SELECT `JaneUsername`,`JaneSMBPassword`,`JaneUserID` FROM `janeUsers` WHERE `JaneUserEnabled` = 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -48,13 +47,12 @@ if ($result->num_rows > 0) {
 		$JaneUserIDs[] = trim($row["JaneUserID"]);
         }
 }
-
+$result->free();
 
 
 // Users in the database that do not exist locally need created.
 $i = 0;
 foreach($JaneUsernames as $JaneUsername) {
-	$i = $i + 1;
 	foreach($SystemLocalUsers as $SystemLocalUser) {
 		if ($JaneUsername == $SystemLocalUser) {
 			$found = "true";
@@ -63,39 +61,20 @@ foreach($JaneUsernames as $JaneUsername) {
 			$found = "false";
 		}
 	}
-
 	if ($found == "false") {
-		// Make user here.
-		
+		echo "Username: $JaneUsernames[$i]\n";
+		echo "Password: $JaneSMBPasswords[$i]\n";
+		// Make user here
+		$command = "useradd $JaneUsernames[$i]";
+		echo shell_exec($command);
+		$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin";
+		echo shell_exec($command);
 	}
-
+	$i = $i + 1;
 }
 
 
 // users that exist locally but not in the database need deleted.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
