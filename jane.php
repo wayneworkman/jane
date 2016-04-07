@@ -9,14 +9,14 @@ if ($SessionIsVerified == "1") {
 	echo "<meta charset=\"UTF-8\"/>";
 	echo "<title>Jane</title>";
 	echo "<style>";
-	echo "div{width:600px;padding:10px;border:5px solid gray;margin:0}";
+	echo "div{width:500px;padding:10px;border:5px solid gray;margin:0}";
 	echo "<!--";
 	echo ".tab { margin-left: 40px; }";
 	echo "-->";
 	echo "div.absolute {";
 	echo "position: absolute;";
 	echo "right: 20px;";
-	echo "width: 600px;";
+	echo "width: 700px;";
 	echo "height: 0px;";
 	echo "border: 0px solid #8AC007;";
 	echo "}";
@@ -27,7 +27,8 @@ if ($SessionIsVerified == "1") {
 	
 
 	echo "<div class=\"absolute\">";
-	echo "<a href=\"logout.php\">Log Out</a><br><br>";
+	echo "<a href=\"logout.php\">Log Out</a><br>";
+	echo "<a href=\"LICENSE\">License</a><br><br>";
 	if ($isAdministrator == 1) {
 		//Recent bad login attempts.
 		echo "<font color=\"red\">Recent bad login attempts:</font><br>";
@@ -64,14 +65,14 @@ if ($SessionIsVerified == "1") {
 	}
 	$result = $link->query($sql);
 	while($row = $result->fetch_assoc()) {
-		echo "<option value='" . $row['JaneSettingsID'] . "'>" . $row['JaneSettingsNickName'] . "</option>";
+		echo "<option value='" . trim($row['JaneSettingsID']) . "'>" . trim($row['JaneSettingsNickName']) . "</option>";
 	}
 	echo "</select><br>";
 	echo "<br>";
         echo "<input type=\"submit\">";
         echo "</form>";	
 	echo "</div>";
-	
+
 
 	echo "<div>";
 	echo "<form action=\"ChangeUsername.php\" method=\"post\">";
@@ -129,7 +130,7 @@ if ($SessionIsVerified == "1") {
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['SettingsTypeID'] . "'>" . $row['SettingsTypeName'] . "</option>";
+				echo "<option value='" . trim($row['SettingsTypeID']) . "'>" . trim($row['SettingsTypeName']) . "</option>";
                         }
 		} else {
 			echo "<option value='no_users'>no_settings</option>";
@@ -143,7 +144,7 @@ if ($SessionIsVerified == "1") {
                 $result = $link->query($sql);
                 if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                                echo "<option value='" . $row['JaneGroupID'] . "'>" . $row['JaneGroupName'] . "</option>";
+                                echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
                         }
                 } else {
                         echo "<option value='no_groups'>no_settings</option>";
@@ -175,7 +176,7 @@ if ($SessionIsVerified == "1") {
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneUserID'] . "'>" . $row['JaneUsername'] . "</option>";
+				echo "<option value='" . trim($row['JaneUserID']) . "'>" . trim($row['JaneUsername']) . "</option>";
 			}
 		} else {
 			echo "<option value='no_users'>no_users</option>";
@@ -199,7 +200,7 @@ if ($SessionIsVerified == "1") {
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneUserID'] . "'>" . $row['JaneUsername'] . "</option>";
+				echo "<option value='" . trim($row['JaneUserID']) . "'>" . trim($row['JaneUsername']) . "</option>";
 			}
 		} else {
 			echo "<option value='no_users'>no_users</option>";
@@ -250,7 +251,7 @@ if ($SessionIsVerified == "1") {
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneGroupID'] . "'>" . $row['JaneGroupName'] . "</option>";
+				echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
 			}
 		} else {
 			echo "<option value='no_groups'>no_settings</option>";
@@ -264,7 +265,7 @@ if ($SessionIsVerified == "1") {
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . $row['JaneUserID'] . "'>" . $row['JaneUsername'] . "</option>";
+				echo "<option value='" . trim($row['JaneUserID']) . "'>" . trim($row['JaneUsername']) . "</option>";
 			}
 		} else {
 			echo "<option value='no_users'>no_users</option>";

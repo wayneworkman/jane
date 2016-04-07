@@ -7,7 +7,7 @@ if ($SessionIsVerified == "1") {
 
 
                 // Do actions here.
-                $uID = $link->real_escape_string($_REQUEST['AdminResetJanePass']);
+                $uID = $link->real_escape_string(trim($_REQUEST['AdminResetJanePass']));
                 $NewPassword = password_hash($PasswordDefault, PASSWORD_DEFAULT);
                 $sql = "UPDATE `janeUsers` SET `JanePassword` = '$NewPassword' WHERE `JaneUserID` = $uID";
 

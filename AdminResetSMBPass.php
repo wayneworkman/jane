@@ -7,7 +7,7 @@ if ($SessionIsVerified == "1") {
 
 
                 // Do actions here.
-                $uID = $link->real_escape_string($_REQUEST['adminResetSMBPass']);
+                $uID = $link->real_escape_string(trim($_REQUEST['adminResetSMBPass']));
                 $sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$PasswordDefault' WHERE `JaneUserID` = $uID";
 
 

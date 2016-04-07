@@ -4,10 +4,10 @@ include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
 	// Do actions here.
-	$Action = $link->real_escape_string($_REQUEST['Action']);
-	$JaneSettingsID = $link->real_escape_string($_REQUEST['SettingsNickName']);
+	$Action = $link->real_escape_string(trim($_REQUEST['Action']));
+	$JaneSettingsID = $link->real_escape_string(trim($_REQUEST['SettingsNickName']));
 	if (isset($_REQUEST['ConfirmDelete'])) {
-		$ConfirmDelete = $link->real_escape_string($_REQUEST['ConfirmDelete']);
+		$ConfirmDelete = $link->real_escape_string(trim($_REQUEST['ConfirmDelete']));
 	}
 	if ($isAdministrator == 1) {
 		$sql = "SELECT JaneSettingsID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID'";
@@ -22,8 +22,8 @@ if ($SessionIsVerified == "1") {
 			$result = $link->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
-					$SettingsTableName = $row["SettingsTableName"];
-					$SettingsTypeName = $row["SettingsTypeName"];
+					$SettingsTableName = trim($row["SettingsTableName"]);
+					$SettingsTypeName = trim($row["SettingsTypeName"]);
 				}
 			} else {
 				// No matching settings type.
@@ -61,7 +61,7 @@ if ($SessionIsVerified == "1") {
 			$result = $link->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
-					$SettingsTableName = $row["SettingsTableName"];
+					$SettingsTableName = trim($row["SettingsTableName"]);
 				}
 			} else {
 				// No matching settings type.

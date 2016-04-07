@@ -7,7 +7,7 @@ if ($SessionIsVerified == "1") {
 
 
                 // Do actions here.
-                $NewUsername = $link->real_escape_string($_REQUEST['NewUsername']);
+                $NewUsername = $link->real_escape_string(trim($_REQUEST['NewUsername']));
 		$NewPassword = password_hash($PasswordDefault, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('$NewUsername','$NewPassword','$PasswordDefault','1')";
 

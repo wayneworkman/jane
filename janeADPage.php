@@ -23,6 +23,7 @@ div{padding:10px;border:5px solid gray;margin:0}
 
 </head>
 <body>
+<a href="jane.php">Back</a><br>
 <form action="janeADPostProcessing.php" method="post">
 
     <div>

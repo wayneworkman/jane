@@ -6,8 +6,8 @@ if ($SessionIsVerified == "1") {
 
 
 		// Do actions here.
-		$OldJanePassword = $link->real_escape_string($_REQUEST['OldJanePassword']);
-		$NewJanePassword = $link->real_escape_string($_REQUEST['NewJanePassword']);
+		$OldJanePassword = $link->real_escape_string(trim($_REQUEST['OldJanePassword']));
+		$NewJanePassword = $link->real_escape_string(trim($_REQUEST['NewJanePassword']));
 
 
 
@@ -16,7 +16,7 @@ if ($SessionIsVerified == "1") {
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				$StoredPassword = $row["JanePassword"];
+				$StoredPassword = trim($row["JanePassword"]);
 			}
 		}
 		echo "$OldJanePassword  $StoredPassword";

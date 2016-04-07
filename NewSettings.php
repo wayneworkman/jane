@@ -5,11 +5,11 @@ if ($SessionIsVerified == "1") {
 	if ($isAdministrator == 1) {
 		include 'connect2db.php';
 		// Do actions here.
-		$JaneSettingsNickName = $link->real_escape_string($_REQUEST['NewSettingsNickName']);
-		$JaneSettingsTypeID = $link->real_escape_string($_REQUEST['NewSettingsType']);
-		$JaneSettingsGroupID = $link->real_escape_string($_REQUEST['NewSettingsGroup']);
-		$JaneSettingsSMBallowedIP = $link->real_escape_string($_REQUEST['JaneSettingsSMBallowedIP']);
-		$JaneSettingsWHERE = $link->real_escape_string($_REQUEST['JaneSettingsWHERE']);
+		$JaneSettingsNickName = $link->real_escape_string(trim($_REQUEST['NewSettingsNickName']));
+		$JaneSettingsTypeID = $link->real_escape_string(trim($_REQUEST['NewSettingsType']));
+		$JaneSettingsGroupID = $link->real_escape_string(trim($_REQUEST['NewSettingsGroup']));
+		$JaneSettingsSMBallowedIP = $link->real_escape_string(trim($_REQUEST['JaneSettingsSMBallowedIP']));
+		$JaneSettingsWHERE = $link->real_escape_string(trim($_REQUEST['JaneSettingsWHERE']));
 		$sql = "INSERT INTO janeSettings (JaneSettingsNickName,JaneSettingsWHERE,JaneSettingsGroupID,JaneSettingsTypeID,JaneSettingsSMBallowedIP) VALUES ('$JaneSettingsNickName','$JaneSettingsWHERE','$JaneSettingsGroupID','$JaneSettingsTypeID','$JaneSettingsSMBallowedIP')";
                 if ($link->query($sql)) {
                         // good, send back to jane.php

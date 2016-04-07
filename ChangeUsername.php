@@ -6,8 +6,8 @@ if ($SessionIsVerified == "1") {
 
 
                 // Do actions here.
-                $OldUsername = $link->real_escape_string($_REQUEST['OldUsername']);
-                $NewUsername = $link->real_escape_string($_REQUEST['NewUsername']);
+                $OldUsername = $link->real_escape_string(trim($_REQUEST['OldUsername']));
+                $NewUsername = $link->real_escape_string(trim($_REQUEST['NewUsername']));
 
                 $sql = "UPDATE `janeUsers` SET `janeUsername` = '$NewUsername' WHERE `JaneUserID` = $JaneUserID and `JaneUserName`='$OldUsername'";
 

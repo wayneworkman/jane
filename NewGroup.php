@@ -7,7 +7,7 @@ if ($SessionIsVerified == "1") {
 
 
                 // Do actions here.
-                $NewGroupname = $link->real_escape_string($_REQUEST['NewGroupname']);
+                $NewGroupname = $link->real_escape_string(trim($_REQUEST['NewGroupname']));
 
                 $sql = "INSERT INTO janeGroups (JaneGroupName) VALUES ('$NewGroupname')";
 

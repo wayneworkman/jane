@@ -7,8 +7,8 @@ if ($SessionIsVerified == "1") {
 
 
                 // Do actions here.
-                $gID = $link->real_escape_string($_REQUEST['GroupName']);
-                $uID = $link->real_escape_string($_REQUEST['UserName']);
+                $gID = $link->real_escape_string(trim($_REQUEST['GroupName']));
+                $uID = $link->real_escape_string(trim($_REQUEST['UserName']));
 
                 $sql = "INSERT INTO janeUserGroupAssociation (uID,gID) VALUES ($uID,$gID)";
 
