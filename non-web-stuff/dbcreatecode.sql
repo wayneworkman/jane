@@ -1,6 +1,6 @@
-#drop user 'janeWeb'@'localhost';
-#drop user 'janeSystem'@'localhost';
-#drop database jane;
+drop user 'janeWeb'@'localhost';
+drop user 'janeSystem'@'localhost';
+drop database jane;
 
 CREATE DATABASE IF NOT EXISTS jane;
 
@@ -229,7 +229,7 @@ GRANT ALL ON jane.janeUserGroupAssociation TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeUsers TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
 
-GRANT ALL ON jane.LocalUsersNotToDelete TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.LocalUsersNotToDisturb TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeAD TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettings TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettingsTypes TO 'janeSystem'@'localhost';
