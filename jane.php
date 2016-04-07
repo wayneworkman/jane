@@ -13,11 +13,39 @@ if ($SessionIsVerified == "1") {
 	echo "<!--";
 	echo ".tab { margin-left: 40px; }";
 	echo "-->";
+	echo "div.absolute {";
+	echo "position: absolute;";
+	echo "right: 20px;";
+	echo "width: 600px;";
+	echo "height: 0px;";
+	echo "border: 0px solid #8AC007;";
+	echo "}";
 	echo "</style>";
 	echo "</head>";
 	echo "<body>";
 	
 	
+
+	echo "<div class=\"absolute\">";
+	echo "<a href=\"logout.php\">Log Out</a><br><br>";
+	if ($isAdministrator == 1) {
+		//Recent bad login attempts.
+		echo "<font color=\"red\">Recent bad login attempts:</font><br>";
+		$sql = "SELECT badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT FROM badLoginAttempts ORDER BY badREQUEST_TIME asc LIMIT 40";
+		$result = $link->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "<br>";
+				echo $row["badUsername"] . "<br>";
+				echo $row["badREMOTE_ADDR"] . "<br>";
+				echo $row["badHTTP_USER_AGENT"] . "<br>";
+			}
+		}
+
+	}
+	echo "</div>";
+
+
 	echo "<div>";
 	echo "<form action=\"EditOrDeleteSettings.php\" method=\"post\">";
 	echo "Edit or Delete Settings<br>";
@@ -63,8 +91,8 @@ if ($SessionIsVerified == "1") {
 	echo "<form action=\"ChangeJanePassword.php\" method=\"post\">";
         echo "Change Jane Password<br>";
         echo "<p class=\"tab\">";
-        echo "Old Jane Password:<br><input type=\"password\" name=\"OldJanePassword\"><br>";
-        echo "New Jane Password:<br><input type=\"password\" name=\"NewJanePassword\"><br>";
+        echo "Old Jane Password:<br><input type=\"password\" name=\"OldJanePassword\" autocomplete=\"off\"><br>";
+        echo "New Jane Password:<br><input type=\"password\" name=\"NewJanePassword\" autocomplete=\"off\"><br>";
 	echo "<br>";
         echo "<input type=\"submit\">";
         echo "</form>";
@@ -75,8 +103,8 @@ if ($SessionIsVerified == "1") {
 	echo "<form action=\"ChangeSMBPassword.php\" method=\"post\">";
 	echo "Change SMB Password<br>";
 	echo "<p class=\"tab\">";
-	echo "Old SMB Password:<br><input type=\"password\" name=\"OldSMBPassword\"><br>";
-	echo "New SMB Password:<br><input type=\"password\" name=\"NewSMBPassword\"><br>";
+	echo "Old SMB Password:<br><input type=\"password\" name=\"OldSMBPassword\" autocomplete=\"off\"><br>";
+	echo "New SMB Password:<br><input type=\"password\" name=\"NewSMBPassword\" autocomplete=\"off\"><br>";
 	echo "<br>";
 	echo "<input type=\"submit\">";
 	echo "</form>";
