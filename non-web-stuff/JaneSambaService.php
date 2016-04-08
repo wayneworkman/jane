@@ -119,7 +119,17 @@ $result->free();
 $localGroups = shell_exec('cut -d: -f1 /etc/group');
 $SystemLocalGroups = array();
 foreach(preg_split("/((\r?\n)|(\r\n?))/", $localGroups) as $group){
-        $SystemLocalGroups[] = $group;
+	$add = "true";
+	foreach ($DoNotDisturbList as $DoNotDisturb) {
+		if ($group == $DoNotDisturb) {
+			// Don't bother this group.
+			$add = "false";
+			break;
+		}
+	}
+	if ($add == "true") {
+		$SystemLocalGroups[] = $group;
+	}
 }
 
 
