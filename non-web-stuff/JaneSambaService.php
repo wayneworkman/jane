@@ -115,17 +115,40 @@ $result->free();
 
 
 
-// Setup directories.
+// Get local jane directories.
 $JaneSettingDirs = array();
 $files = scandir($PathToSMBShares);
 foreach ($files as $file) {
 	if (is_dir("$PathToSMBShares$file")) {
 		if ($file != "." && $file != "..") {
 			$JaneSettingDirs[] = $file;
-			echo "$file\n";
 		}
 	}
 }
+
+// If it exists in the DB but not locally, make it.
+$i=0;
+foreach($JaneSettingsNickName as $NickName) {
+	echo "$NickName\n";
+	$found = "false";
+	foreach($JaneSettingDirs as $dir) {
+		echo "-----------------------\n$NicnName : $dir\n-----------------\n";
+		if ($NickName == $dir) {
+			$found = "true";
+			break;
+		}
+	}
+	if ($found == "false") {
+		// Make user here
+		if ($JaneSettingsNickName[$i] != "") {
+			$command = "mkdir $PathToSMBShares$JaneSettingsNickName[$i]";
+			echo "$command\n";
+			echo shell_exec($command);
+		}
+	}
+	$i = $i + 1;
+}
+
 
 
 

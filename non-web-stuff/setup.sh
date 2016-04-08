@@ -43,6 +43,8 @@ echo -e "$password\n$password\n" | sudo passwd jane
 
 
 mysql < dbcreatecode.sql
+php initialStoreLocalUsersAndGroups.php
+mkdir /jane
 
 
 #Additionally, make sure the jane php files is put into /var/www/html/jane
