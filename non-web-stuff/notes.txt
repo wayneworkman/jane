@@ -6,3 +6,22 @@ add user to group:
 usermod -g administrators administrator
 
 
+
+security = user
+passdb backend = tdbsam
+unix charset = utf-8
+dos charset = cp932
+[images]
+path = /images
+read only = no
+# The below line defines what IP ranges are allowed. They are space delemeted.
+# For instance, if you wanted local loopback address, the 10.0.0. range,
+# and the 192.168.1 range, and a specifc public IP of 50.50.50.50,
+# It would be this:
+# hosts allow = 127.0.0.1 10.0.0. 192.168.1. 50.50.50.50
+create mode = 0777
+directory mode = 0777
+writable = yes
+
+
+valid users = sofie shelby adilia
