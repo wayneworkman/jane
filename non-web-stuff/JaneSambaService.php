@@ -102,7 +102,6 @@ $JaneSettingsNickName = array();
 $JaneSettingsGroupID = array();
 $JaneSettingsSMBallowedIP = array();
 $sql = "SELECT `JaneSettingsNickName`,`JaneSettingsGroupID`,`JaneSettingsSMBallowedIP` FROM `janeSettings`";
-echo "$sql\n";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
@@ -131,9 +130,7 @@ foreach($JaneSettingsNickName as $NickName) {
 	$smbconf .= "directory mode = 0777\n";
 	$smbconf .= "writable = yes\n";
 	$smbconf .= "valid users =";
-
 	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` = $JaneSettingsGroupID[$i])";
-	echo "$sql\n";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
