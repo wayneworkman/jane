@@ -321,8 +321,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
                         
 			$ThisCOMMAND = $COMMAND;
 			$ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
-			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
-			$ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND); $ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
@@ -333,7 +332,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	
 
 			// Write commands for this user, for this setting, to the setting's file.
-			$file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
+			$file = $PathToSMBShares . "$JaneSettingsNickName/" .  $JaneSettingsNickName . ".ps1";
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;	
@@ -378,7 +377,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			$ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
 			// Write commands for this user, for this setting, to the setting's file.
-			$file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
+			$file = $PathToSMBShares . "$JaneSettingsNickName/" . $JaneSettingsNickName . ".ps1";
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;
@@ -422,7 +421,7 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         $ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
                         // Write commands for this user, for this setting, to the setting's file.
-                        $file = $PathToSMBShares . $JaneSettingsNickName . ".ps1";
+                        $file = $PathToSMBShares . "$JaneSettingsNickName/" . $JaneSettingsNickName . ".ps1";
                         if (file_exists($file)) {
                                 $current = file_get_contents($file);
                                 $current = $current . $ThisCOMMAND;
