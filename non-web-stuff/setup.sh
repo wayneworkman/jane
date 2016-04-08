@@ -47,6 +47,7 @@ mysql < dbcreatecode.sql
 php initialStoreLocalUsersAndGroups.php
 mkdir /jane
 mkdir /jane/imports
+chown -R jane:jane /jane/imports
 #set selinux to permissive.
 setenforce 0
 systemctl enable smb
