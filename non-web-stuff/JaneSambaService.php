@@ -129,10 +129,8 @@ foreach ($files as $file) {
 // If it exists in the DB but not locally, make it.
 $i=0;
 foreach($JaneSettingsNickName as $NickName) {
-	echo "$NickName\n";
 	$found = "false";
 	foreach($JaneSettingDirs as $dir) {
-		echo "-----------------------\n$NicnName : $dir\n-----------------\n";
 		if ($NickName == $dir) {
 			$found = "true";
 			break;
@@ -142,7 +140,6 @@ foreach($JaneSettingsNickName as $NickName) {
 		// Make user here
 		if ($JaneSettingsNickName[$i] != "") {
 			$command = "mkdir $PathToSMBShares$JaneSettingsNickName[$i]";
-			echo "$command\n";
 			echo shell_exec($command);
 		}
 	}
