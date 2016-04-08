@@ -114,6 +114,23 @@ $result->free();
 
 
 
+
+// Setup directories.
+$JaneSettingDirs = array();
+$files = scandir($PathToSMBShares);
+foreach ($files as $file) {
+	if (is_dir("$PathToSMBShares$file")) {
+		if ($file != "." && $file != "..") {
+			$JaneSettingDirs[] = $file;
+			echo "$file\n";
+		}
+	}
+}
+
+
+
+
+
 // Build smb.conf file.
 $i=0;
 $smbconf = "";
