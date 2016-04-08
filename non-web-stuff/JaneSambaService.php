@@ -2,6 +2,12 @@
 include 'localVars.php';
 include 'connect2db.php';
 
+// start loop.
+while(1) {
+
+
+
+
 
 // Get list of users not to disturb.
 $DoNotDisturbList = array();
@@ -283,6 +289,7 @@ if ($Current_SMB_Checksum != $New_SMB_Checksum) {
 }
 
 
-
+sleep($SMB_SLEEP_TIME);
+} // end loop.
 
 ?>

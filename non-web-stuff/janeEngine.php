@@ -2,6 +2,8 @@
 include 'localVars.php';
 include 'connect2db.php';
 
+while(1) {
+
 $sql = "SELECT SettingsTypeID,SettingsTableName FROM janeSettingsTypes";
 $result0 = $link->query($sql);
 if ($result0->num_rows > 0) {
@@ -40,6 +42,12 @@ if ($result0->num_rows > 0) {
 		}
 	}
 }
+
+
+sleep($JaneEngine_Sleep_Time);
+
+} // end loop.
+
 $link->close();
 ?>
 
