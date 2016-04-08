@@ -49,6 +49,7 @@ mkdir /jane
 mkdir /jane/imports
 #set selinux to permissive.
 setenforce 0
+systemctl enable smb
 
 #Additionally, make sure the jane php files is put into /var/www/html/jane
 #set permissions on that with:  
