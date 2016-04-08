@@ -1,2 +1,8 @@
 Fill the "LocalUsersNotToDelete" table during install with 
 cut -d: -f1 /etc/passwd
+
+
+add user to group:
+usermod -g administrators administrator
+
+
