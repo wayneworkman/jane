@@ -13,8 +13,6 @@ if ($result->num_rows > 0) {
         }
 }
 $result->free();
-
-
 // Get existing users on local system.
 $localUsers = shell_exec('cut -d: -f1 /etc/passwd');
 $SystemLocalUsers = array();
@@ -31,9 +29,6 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $localUsers) as $user){
 		$SystemLocalUsers[] = $user;
 	}
 }
-
-
-
 // Get list of users that should be there.
 $JaneUsernames = array();
 $JaneSMBPasswords = array();
@@ -48,8 +43,6 @@ if ($result->num_rows > 0) {
         }
 }
 $result->free();
-
-
 // Users in the database that do not exist locally need created.
 $i = 0;
 foreach($JaneUsernames as $JaneUsername) {
@@ -73,11 +66,26 @@ foreach($JaneUsernames as $JaneUsername) {
 	}
 	$i = $i + 1;
 }
-
-
 // users that exist locally but not in the database need deleted.
-
-
+$i=0
+foreach($SystemLocalUsers as $SystemLocalUser) {
+	$found = "false";
+	foreach($JaneUsernames as $JaneUsername) {
+		if ($SystemLocalUser == $JaneUsername) {
+			//Found, don't delete.
+			$found = "true";
+			break;
+		} else {
+			$found = "false";
+		}
+	}
+	if ($found == "false") {
+		//Delete the acccount.
+		$command = "userdel -r $SystemLocalUsers[$i]";
+		echo shell_exec($command);
+	}
+$i = $i + 1;
+}
 
 
 ?>
