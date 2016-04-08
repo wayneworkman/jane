@@ -51,7 +51,7 @@ foreach($JaneUsernames as $JaneUsername) {
 			$found = "true";
 			// Update password.
 			$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin";
-			echo shell_exec($command);
+			shell_exec($command);
 			break;
 		} else {
 			$found = "false";
@@ -60,16 +60,15 @@ foreach($JaneUsernames as $JaneUsername) {
 	if ($found == "false") {
 		// Make user here
 		$command = "useradd $JaneUsernames[$i]";
-		echo shell_exec($command);
+		shell_exec($command);
 		$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin";
-		echo shell_exec($command);
+		shell_exec($command);
 	}
 	$i = $i + 1;
 }
 // users that exist locally but not in the database need deleted.
-$i=0
+$i=0;
 foreach($SystemLocalUsers as $SystemLocalUser) {
-	$found = "false";
 	foreach($JaneUsernames as $JaneUsername) {
 		if ($SystemLocalUser == $JaneUsername) {
 			//Found, don't delete.
@@ -80,11 +79,14 @@ foreach($SystemLocalUsers as $SystemLocalUser) {
 		}
 	}
 	if ($found == "false") {
-		//Delete the acccount.
-		$command = "userdel -r $SystemLocalUsers[$i]";
-		echo shell_exec($command);
+		if ($SystemLocalUsers[$i] != "") {
+			//Delete the acccount.
+			$command = "userdel -r $SystemLocalUsers[$i]";
+			shell_exec($command);
+		}
 	}
 $i = $i + 1;
+$found = "false";
 }
 
 
