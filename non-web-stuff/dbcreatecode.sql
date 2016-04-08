@@ -235,6 +235,7 @@ GRANT ALL ON jane.janeUserGroupAssociation TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeUsers TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
 
+GRANT ALL ON jane.janeUserGroupAssociation TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeGroups TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeUsers TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.LocalUsersNotToDisturb TO 'janeSystem'@'localhost';

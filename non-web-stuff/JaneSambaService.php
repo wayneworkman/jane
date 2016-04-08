@@ -132,7 +132,7 @@ foreach($JaneSettingsNickName as $NickName) {
 	$smbconf .= "writable = yes\n";
 	$smbconf .= "valid users =";
 
-	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` = $$JaneSettingsGroupID[$i])";
+	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` = $JaneSettingsGroupID[$i])";
 	echo "$sql\n";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
