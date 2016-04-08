@@ -169,14 +169,14 @@ $smbconf .= "security = user\n";
 $smbconf .= "passdb backend = tdbsam\n";
 $smbconf .= "unix charset = utf-8\n";
 $smbconf .= "dos charset = cp932\n";
-$smbconf .= "[imports]";
+$smbconf .= "[imports]\n";
 $smbconf .= "path = $PathToSMBShares" . "imports\n";
 $smbconf .= "read only = no\n";
 $smbconf .= "hosts allow = $ImportIP\n";
 $smbconf .= "create mode = 0777\n";
 $smbconf .= "directory mode = 0777\n";
 $smbconf .= "writable = yes\n";
-$smbconf .= "valid users = jane";
+$smbconf .= "valid users = jane\n";
 
 
 
