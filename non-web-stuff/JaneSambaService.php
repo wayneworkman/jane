@@ -97,5 +97,60 @@ foreach($SystemLocalUsers as $SystemLocalUser) {
 
 
 
+// Get JaneSettings values for shares.
+$JaneSettingsNickName = array();
+$JaneSettingsGroupID = array();
+$JaneSettingsSMBallowedIP = array();
+$sql = "SELECT `JaneSettingsNickName`,`JaneSettingsGroupID`,`JaneSettingsSMBallowedIP` FROM `janeSettings`";
+echo "$sql\n";
+$result = $link->query($sql);
+if ($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+		$JaneSettingsNickName[] = trim($row["JaneSettingsNickName"]);
+		$JaneSettingsGroupID[] = trim($row["JaneSettingsGroupID"]);
+		$JaneSettingsSMBallowedIP[] = trim($row["JaneSettingsSMBallowedIP"]);
+	}
+}
+$result->free();
+
+
+
+// Build smb.conf file.
+$i=0;
+$smbconf = "";
+$smbconf .= "security = user\n";
+$smbconf .= "passdb backend = tdbsam\n";
+$smbconf .= "unix charset = utf-8\n";
+$smbconf .= "dos charset = cp932\n";
+foreach($JaneSettingsNickName as $NickName) {
+	$smbconf .= "[$NickName]\n";
+	$smbconf .= "$PathToSMBShares$NickName\n";
+	$smbconf .= "read only = no\n";
+	$smbconf .= "$JaneSettingsSMBallowedIP[$i]\n";
+	$smbconf .= "create mode = 0777\n";
+	$smbconf .= "directory mode = 0777\n";
+	$smbconf .= "writable = yes\n";
+	$smbconf .= "valid users =";
+
+	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` = $$JaneSettingsGroupID[$i])";
+	echo "$sql\n";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$tmp = trim($row["JaneUsername"]);
+			if ($tmp != "") {
+				$smbconf .= " $tmp";
+			}
+		}
+	}
+	$result->free();
+	$smbconf .= "\n";
+	$i = $i + 1;
+}
+
+
+echo $smbconf;
+
+
 
 ?>
