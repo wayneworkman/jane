@@ -38,14 +38,17 @@ systemctl restart firewalld.service
 
 #create user Jane
 useradd jane
-local password=janepassword
+local password=uyspBj[D5)s3b2vv
 echo -e "$password\n$password\n" | sudo passwd jane
-
+smbpasswd -a jane
+uyspBj[D5)s3b2vv
 
 mysql < dbcreatecode.sql
 php initialStoreLocalUsersAndGroups.php
 mkdir /jane
-
+mkdir /jane/imports
+#set selinux to permissive.
+setenforce 0
 
 #Additionally, make sure the jane php files is put into /var/www/html/jane
 #set permissions on that with:  

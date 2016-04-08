@@ -7,6 +7,7 @@ include 'connect2db.php';
 $DoNotDisturbList = array();
 $sql = "SELECT SystemUsername FROM LocalUsersNotToDisturb";
 $result = $link->query($sql);
+
 if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
                 $DoNotDisturbList[] = trim($row["SystemUsername"]);
@@ -147,6 +148,10 @@ foreach($JaneSettingsNickName as $NickName) {
 }
 
 
+// If the directory exists locally but not in the DB, delete it.
+
+
+
 
 
 
@@ -158,11 +163,24 @@ $smbconf .= "security = user\n";
 $smbconf .= "passdb backend = tdbsam\n";
 $smbconf .= "unix charset = utf-8\n";
 $smbconf .= "dos charset = cp932\n";
+$smbconf .= "[imports]";
+$smbconf .= "path = $PathToSMBShares" . "imports\n";
+$smbconf .= "read only = no\n";
+$smbconf .= "hosts allow = $ImportIP\n";
+$smbconf .= "create mode = 0777\n";
+$smbconf .= "directory mode = 0777\n";
+$smbconf .= "writable = yes\n";
+$smbconf .= "valid users = jane";
+
+
+
+
+
 foreach($JaneSettingsNickName as $NickName) {
 	$smbconf .= "[$NickName]\n";
-	$smbconf .= "$PathToSMBShares$NickName\n";
+	$smbconf .= "path = $PathToSMBShares$NickName\n";
 	$smbconf .= "read only = no\n";
-	$smbconf .= "$JaneSettingsSMBallowedIP[$i]\n";
+	$smbconf .= "hosts allow = $JaneSettingsSMBallowedIP[$i]\n";
 	$smbconf .= "create mode = 0777\n";
 	$smbconf .= "directory mode = 0777\n";
 	$smbconf .= "writable = yes\n";
@@ -183,7 +201,87 @@ foreach($JaneSettingsNickName as $NickName) {
 }
 
 
-echo $smbconf;
+
+
+
+// Write the conf file to the temp location.
+if (file_exists($tmpFile)) {
+	unlink($tmpFile);
+	if (file_exists($tmpFile)) {
+		echo "Deleting the temporary SMB config file from \"$tmpFile\" failed for some reason. Check permissions and maybe SELinux.";
+        } else {
+		file_put_contents($tmpFile, $smbconf);
+	}
+} else {
+	file_put_contents($tmpFile, $smbconf);
+}
+
+
+
+
+
+
+
+
+//Checksum of current file.
+if (file_exists($SMB_TO_USE)) {
+	$Current_SMB_Checksum = sha1_file($SMB_TO_USE);
+	//Check it twice.
+	$tmp = sha1_file($SMB_TO_USE);
+	if ($tmp != $Current_SMB_Checksum) {
+		echo "The SMB configuration file \"$SMB_TO_USE\" failed to be checksumed correctly. No action will be taken with the SMB configuration file or the SMB service. This can be due to RAM issues, a failing HDD or possibly other causes.";
+			$Current_SMB_Checksum = "0";
+	}
+} else {
+	echo "The SMB configuration file \"$SMB_TO_USE\" does not exist. Because of this, the temporary SMB file will not be swapped out in place of where the current SMB file should be. You should investigate why it's missing. Is the path correct? Is Samba installed? Are permissions OK? Could it be SELinux?";
+	$Current_SMB_Checksum = "0";
+}
+
+
+
+
+
+
+//Checksum of new file.
+if (file_exists($tmpFile)) {
+	$New_SMB_Checksum = sha1_file($tmpFile);
+	//Check it twice.
+	$tmp = sha1_file($tmpFile);
+	if ($tmp != $New_SMB_Checksum) {
+		echo "The new SMB configuration file \"$tmpFile\" failed to be checksumed correctly. No action will be taken with the SMB configuration file or the SMB service. This can be due to RAM issues, a failing HDD or possibly other causes.";
+		$New_SMB_Checksum = "1";
+	}
+} else {
+	echo "The new SMB configuration file \"$tmpFile\" was supposed to be written moments ago, but does not exist now. Because of this, the temporary SMB file will not be moved into the position of the current SMB file. Something might be wrong with permissions, the path, or possibly SELinux. The partition might be full as well. You should investigate.";
+	$New_SMB_Checksum = "1";
+}
+
+
+
+
+
+
+
+if ($Current_SMB_Checksum != $New_SMB_Checksum) {
+	if ($New_SMB_Checksum != "1" && $Current_SMB_Checksum != "0") {
+		echo "The newly generated SMB files checksum does not match the checksum of the currently in use SMB file. Attempting to move the current file to \"$SMB_TO_USE.old\" and attempting to place the newly generated file \"$tmpFile\" in it's place.";
+		// Move old file.
+		if (file_exists($SMB_TO_USE)) {
+			// Delete pre-existing old file.
+			if (file_exists("$SMB_TO_USE.old")) {
+				unlink("$SMB_TO_USE.old");
+			}
+			// Move current to old.
+			rename($SMB_TO_USE, "$SMB_TO_USE.old");
+		}
+		// Place new file.
+		rename($tmpFile, $SMB_TO_USE);
+		// Restart smb service.
+		$command = "systemctl restart smb";
+		echo shell_exec($command);
+	}
+}
+
 
 
 
