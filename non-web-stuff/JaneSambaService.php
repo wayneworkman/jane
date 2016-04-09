@@ -226,25 +226,26 @@ $i = $i + 1;
 
 
 
-
-
-
-
-
-
-
-
 // Get JaneSettings values for shares.
 $JaneSettingsNickName = array();
 $JaneSettingsGroupID = array();
 $JaneSettingsSMBallowedIP = array();
+$JaneSettingsGroupName = array();
 $sql = "SELECT `JaneSettingsNickName`,`JaneSettingsGroupID`,`JaneSettingsSMBallowedIP` FROM `janeSettings`";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
 		$JaneSettingsNickName[] = trim($row["JaneSettingsNickName"]);
 		$JaneSettingsGroupID[] = trim($row["JaneSettingsGroupID"]);
+		$tmp = trim($row["JaneSettingsGroupID"]);
 		$JaneSettingsSMBallowedIP[] = trim($row["JaneSettingsSMBallowedIP"]);
+		$sql = "SELECT `JaneGroupName` FROM `janeGroups` WHERE `JaneGroupID = $tmp LIMIT 1";
+		$result2 = $link->query($sql);
+		if ($result2->num_rows > 0) {
+			while($row2 = $result2->fetch_assoc()) {
+				$JaneSettingsGroupName[] = trim($row["JaneGroupName"]);
+			}
+		}
 	}
 }
 $result->free();
@@ -278,6 +279,8 @@ foreach($JaneSettingsNickName as $NickName) {
 		if ($JaneSettingsNickName[$i] != "") {
 			$command = "mkdir $PathToSMBShares$JaneSettingsNickName[$i]";
 			echo shell_exec($command);
+			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsNickName[$i]";
+                        echo shell_exec($command);
 		}
 	}
 	$i = $i + 1;
