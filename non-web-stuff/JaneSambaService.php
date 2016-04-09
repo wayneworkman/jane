@@ -160,6 +160,10 @@ foreach($JaneGroupNames as $JaneGroupName) {
 	foreach($SystemLocalGroups as $SystemLocalGroup) {
 		if ($JaneGroupName == $SystemLocalGroup) {
 			$found = "true";
+			$command = "groupdel $JaneGroupNames[$i]";
+			echo shell_exec($command);
+			$command = "groupadd $JaneGroupNames[$i]";
+			echo shell_exec($command);
 			break;
 		} else {
 			$found = "false";
@@ -198,6 +202,23 @@ foreach($SystemLocalGroups as $SystemLocalGroup) {
 }
 
 
+
+
+// place users into the correct secondary groups.
+$i = 0;
+foreach($JaneUserIDs as $ID) {
+	$sql = "SELECT JaneGroupName FROM janeGroups WHERE JaneGroupID IN (SELECT gID FROM janeUserGroupAssociation WHERE uID = $ID)";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$tmp = trim($row["JaneGroupName"]);
+			$command = "usermod -a -G $tmp $JaneUsernames[$i]";
+			shell_exec($command);
+		}
+	}
+	$result->free();
+$i = $i + 1;
+}
 
 
 // ------------------- end groups ---------------//
