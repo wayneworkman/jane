@@ -239,16 +239,17 @@ if ($result->num_rows > 0) {
 		$JaneSettingsGroupID[] = trim($row["JaneSettingsGroupID"]);
 		$tmp = trim($row["JaneSettingsGroupID"]);
 		$JaneSettingsSMBallowedIP[] = trim($row["JaneSettingsSMBallowedIP"]);
-		$sql = "SELECT `JaneGroupName` FROM `janeGroups` WHERE `JaneGroupID = $tmp LIMIT 1";
+		$sql = "SELECT `JaneGroupName` FROM `janeGroups` WHERE `JaneGroupID` = $tmp LIMIT 1";
 		$result2 = $link->query($sql);
 		if ($result2->num_rows > 0) {
 			while($row2 = $result2->fetch_assoc()) {
-				$JaneSettingsGroupName[] = trim($row["JaneGroupName"]);
+				$JaneSettingsGroupName[] = trim($row2["JaneGroupName"]);
 			}
 		}
 	}
 }
 $result->free();
+$result2->free();
 
 
 
@@ -281,6 +282,8 @@ foreach($JaneSettingsNickName as $NickName) {
 			echo shell_exec($command);
 			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsNickName[$i]";
                         echo shell_exec($command);
+			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsNickName[$i]";
+			echo shell_exec($command);
 		}
 	}
 	$i = $i + 1;
