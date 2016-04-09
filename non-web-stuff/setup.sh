@@ -38,10 +38,9 @@ systemctl restart firewalld.service
 
 #create user Jane
 useradd jane
-local password=uyspBj[D5)s3b2vv
+local password=janepassword
 echo -e "$password\n$password\n" | sudo passwd jane
 smbpasswd -a jane
-uyspBj[D5)s3b2vv
 
 mysql < dbcreatecode.sql
 php initialStoreLocalUsersAndGroups.php
