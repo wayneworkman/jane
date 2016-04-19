@@ -321,7 +321,8 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
                         
 			$ThisCOMMAND = $COMMAND;
 			$ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
-			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND); $ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
+			$ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
