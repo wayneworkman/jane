@@ -285,6 +285,14 @@ foreach($JaneSettingsNickName as $NickName) {
 			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsNickName[$i]";
 			echo shell_exec($command);
 		}
+	} else {
+		if ($JaneSettingsNickName[$i] != "") {
+			//Here, the directory already exists and should be there, but we are going to reset ownership to the proper ownership.
+			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsNickName[$i]";
+			echo shell_exec($command);
+			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsNickName[$i]";
+			echo shell_exec($command);
+		}
 	}
 	$i = $i + 1;
 }
