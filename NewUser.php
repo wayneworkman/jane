@@ -22,6 +22,17 @@ if ($SessionIsVerified == "1") {
 				$link->close();
 				die ($SiteErrorMessage);
 			}
+			//Every user has a group with the same name locally.
+			$sql = "INSERT INTO janeGroups (JaneGroupName) VALUES ('$NewUsername')";
+			if ($link->query($sql)) {
+				// good, send back to jane.php
+				$NextURL="jane.php";
+				header("Location: $NextURL");
+			} else {
+				// Error
+				$link->close();
+				die ($SiteErrorMessage);
+			}
 		}
 
 

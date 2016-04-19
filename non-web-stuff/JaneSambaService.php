@@ -246,10 +246,10 @@ if ($result->num_rows > 0) {
 				$JaneSettingsGroupName[] = trim($row2["JaneGroupName"]);
 			}
 		}
+		$result2->free();
 	}
 }
 $result->free();
-$result2->free();
 
 
 

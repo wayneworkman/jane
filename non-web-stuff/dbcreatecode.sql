@@ -189,23 +189,25 @@ WhatIf VARCHAR(255),
 PRIMARY KEY (janeADid)
 );
 
+
+
 insert into janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) values ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
-#administrator default password  and default SMB password is changeme
-
+#insert into janeGroups (JaneGroupName) VALUES ('administrator');
 insert into janeGroups (JaneGroupName) values ('administrators');
-
 insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'administrator'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'administrators'));
 
 
+
 insert into janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) values ('tech','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
-#tech default password is changeme
-
+#INSERT INTO janeGroups (JaneGroupName) VALUES ('tech');
 insert into janeGroups (JaneGroupName) values ('techs');
-
 insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'tech'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'techs'));
+
+
 
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('Active Directory','Standard Active Directory settings type.','janeAD');
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('OpenDirectory','Standard Open Directory settings type.','janeOD');
+
 
 
 INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%Action%','Add');
