@@ -61,7 +61,7 @@ if ($SessionIsVerified == "1") {
 	if ($isAdministrator == 1) {
 		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings";
 	} else {
-		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings WHERE JaneSettingsGroupID = (SELECT gID FROM janeUserGroupAssociation WHERE uID = '$JaneUserID')";
+		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings WHERE JaneSettingsGroupID IN (SELECT gID FROM janeUserGroupAssociation WHERE uID = '$JaneUserID')";
 	}
 	$result = $link->query($sql);
 	while($row = $result->fetch_assoc()) {

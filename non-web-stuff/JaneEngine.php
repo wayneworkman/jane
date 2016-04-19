@@ -20,18 +20,19 @@ if ($result0->num_rows > 0) {
 
 				//Here, you filter out each setting type and send the JaneSettingsID to each respective settings type script.
 
-
+				//Active Directory
 				if ($SettingsTableName = "janeAD") {
 					include('janeADEngine.php');
 				}
 
 
-
+				//Open Directory
 				if ($SettingsTableName = "janeOD") {
 					include('janeODEngine.php');
                                 }
 
 
+				//Other goes here
 
 
 
