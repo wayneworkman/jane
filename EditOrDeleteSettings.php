@@ -12,13 +12,13 @@ if ($SessionIsVerified == "1") {
 	if ($isAdministrator == 1) {
 		$sql = "SELECT JaneSettingsID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID'";
 	} else {
-		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' AND JaneSettingsGroupID = (SELECT gID FROM janeUserGroupAssociation WHERE uID = '$JaneUserID')";
+		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' AND JaneSettingsGroupID IN (SELECT gID FROM janeUserGroupAssociation WHERE uID = '$JaneUserID')";
 	}
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		if ($Action == "EditSettings") {
 			// Get tablename, SettingsTypeName
-			$sql = "SELECT SettingsTableName,SettingsTypeName FROM janeSettingsTypes WHERE SettingsTypeID = (SELECT JaneSettingsTypeID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID')";
+			$sql = "SELECT SettingsTableName,SettingsTypeName FROM janeSettingsTypes WHERE SettingsTypeID IN (SELECT JaneSettingsTypeID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID')";
 			$result = $link->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
@@ -31,6 +31,9 @@ if ($SessionIsVerified == "1") {
 				$NextURL="jane.php";
 				header("Location: $NextURL");
 			}
+
+
+
 			// ------------------------------Begin---------------------------------
 			// From here down to the next marker is where custom select code for each settings type would go.
 			// You'd select the data from the appropriate table,
@@ -54,10 +57,20 @@ if ($SessionIsVerified == "1") {
 
 
 
+
+
+
+
+
+
+
 			//---------------------------------END----------------------------------
+
+
+
 		} elseif ($Action == "DeleteSettings" && $ConfirmDelete == "Confirmed") {
 			// Query settings table name.
-			$sql = "SELECT SettingsTableName FROM janeSettingsTypes WHERE SettingsTypeID = (SELECT JaneSettingsTypeID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID')";
+			$sql = "SELECT SettingsTableName FROM janeSettingsTypes WHERE SettingsTypeID IN (SELECT JaneSettingsTypeID FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID')";
 			$result = $link->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
