@@ -42,13 +42,24 @@ while(1) {
 
 
 
+				}
 			}
 		}
 	}
-}
+
+	// Destroy data in table.
+	$sql = "TRUNCATE TABLE userDataToImport";
+	if ($link->query($sql)) {
+		// good
+	} else {
+		// Error
+		$link->close();
+		die ($SiteErrorMessage);
+	}
 
 
-sleep($JaneEngine_Sleep_Time);
+
+	sleep($JaneEngine_Sleep_Time);
 
 } // end loop.
 

@@ -343,14 +343,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			file_put_contents($file, $current);
 
 		}
-		$sql = "DELETE FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
-		if ($link->query($sql)) {
-			// good
-		} else {
-			// Error
-			$link->close();
-			die ($SiteErrorMessage);
-		}
 	}
 }
 if ($ActionDisable != "" && $ActionDisableText != "") {
@@ -394,14 +386,6 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 				$current = $ThisCOMMAND;
 			}
 			file_put_contents($file, $current);	
-		}
-		$sql = "DELETE FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
-		if ($link->query($sql)) {
-			// good
-		} else {
-			// Error
-			$link->close();
-			die ($SiteErrorMessage);
 		}
 	}
 }
@@ -447,14 +431,6 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         }
                         file_put_contents($file, $current);
                 }
-		$sql = "DELETE FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
-		if ($link->query($sql)) {
-			// good
-		} else {
-			// Error
-			$link->close();
-			die ($SiteErrorMessage);
-		}
 	}
 }
 ?>
