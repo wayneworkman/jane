@@ -15,11 +15,11 @@ $sql = "SELECT SystemUsername FROM LocalUsersNotToDisturb";
 $result = $link->query($sql);
 
 if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-                $DoNotDisturbList[] = trim($row["SystemUsername"]);
-        }
+	while($row = $result->fetch_assoc()) {
+		$DoNotDisturbList[] = trim($row["SystemUsername"]);
+	}
+	$result->free();
 }
-$result->free();
 // Get existing users on local system.
 $localUsers = shell_exec('cut -d: -f1 /etc/passwd');
 $SystemLocalUsers = array();
@@ -43,13 +43,13 @@ $JaneUserIDs = array();
 $sql = "SELECT `JaneUsername`,`JaneSMBPassword`,`JaneUserID` FROM `janeUsers` WHERE `JaneUserEnabled` = 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-                $JaneUsernames[] = trim($row["JaneUsername"]);
+	while($row = $result->fetch_assoc()) {
+		$JaneUsernames[] = trim($row["JaneUsername"]);
 		$JaneSMBPasswords[] = trim($row["JaneSMBPassword"]);
 		$JaneUserIDs[] = trim($row["JaneUserID"]);
-        }
+	}
+	$result->free();
 }
-$result->free();
 // Users in the database that do not exist locally need created.
 $i = 0;
 foreach($JaneUsernames as $JaneUsername) {
@@ -121,8 +121,8 @@ if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
                 $DoNotDisturbList[] = trim($row["SystemGroupname"]);
         }
+	$result->free();
 }
-$result->free();
 
 
 $localGroups = shell_exec('cut -d: -f1 /etc/group');
@@ -150,8 +150,8 @@ if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
                 $JaneGroupNames[] = trim($row["JaneGroupName"]);
         }
+	$result->free();
 }
-$result->free();
 
 
 // Groups in the database that do not exist locally need created.
@@ -215,8 +215,8 @@ foreach($JaneUserIDs as $ID) {
 			$command = "usermod -a -G $tmp $JaneUsernames[$i]";
 			shell_exec($command);
 		}
-	}
 	$result->free();
+	}
 $i = $i + 1;
 }
 
@@ -227,26 +227,12 @@ $i = $i + 1;
 
 
 // Get JaneSettings values for shares.
-$JaneSettingsNickName = array();
-$JaneSettingsGroupID = array();
-$JaneSettingsSMBallowedIP = array();
 $JaneSettingsGroupName = array();
-$sql = "SELECT `JaneSettingsNickName`,`JaneSettingsGroupID`,`JaneSettingsSMBallowedIP` FROM `janeSettings`";
+$sql = "SELECT `JaneGroupName` FROM `janeGroups`";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
-		$JaneSettingsNickName[] = trim($row["JaneSettingsNickName"]);
-		$JaneSettingsGroupID[] = trim($row["JaneSettingsGroupID"]);
-		$tmp = trim($row["JaneSettingsGroupID"]);
-		$JaneSettingsSMBallowedIP[] = trim($row["JaneSettingsSMBallowedIP"]);
-		$sql = "SELECT `JaneGroupName` FROM `janeGroups` WHERE `JaneGroupID` = $tmp LIMIT 1";
-		$result2 = $link->query($sql);
-		if ($result2->num_rows > 0) {
-			while($row2 = $result2->fetch_assoc()) {
-				$JaneSettingsGroupName[] = trim($row2["JaneGroupName"]);
-			}
-		}
-		$result2->free();
+		$JaneSettingsGroupName[] = trim($row["JaneGroupName"]);
 	}
 }
 $result->free();
@@ -266,7 +252,6 @@ foreach ($files as $file) {
 }
 
 // If it exists in the DB but not locally, make it.
-$i=0;
 foreach($JaneSettingsGroupName as $GroupName) {
 	$found = "false";
 	foreach($JaneSettingDirs as $dir) {
@@ -277,24 +262,23 @@ foreach($JaneSettingsGroupName as $GroupName) {
 	}
 	if ($found == "false") {
 		// Make user here
-		if ($JaneSettingsGroupName[$i] != "") {
-			$command = "mkdir $PathToSMBShares$JaneSettingsGroupName[$i]";
+		if ($GroupName != "") {
+			$command = "mkdir $PathToSMBShares$GroupName";
 			echo shell_exec($command);
-			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsGroupName[$i]";
+			$command = "chown -R root:$GroupName $PathToSMBShares$GroupName";
                         echo shell_exec($command);
-			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsGroupName[$i]";
+			$command = "chmod -R 770 $PathToSMBShares$GroupName";
 			echo shell_exec($command);
 		}
 	} else {
-		if ($JaneSettingsNickName[$i] != "") {
+		if ($GroupName != "") {
 			//Here, the directory already exists and should be there, but we are going to reset ownership to the proper ownership.
-			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsGroupName[$i]";
+			$command = "chown -R root:$GroupName $PathToSMBShares$GroupName";
 			echo shell_exec($command);
-			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsGroupName[$i]";
+			$command = "chmod -R 770 $PathToSMBShares$GroupName";
 			echo shell_exec($command);
 		}
 	}
-	$i = $i + 1;
 }
 
 
@@ -330,12 +314,26 @@ foreach($JaneSettingsGroupName as $GroupName) {
 	$smbconf .= "[$GroupName]\n";
 	$smbconf .= "path = $PathToSMBShares$GroupName\n";
 	$smbconf .= "read only = no\n";
-	$smbconf .= "hosts allow = $JaneSettingsSMBallowedIP[$i]\n";
+
+
+	$JaneSettingsSMBallowedIP = "";
+	$sql = "SELECT `JaneSettingsSMBallowedIP` FROM `janeSettings` WHERE `JaneSettingsGroupID` IN (SELECT JaneGroupID from janeGroups where JaneGroupName = '$GroupName')";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$JaneSettingsSMBallowedIP = trim($row["JaneSettingsSMBallowedIP"]) . " ";
+		}
+		$result->free();
+	}
+
+
+
+	$smbconf .= "hosts allow = $JaneSettingsSMBallowedIP\n";
 	$smbconf .= "create mode = 0777\n";
 	$smbconf .= "directory mode = 0777\n";
 	$smbconf .= "writable = yes\n";
 	$smbconf .= "valid users =";
-	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` = $JaneSettingsGroupID[$i])";
+	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` IN (SELECT JaneGroupID from janeGroups where JaneGroupName = '$GroupName')";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
@@ -344,8 +342,8 @@ foreach($JaneSettingsGroupName as $GroupName) {
 				$smbconf .= " $tmp";
 			}
 		}
+		$result->free();
 	}
-	$result->free();
 	$smbconf .= "\n";
 	$i = $i + 1;
 }
