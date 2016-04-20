@@ -1,18 +1,25 @@
 <?php
-$sql = "SELECT JaneSettingsNickName,JaneSettingsWHERE FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
+$sql = "SELECT `JaneSettingsNickName`,`JaneSettingsWHERE`,`JaneSettingsGroupID` FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID' LIMIT 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
-	// output data of each row
 	while($row = $result->fetch_assoc()) {
 		$JaneSettingsNickName = trim($row["JaneSettingsNickName"]);
 		$JaneSettingsWHERE = trim($row["JaneSettingsWHERE"]);
+		$tmp = trim($row["JaneSettingsGroupID"]);
+		$sql = "SELECT `JaneGroupName` FROM `janeGroups` WHERE `JaneGroupID` = $tmp LIMIT 1";
+		$result2 = $link->query($sql); if ($result2->num_rows > 0) {
+			while($row2 = $result2->fetch_assoc()) {
+				$JaneSettingsGroupName = trim($row2["JaneGroupName"]);
+			}
+		}
+		$result2->free();
 	}
 }
+$result->free();
 
-$sql = "SELECT * FROM janeAD WHERE JaneSettingsID = '$JaneSettingsID' LIMIT 1";
+$sql = "SELECT * FROM `janeAD` WHERE `JaneSettingsID` = '$JaneSettingsID' LIMIT 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
-	// output data of each row
 	while($row = $result->fetch_assoc()) {
 		$ActionCreate = trim($row["ActionCreate"]);
 		$ActionDisable = trim($row["ActionDisable"]);
@@ -294,7 +301,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 	
 
-	$sql = "SELECT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
+	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		// output data of each row
@@ -333,7 +340,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	
 
 			// Write commands for this user, for this setting, to the setting's file.
-			$file = $PathToSMBShares . "$JaneSettingsNickName/" .  $JaneSettingsNickName . ".ps1";
+			$file = $PathToSMBShares . "$JaneSettingsGroupName/" .  $JaneSettingsNickName . ".ps1";
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;	
@@ -348,7 +355,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 if ($ActionDisable != "" && $ActionDisableText != "") {
 	//make sure user exists first (powershell).
 	 $COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "Disable-ADAccount -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n" . "echo \"This user does not exist.\"" . "\r\n" . "}" . "\r\n";
-	$sql = "SELECT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
+	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		// output data of each row
@@ -378,7 +385,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			$ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
 			// Write commands for this user, for this setting, to the setting's file.
-			$file = $PathToSMBShares . "$JaneSettingsNickName/" . $JaneSettingsNickName . ".ps1";
+			$file = $PathToSMBShares . "$JaneSettingsGroupName/" . $JaneSettingsNickName . ".ps1";
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;
@@ -392,7 +399,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 if ($ActionDelete != "" && $ActionDeleteText != "") {
 	//make sure user exists first (powershell).
          $COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "Remove-ADUser -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n" . "echo \"This user does not exist.\"" . "\r\n" . "}" . "\r\n";
-        $sql = "SELECT userID,userImportedID,userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword FROM userDataToImport WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
+        $sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
                 // output data of each row
@@ -422,7 +429,7 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         $ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
                         // Write commands for this user, for this setting, to the setting's file.
-                        $file = $PathToSMBShares . "$JaneSettingsNickName/" . $JaneSettingsNickName . ".ps1";
+                        $file = $PathToSMBShares . "$JaneSettingsGroupName/" . $JaneSettingsNickName . ".ps1";
                         if (file_exists($file)) {
                                 $current = file_get_contents($file);
                                 $current = $current . $ThisCOMMAND;

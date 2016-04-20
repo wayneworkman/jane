@@ -267,30 +267,30 @@ foreach ($files as $file) {
 
 // If it exists in the DB but not locally, make it.
 $i=0;
-foreach($JaneSettingsNickName as $NickName) {
+foreach($JaneSettingsGroupName as $GroupName) {
 	$found = "false";
 	foreach($JaneSettingDirs as $dir) {
-		if ($NickName == $dir) {
+		if ($GroupName == $dir) {
 			$found = "true";
 			break;
 		}
 	}
 	if ($found == "false") {
 		// Make user here
-		if ($JaneSettingsNickName[$i] != "") {
-			$command = "mkdir $PathToSMBShares$JaneSettingsNickName[$i]";
+		if ($JaneSettingsGroupName[$i] != "") {
+			$command = "mkdir $PathToSMBShares$JaneSettingsGroupName[$i]";
 			echo shell_exec($command);
-			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsNickName[$i]";
+			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsGroupName[$i]";
                         echo shell_exec($command);
-			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsNickName[$i]";
+			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsGroupName[$i]";
 			echo shell_exec($command);
 		}
 	} else {
 		if ($JaneSettingsNickName[$i] != "") {
 			//Here, the directory already exists and should be there, but we are going to reset ownership to the proper ownership.
-			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsNickName[$i]";
+			$command = "chown -R root:$JaneSettingsGroupName[$i] $PathToSMBShares$JaneSettingsGroupName[$i]";
 			echo shell_exec($command);
-			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsNickName[$i]";
+			$command = "chmod -R 770 $PathToSMBShares$JaneSettingsGroupName[$i]";
 			echo shell_exec($command);
 		}
 	}
@@ -326,9 +326,9 @@ $smbconf .= "valid users = jane\n";
 
 
 
-foreach($JaneSettingsNickName as $NickName) {
-	$smbconf .= "[$NickName]\n";
-	$smbconf .= "path = $PathToSMBShares$NickName\n";
+foreach($JaneSettingsGroupName as $GroupName) {
+	$smbconf .= "[$GroupName]\n";
+	$smbconf .= "path = $PathToSMBShares$GroupName\n";
 	$smbconf .= "read only = no\n";
 	$smbconf .= "hosts allow = $JaneSettingsSMBallowedIP[$i]\n";
 	$smbconf .= "create mode = 0777\n";
