@@ -81,7 +81,6 @@ if ($result->num_rows == 0) {
 		//redirect to login screen.
 		session_unset();
 		session_destroy();
-		$link->close();
 		$NextURL="login.php";
 		header("Location: $NextURL");
 	}
