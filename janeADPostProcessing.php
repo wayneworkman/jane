@@ -6,10 +6,11 @@ if ($SessionIsVerified == "1") {
 	$JaneSettingsID = $link->real_escape_string(htmlspecialchars_decode(trim($_SESSION['JaneSettingsID'])));
 
 	if ($isAdministrator == 1) {
-		$sql = "SELECT * FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID'";
+		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID'";
 	} else {
-		$sql = "SELECT * FROM janeSettings WHERE JaneSettingsID = '$JaneSettingsID' and JaneSettingsGroupID = (SELECT gID FROM janeUserGroupAssociation WHERE uID = '$JaneUserID')";
+		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID' and `JaneSettingsGroupID` IN (SELECT `gID` FROM `janeUserGroupAssociation` WHERE `uID` = '$JaneUserID')";
 	}
+	echo "$sql <br>\n";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 
@@ -111,7 +112,7 @@ if ($SessionIsVerified == "1") {
 
 
 
-		$sql = "SELECT * FROM janeAD WHERE JaneSettingsID = '$JaneSettingsID'";
+		$sql = "SELECT * FROM `janeAD` WHERE `JaneSettingsID` = '$JaneSettingsID'";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			// Record exists, UPDATE
