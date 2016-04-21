@@ -1,6 +1,4 @@
 <?php
-include 'localVars.php';
-include 'connect2db.php';
 
 
 //Allowed characters within user data:
