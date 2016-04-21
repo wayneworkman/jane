@@ -125,6 +125,15 @@ if ($result->num_rows > 0) {
 }
 
 
+// Add usernames to list of groups not to distrub as user's default groups should not be distrubed while the user exists.
+foreach($JaneUsernames as $JaneUsername) {
+	//This is a valid user's group, don't mess with it.
+	$DoNotDisturbList[] = $JaneUsername;
+}
+
+
+
+
 $localGroups = shell_exec('cut -d: -f1 /etc/group');
 $SystemLocalGroups = array();
 foreach(preg_split("/((\r?\n)|(\r\n?))/", $localGroups) as $group){
@@ -152,6 +161,9 @@ if ($result->num_rows > 0) {
         }
 	$result->free();
 }
+
+
+
 
 
 // Groups in the database that do not exist locally need created.
@@ -260,8 +272,19 @@ foreach($JaneSettingsGroupName as $GroupName) {
 			break;
 		}
 	}
+	$isUserGroup = "false";
+	foreach($JaneUsernames as $JaneUsername) {
+		if ($GroupName == $JaneUsername) {
+			//This is a user group, don't make a directory for it.
+			$isUserGroup = "true";
+			break;
+		}
+        }
+	if ($isUserGroup == "true") {
+		continue;
+	}
 	if ($found == "false") {
-		// Make user here
+		// Make directory here.
 		if ($GroupName != "") {
 			$command = "mkdir $PathToSMBShares$GroupName";
 			echo shell_exec($command);
@@ -321,7 +344,7 @@ foreach($JaneSettingsGroupName as $GroupName) {
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
-			$JaneSettingsSMBallowedIP = trim($row["JaneSettingsSMBallowedIP"]) . " ";
+			$JaneSettingsSMBallowedIP .= trim($row["JaneSettingsSMBallowedIP"]) . " ";
 		}
 		$result->free();
 	}
@@ -333,7 +356,7 @@ foreach($JaneSettingsGroupName as $GroupName) {
 	$smbconf .= "directory mode = 0777\n";
 	$smbconf .= "writable = yes\n";
 	$smbconf .= "valid users =";
-	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` IN (SELECT JaneGroupID from janeGroups where JaneGroupName = '$GroupName')";
+	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` IN (SELECT JaneGroupID from janeGroups where JaneGroupName = '$GroupName'))";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
