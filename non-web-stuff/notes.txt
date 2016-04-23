@@ -1,9 +1,17 @@
-Fill the "LocalUsersNotToDelete" table during install with 
-cut -d: -f1 /etc/passwd
+
+Need to add these to admin's home page. The backend is already able to do handle these things, just need to create the front end for them.
+
+Delete User
+Disable User
+Remove User From Group
+Delete Group
+Delete Settings-Set
+List All Users in Each Group
+List All Groups A User Is In
+Block IP
+Modify Settings-Set Name,SMB Allowed IP, WHERE, and Group for Admins-only.
 
 
-Add user to secondary group:
-usermod -a -G <groupname> username
 
 
 Windows Server supports different levels of script authentication:
@@ -14,4 +22,9 @@ Windows Server supports different levels of script authentication:
 	Unrestricted - No restrictions; all Windows PowerShell scripts can be run.
 
 Linux can sign these scripts and authenticate in this manner. Not within the scope of a 0.01 release - but absolutely going to be integrated in future versions.
+
+
+
+
+
 
