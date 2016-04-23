@@ -1,7 +1,6 @@
 Need to add these to admin's home page. The backend is already able to do handle these things, just need to create the front end for them.
 
-Enable User
-Remove User From Group
+
 Delete Group
 Delete Settings-Set
 List All Users in Each Group
