@@ -279,6 +279,49 @@ if ($SessionIsVerified == "1") {
 
 
 
+
+
+		echo "<div>";
+		echo "<form action=\"DeleteUserFromGroup.php\" method=\"post\">";
+		echo "Delete User From Group<br>";
+		echo "<p class=\"tab\">";
+		echo "Group name:<br>";
+		echo "<select name='gID'>";
+		echo "<option value='0'>Pick Group</option>";
+		$sql = "SELECT JaneGroupID,JaneGroupName from janeGroups";
+		$result = $link->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
+			}
+		} else {
+			echo "<option value='no_groups'>no_settings</option>";
+		}
+		echo "</select><br>";
+		echo "<br>";
+		echo "Username:<br>";
+		echo "<select name='uID'>";
+		echo "<option value='0'>Pick User</option>";
+		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
+		$result = $link->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "<option value='" . trim($row['JaneUserID']) . "'>" . trim($row['JaneUsername']) . "</option>";
+			}
+		} else {
+			echo "<option value='no_users'>no_users</option>";
+		}
+		echo "</select><br>";
+		echo "<br>";
+		echo "<input type=\"submit\">";
+		echo "</form>";
+		echo "</div>";
+
+
+
+
+
+
 		echo "<div>";
 		echo "<form action=\"DeleteUser.php\" method=\"post\">";
 		echo "Delete User<br>";

@@ -7,22 +7,21 @@ if ($SessionIsVerified == "1") {
 
 
 		// Do actions here.
-		$MyVar1 = $link->real_escape_string(trim($_REQUEST['MyVar1']));
-		$MyVar2 = $link->real_escape_string(trim($_REQUEST['MyVar2']));
+		$uID = $link->real_escape_string(trim($_REQUEST['uID']));
+		$gID = $link->real_escape_string(trim($_REQUEST['gID']));
 
-		$sql = "INSERT INTO SomeTable (ColumnName1,ColumnName2) VALUES ('$MyVar1','$MyVar2')";
-
-
-		if ($link->query($sql)) {
-			// good, send back to jane.php
-			$NextURL="jane.php";
-			header("Location: $NextURL");
-		} else {
-			// Error
-			$link->close();
-			die ($SiteErrorMessage);
-		}	
-
+		$sql = "DELETE FROM `janeUserGroupAssociation` WHERE `uID` = '$uID' AND `gID` = '$gID'";
+		if ($uID != "" && $gID != "") {
+			if ($link->query($sql)) {
+				// good, send back to jane.php
+				$NextURL="jane.php";
+				header("Location: $NextURL");
+			} else {
+				// Error
+				$link->close();
+				die ($SiteErrorMessage);
+			}	
+		}
 
 
 
