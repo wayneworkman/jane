@@ -25,14 +25,15 @@ if ($SessionIsVerified == "1") {
 
 
 
+		} else {
+			// not an admin, redirect to jane.php
+			$NextURL="jane.php";
+			header("Location: $NextURL");
+		}
 	} else {
-		// not an admin, redirect to jane.php
-		$NextURL="jane.php";
+		$NextURL="login.php";
 		header("Location: $NextURL");
 	}
-} else {
-	$NextURL="login.php";
-	header("Location: $NextURL");
 }
 ?>
 

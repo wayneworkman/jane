@@ -1,4 +1,3 @@
-
 Need to add these to admin's home page. The backend is already able to do handle these things, just need to create the front end for them.
 
 Delete User
@@ -15,8 +14,6 @@ Show Active Sessions
 Modify Settings-Set Name,SMB Allowed IP, WHERE, and Group for Admins-only.
 
 
-
-
 Windows Server supports different levels of script authentication:
 
 	Restricted - No scripts can be run. Windows PowerShell can be used only in interactive mode.
@@ -25,9 +22,3 @@ Windows Server supports different levels of script authentication:
 	Unrestricted - No restrictions; all Windows PowerShell scripts can be run.
 
 Linux can sign these scripts and authenticate in this manner. Not within the scope of a 0.01 release - but absolutely going to be integrated in future versions.
-
-
-
-
-
-

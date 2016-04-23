@@ -275,6 +275,34 @@ if ($SessionIsVerified == "1") {
 		echo "<input type=\"submit\">";
 		echo "</form>";
 		echo "</div>";
+
+
+
+
+		echo "<div>";
+		echo "<form action=\"DeleteUser.php\" method=\"post\">";
+		echo "Delete User<br>";
+		echo "<p class=\"tab\">";
+		echo "<select name='uID'>";
+		echo "<option value='0'>Pick User</option>";
+		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
+		$result = $link->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "<option value='" . trim($row['JaneUserID']) . "'>" . trim($row['JaneUsername']) . "</option>";
+			}
+		} else {
+			echo "<option value='no_users'>no_users</option>";
+		}
+		echo "</select><br>";
+		echo "<br>";
+		echo "<input type=\"submit\">";
+		echo "</form>";
+		echo "</div>";
+
+
+
+
 	}
 	echo "<br>";
 	echo "</body>";
