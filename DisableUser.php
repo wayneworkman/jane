@@ -9,7 +9,7 @@ if ($SessionIsVerified == "1") {
 		// Do actions here.
 		$uID = $link->real_escape_string(trim($_REQUEST['uID']));
 
-		$sql = "UPDATE `janeUsers` SET `JaneUserEnabled` - '0' WHERE `JaneUserID` = '$uID'";
+		$sql = "UPDATE `janeUsers` SET `JaneUserEnabled` = '0' WHERE `JaneUserID` = '$uID'";
 
 
 		if ($link->query($sql)) {
