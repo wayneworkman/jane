@@ -43,6 +43,18 @@ $adminActionNames[] = $AddSelectedUserToSelectedGroup;
 $RemoveSelectedUserFromSelectedGroup = "Remove Selected User From Selected Group";
 $adminActionNames[] = $RemoveSelectedUserFromSelectedGroup;
 
+$BlockIP = "Block IP";
+$adminActionNames[] = $BlockIP;
+
+$UnblockIP = "Unblock IP";
+$adminActionNames[] = $UnblockIP;
+
+
+
+
+
+
+
 
 
 ?>

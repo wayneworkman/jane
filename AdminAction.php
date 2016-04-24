@@ -108,6 +108,18 @@ if ($SessionIsVerified == "1") {
 					doQuery();
 				}
 				break;
+			case $BlockIP:
+				if ($adminActionText != "") {
+					$sql = "INSERT INTO `blockedIPs` (`BlockedIP`) VALUES ('$adminActionText')";
+					doQuery();
+				}
+				break;
+			case $UnblockIP:
+				if ($adminActionText != "") {
+					$sql = "DELETE FROM `blockedIPs` WHERE `BlockedIP` = '$adminActionText'";
+					doQuery();
+				}
+				break;
 		}
 
 
