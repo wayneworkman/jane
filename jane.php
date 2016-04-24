@@ -9,41 +9,19 @@ if ($SessionIsVerified == "1") {
 	echo "<meta charset=\"UTF-8\"/>";
 	echo "<title>Jane</title>";
 	echo "<style>";
-	echo "div{width:500px;padding:10px;border:5px solid gray;margin:0}";
+	echo "div{padding:10px;border:5px solid gray;margin:0}";
 	echo "<!--";
 	echo ".tab { margin-left: 40px; }";
 	echo "-->";
-	echo "div.absolute {";
-	echo "position: absolute;";
-	echo "right: 20px;";
-	echo "width: 700px;";
-	echo "height: 0px;";
-	echo "border: 0px solid #8AC007;";
-	echo "}";
 	echo "</style>";
 	echo "</head>";
 	echo "<body>";
 	
 	
 
-	echo "<div class=\"absolute\">";
+	echo "<div>";
 	echo "<a href=\"logout.php\">Log Out</a><br>";
 	echo "<a href=\"LICENSE\">License</a><br><br>";
-	if ($isAdministrator == 1) {
-		//Recent bad login attempts.
-		echo "<font color=\"red\">Recent bad login attempts:</font><br>";
-		$sql = "SELECT badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT FROM badLoginAttempts ORDER BY badREQUEST_TIME asc LIMIT 40";
-		$result = $link->query($sql);
-		if ($result->num_rows > 0) {
-			while($row = $result->fetch_assoc()) {
-				echo "<br>";
-				echo $row["badUsername"] . "<br>";
-				echo $row["badREMOTE_ADDR"] . "<br>";
-				echo $row["badHTTP_USER_AGENT"] . "<br>";
-			}
-		}
-
-	}
 	echo "</div>";
 
 
@@ -115,7 +93,57 @@ if ($SessionIsVerified == "1") {
 
 	if ($isAdministrator == 1) {
 
+		echo "<div>";
+                echo "<form action=\"NewSettings.php\" method=\"post\">";
+                echo "New Settings<br>";
+                echo "<p class=\"tab\">";
+                echo "<br>";
+		echo "Settings Nickname:<br>";
+                echo "<input type=\"text\" name=\"NewSettingsNickName\"><br>";
+                echo "<br>";
+		echo "Settings Type:<br>";
+		echo "<select name='NewSettingsType'>";
+		echo "<option value='0'>Pick Settings Type</option>";
+		$sql = "SELECT SettingsTypeID,SettingsTypeName from janeSettingsTypes";
+		$result = $link->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "<option value='" . trim($row['SettingsTypeID']) . "'>" . trim($row['SettingsTypeName']) . "</option>";
+                        }
+			$result->free();
+		} else {
+			echo "<option value='no_users'>no_settings</option>";
+		}
+		echo "</select><br>";
+		echo "<br>";
+		echo "Settings Group:<br>";
+		echo "<select name='NewSettingsGroup'>";
+                echo "<option value='0'>Pick Group</option>";
+                $sql = "SELECT JaneGroupID,JaneGroupName from janeGroups";
+                $result = $link->query($sql);
+                if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
+                        }
+			$result->free();
+                } else {
+                        echo "<option value='no_groups'>no_settings</option>";
+                }
+                echo "</select><br>";
+                echo "<br>";
 
+		echo "IP Allowed Access:<br>";
+		echo "<input type=\"text\" name=\"JaneSettingsSMBallowedIP\"><br>";
+		echo "<br>";
+
+		echo "WHERE:<br>";
+		echo "<input type=\"text\" name=\"JaneSettingsWHERE\"><br>";
+		echo "The WHERE setting is included as part of the SQL SELECT statement used with selecting data from the bulk data table. Any data matching this WHERE clause will be included in processing for this group of settings. After each returned record's successful processing, these records are deleted from the bulk table.<br>";
+                echo "<br>";
+
+		echo "<input type=\"submit\">";
+		echo "</form>";
+		echo "</div>";
 
 		
 
@@ -128,7 +156,13 @@ if ($SessionIsVerified == "1") {
 		
 		echo "Text for selected action:<br><input type=\"text\" name=\"adminActionText\"><br>";
 		echo "<br>";
-	
+
+
+		$GroupIDs = array();
+		$GroupNames = array();
+		$UserIDs = array();
+		$UserNames = array();
+
 		echo "<select name='uID'>";
 		echo "<option value=''>Pick User</option>";
 		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
@@ -136,8 +170,10 @@ if ($SessionIsVerified == "1") {
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
 				echo "<option value='" . trim($row['JaneUserID']) . "'>" . trim($row['JaneUsername']) . "</option>";
+				$UserIDs[] = trim($row['JaneUserID']);
+				$UserNames[] = trim($row['JaneUsername']);
 			}
-			
+			$result->free();
 		} else {
 			echo "<option value='no_users'>no_users</option>";
 		}
@@ -150,7 +186,10 @@ if ($SessionIsVerified == "1") {
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
 				echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
+				$GroupIDs[] = trim($row['JaneGroupID']);
+				$GroupNames[] = trim($row['JaneGroupName']);
 			}
+			$result->free();
 		} else {
 			echo "<option value='no_groups'>no_settings</option>";
 		}
@@ -172,55 +211,79 @@ if ($SessionIsVerified == "1") {
 
 
 
+
+
 		echo "<div>";
-                echo "<form action=\"NewSettings.php\" method=\"post\">";
-                echo "New Settings<br>";
-                echo "<p class=\"tab\">";
-                echo "<br>";
-		echo "Settings Nickname:<br>";
-                echo "<input type=\"text\" name=\"NewSettingsNickName\"><br>";
-                echo "<br>";
-		echo "Settings Type:<br>";
-		echo "<select name='NewSettingsType'>";
-		echo "<option value='0'>Pick Settings Type</option>";
-		$sql = "SELECT SettingsTypeID,SettingsTypeName from janeSettingsTypes";
+		echo "<form>";
+		echo "Lists and Recent things<br>";
+		echo "<p class=\"tab\">";
+
+		// List group's users, and user's groups.	
+
+
+		echo "List of all groups, and the users in each:<br><br>";
+		$i = 0;
+		foreach ($GroupIDs as $GroupID) {
+			$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` IN (SELECT `uID` FROM `janeUserGroupAssociation` WHERE `gID` = '$GroupID')";
+			$result = $link->query($sql);
+			echo "&emsp;&emsp;$GroupNames[$i]<br>";
+			if ($result->num_rows > 0) {
+				while($row = $result->fetch_assoc()) {
+					echo "&emsp;&emsp;&emsp;&emsp;" . $row["JaneUsername"] . "<br>";
+				}
+				$result->free();
+			}
+			echo "<br>";
+			$i = $i + 1;
+		}
+
+
+		echo "List of all users, and the groups they are in.<br><br>";
+		$i = 0;
+                foreach ($UserIDs as $UserID) {
+                        $sql = "SELECT `JaneGroupName` FROM `janeGroups` WHERE `JaneGroupID` IN (SELECT `gID` FROM `janeUserGroupAssociation` WHERE `uID` = '$UserID')";
+                        $result = $link->query($sql);
+                        echo "&emsp;&emsp;$UserNames[$i]<br>";
+                        if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                        echo "&emsp;&emsp;&emsp;&emsp;" . $row["JaneGroupName"] . "<br>";
+                                }
+				$result->free();
+                        }
+                        echo "<br>";
+                        $i = $i + 1;
+                }
+
+
+		$sql = "SELECT `BlockedIP` FROM `blockedIPs`";
+		$result = $link->query($sql);
+		echo "List of blocked IPs:<br>";
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "&emsp;&emsp;" . $row["BlockedIP"] . "<br>";
+			}
+			$result->free();
+		}
+		echo "<br>";
+
+
+
+
+		//Recent bad login attempts.
+		echo "<font color=\"red\">Recent bad login attempts:</font><br>";
+		$sql = "SELECT badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT FROM badLoginAttempts ORDER BY badREQUEST_TIME asc LIMIT 40";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "<option value='" . trim($row['SettingsTypeID']) . "'>" . trim($row['SettingsTypeName']) . "</option>";
-                        }
-		} else {
-			echo "<option value='no_users'>no_settings</option>";
-		}
-		echo "</select><br>";
-		echo "<br>";
-		echo "Settings Group:<br>";
-		echo "<select name='NewSettingsGroup'>";
-                echo "<option value='0'>Pick Group</option>";
-                $sql = "SELECT JaneGroupID,JaneGroupName from janeGroups";
-                $result = $link->query($sql);
-                if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                                echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
-                        }
-                } else {
-                        echo "<option value='no_groups'>no_settings</option>";
+				echo "<br>";
+				echo "&emsp;&emsp;" . $row["badUsername"] . "<br>";
+				echo "&emsp;&emsp;" . $row["badREMOTE_ADDR"] . "<br>";
+				echo "&emsp;&emsp;" . $row["badHTTP_USER_AGENT"] . "<br>";
+			}
+			$result->free();
                 }
-                echo "</select><br>";
-                echo "<br>";
-
-		echo "IP Allowed Access:<br>";
-		echo "<input type=\"text\" name=\"JaneSettingsSMBallowedIP\"><br>";
-		echo "<br>";
-
-		echo "WHERE:<br>";
-		echo "<input type=\"text\" name=\"JaneSettingsWHERE\"><br>";
-		echo "The WHERE setting is included as part of the SQL SELECT statement used with selecting data from the bulk data table. Any data matching this WHERE clause will be included in processing for this group of settings. After each returned record's successful processing, these records are deleted from the bulk table.<br>";
-                echo "<br>";
-
-		echo "<input type=\"submit\">";
-		echo "</form>";
 		echo "</div>";
+		echo "</form>";
 
 	}
 	echo "<br>";

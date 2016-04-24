@@ -2,11 +2,6 @@ Need to add these to admin's home page. The backend is already able to do handle
 
 
 Delete Settings-Set
-List All Users in Each Group
-List All Groups A User Is In
-Block IP
-un-block IP
-list blocked IPs
 Show Active Sessions
 Modify Settings-Set Name,SMB Allowed IP, WHERE, and Group for Admins-only.
 
