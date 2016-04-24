@@ -12,16 +12,36 @@ $BadLoginError = "ERROR: Username and/or password is no good.";
 $IPBlockedMessage = "ERROR: You are blocked. Report this to your Jane administrator and try again later.";
 
 $adminActionNames = array();
-$adminActionNames[] = "Add New User";
-$adminActionNames[] = "Delete Selected User";
-$adminActionNames[] = "Enable Selected User";
-$adminActionNames[] = "Disable Selected User";
-$adminActionNames[] = "Reset Selected Users Jane Password to \"$PasswordDefault\"";
-$adminActionNames[] = "Reset Selected Users SMB Password to \"$PasswordDefault\"";
-$adminActionNames[] = "Create New Group";
-$adminActionNames[] = "Delete Selected Group";
-$adminActionNames[] = "Add Selected User To Selected Group";
-$adminActionNames[] = "Remove Selected User From Selected Group";
+
+$AddNewUser = "Add New User";
+$adminActionNames[] = $AddNewUser;
+
+$DeleteSelectedUser = "Delete Selected User";
+$adminActionNames[] = $DeleteSelectedUser;
+
+$EnableSelectedUser = "Enable Selected User";
+$adminActionNames[] = $EnableSelectedUser;
+
+$DisableSelectedUser = "Disable Selected User";
+$adminActionNames[] = $DisableSelectedUser;
+
+$ResetSelectedUsersJanePassword = "Reset Selected Users Jane Password to $PasswordDefault";
+$adminActionNames[] = $ResetSelectedUsersJanePassword;
+
+$ResetSelectedUsersSMBPassword = "Reset Selected Users SMB Password to $PasswordDefault";
+$adminActionNames[] = $ResetSelectedUsersSMBPassword;
+
+$CreateNewGroup = "Create New Group";
+$adminActionNames[] = $CreateNewGroup;
+
+$DeleteSelectedGroup = "Delete Selected Group";
+$adminActionNames[] = $DeleteSelectedGroup;
+
+$AddSelectedUserToSelectedGroup = "Add Selected User To Selected Group";
+$adminActionNames[] = $AddSelectedUserToSelectedGroup;
+
+$RemoveSelectedUserFromSelectedGroup = "Remove Selected User From Selected Group";
+$adminActionNames[] = $RemoveSelectedUserFromSelectedGroup;
 
 
 
