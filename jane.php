@@ -271,7 +271,7 @@ if ($SessionIsVerified == "1") {
 
 		//Recent bad login attempts.
 		echo "<font color=\"red\">Recent bad login attempts:</font><br>";
-		$sql = "SELECT badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT FROM badLoginAttempts ORDER BY badREQUEST_TIME asc LIMIT 40";
+		$sql = "SELECT badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT FROM badLoginAttempts ORDER BY badREQUEST_TIME desc LIMIT 40";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
