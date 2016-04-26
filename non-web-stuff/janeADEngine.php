@@ -404,7 +404,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 
 
-	$COMMAND = $Command . "} else {" . "\r\n";
+	$COMMAND = $COMMAND . "} else {" . "\r\n";
 	
 
 
