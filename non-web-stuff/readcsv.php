@@ -40,6 +40,9 @@ if (file_exists($PathToCSV)) {
 		}
 	}
 	fclose($csv) or die("can't close file");
+	// below line sets aside old import files, and is temporary.
+	copy($PathToCSV, $PathToCSV . "." . date('Y-m-d'));
+	// below line deletes current import file.
 	unlink($PathToCSV);
 }
 ?>
