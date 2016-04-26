@@ -870,7 +870,7 @@ if ($SessionIsVerified == 1) {
             Note: If the string value provided is not terminated with a '$' character, the system adds one if needed.
             Default Value:
             Data Type: string">
-            SamAccountName
+            <font color="red">*</font>SamAccountName
         </span><br>
         <input type="text" name="SamAccountName" value="<?php echo htmlspecialchars($_SESSION['SamAccountName']); ?>"><br>
     </div>

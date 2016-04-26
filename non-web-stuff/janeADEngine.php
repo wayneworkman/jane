@@ -102,11 +102,313 @@ if ($result->num_rows > 0) {
 if ($ActionCreate != "" && $ActionCreateText != "") {
 	//make sure user does NOT exist first (powershell).
 
-	$COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "echo \"This user already exists. Making sure it's enabled.\"" . "\r\n" . "Enable-ADAccount -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n";
+	$COMMAND = "if (Get-aduser $SamAccountName) {\r\n    echo \"This account already exists. Making sure it's enabled and updating its parameters.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
+
+
+
+	//Here, for existing users, update their information according to the settings set.
+	$COMMAND = $COMMAND . "    Set-ADUser ";
+	
+	if ($Name != "") {
+		$COMMAND = $COMMAND . "-Name " . $Name . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Name $null ';
+	}
+	if ($AccountExpirationDate != "") {
+		$COMMAND = $COMMAND . "-AccountExpirationDate " . $AccountExpirationDate . " ";
+	} else {
+		$COMMAND = $COMMAND . '-AccountExpirationDate $null ';
+	}
+	if ($AccountNotDelegated != "") {
+		$COMMAND = $COMMAND . "-AccountNotDelegated " . $AccountNotDelegated . " ";
+	} else {
+		$COMMAND = $COMMAND . '-AccountNotDelegated $null ';
+	}
+	if ($AccountPassword != "") {
+		$COMMAND = $COMMAND . "-AccountPassword " . $AccountPassword . " ";
+	} else {
+		$COMMAND = $COMMAND . '-AccountPassword $null ';
+	}
+	if ($AllowReversiblePasswordEncryption != "") {
+		$COMMAND = $COMMAND . "-AllowReversiblePasswordEncryption " . $AllowReversiblePasswordEncryption . " ";
+	} else {
+		$COMMAND = $COMMAND . '-AllowReversiblePasswordEncryption $null ';
+	}
+	if ($AuthType != "") {
+		$COMMAND = $COMMAND . "-AuthType " . $AuthType . " ";
+	} else {
+		$COMMAND = $COMMAND . '-AuthType $null ';
+	}
+	if ($CannotChangePassword != "") {
+		$COMMAND = $COMMAND . "-CannotChangePassword " . $CannotChangePassword . " ";
+	} else {
+		$COMMAND = $COMMAND . '-CannotChangePassword $null ';
+	}
+	if ($Certificates != "") {
+		$COMMAND = $COMMAND . "-Certificates " . $Certificates . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Certificates $null ';
+	}
+	if ($ChangePasswordAtLogon != "") {
+		$COMMAND = $COMMAND . "-ChangePasswordAtLogon " . $ChangePasswordAtLogon . " ";
+	} else {
+		$COMMAND = $COMMAND . '-ChangePasswordAtLogon $null ';
+	}
+	if ($City != "") {
+		$COMMAND = $COMMAND . "-City " . $City . " ";
+	} else {
+		$COMMAND = $COMMAND . '-City $null ';
+	}
+	if ($Company != "") {
+		$COMMAND = $COMMAND . "-Company " . $Company . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Company $null ';
+	}
+	if ($Country != "") {
+		$COMMAND = $COMMAND . "-Country " . $Country . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Country $null ';
+	}
+	if ($Credential != "") {
+		$COMMAND = $COMMAND . "-Credential " . $Credential . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Credential $null ';
+	}
+	if ($Department != "") {
+		$COMMAND = $COMMAND . "-Department " . $Department . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Department $null ';
+	}
+	if ($Description != "") {
+		$COMMAND = $COMMAND . "-Description " . $Description . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Description $null ';
+	}
+	if ($DisplayName != "") {
+		$COMMAND = $COMMAND . "-DisplayName " . $DisplayName . " ";
+	} else {
+		$COMMAND = $COMMAND . '-DisplayName $null ';
+	}
+	if ($Division != "") {
+		$COMMAND = $COMMAND . "-Division " . $Division . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Division $null ';
+	}
+	if ($EmailAddress != "") {
+		$COMMAND = $COMMAND . "-EmailAddress " . $EmailAddress . " ";
+	} else {
+		$COMMAND = $COMMAND . '-EmailAddress $null ';
+	}
+	if ($EmployeeID != "") {
+		$COMMAND = $COMMAND . "-EmployeeID " . $EmployeeID . " ";
+	} else {
+		$COMMAND = $COMMAND . '-EmployeeID $null ';
+	}
+	if ($EmployeeNumber != "") {
+		$COMMAND = $COMMAND . "-EmployeeNumber " . $EmployeeNumber . " ";
+	} else {
+		$COMMAND = $COMMAND . '-EmployeeNumber $null ';
+	}
+	if ($Enabled != "") {
+		$COMMAND = $COMMAND . "-Enabled " . $Enabled . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Enabled $null ';
+	}
+	if ($Fax != "") {
+		$COMMAND = $COMMAND . "-Fax " . $Fax . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Fax $null ';
+	}
+	if ($GivenName != "") {
+		$COMMAND = $COMMAND . "-GivenName " . $GivenName . " ";
+	} else {
+		$COMMAND = $COMMAND . '-GivenName $null ';
+	}
+	if ($HomeDirectory != "") {
+		$COMMAND = $COMMAND . "-HomeDirectory " . $HomeDirectory . " ";
+	} else {
+		$COMMAND = $COMMAND . '-HomeDirectory $null ';
+	}
+	if ($HomeDrive != "") {
+		$COMMAND = $COMMAND . "-HomeDrive " . $HomeDrive . " ";
+	} else {
+		$COMMAND = $COMMAND . '-HomeDrive $null ';
+	}
+	if ($HomePage != "") {
+		$COMMAND = $COMMAND . "-HomePage " . $HomePage . " ";
+	} else {
+		$COMMAND = $COMMAND . '-HomePage $null ';
+	}
+	if ($HomePhone != "") {
+		$COMMAND = $COMMAND . "-HomePhone " . $HomePhone . " ";
+	} else {
+		$COMMAND = $COMMAND . '-HomePhone $null ';
+	}
+	if ($Initials != "") {
+		$COMMAND = $COMMAND . "-Initials " . $Initials . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Initials $null ';
+	}
+	if ($Instance != "") {
+		$COMMAND = $COMMAND . "-Instance " . $Instance . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Instance $null ';
+	}
+	if ($LogonWorkstations != "") {
+		$COMMAND = $COMMAND . "-LogonWorkstations " . $LogonWorkstations . " ";
+	} else {
+		$COMMAND = $COMMAND . '-LogonWorkstations $null ';
+	}
+	if ($Manager != "") {
+		$COMMAND = $COMMAND . "-Manager " . $Manager . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Manager $null ';
+	}
+	if ($MobilePhone != "") {
+		$COMMAND = $COMMAND . "-MobilePhone " . $MobilePhone . " ";
+	} else {
+		$COMMAND = $COMMAND . '-MobilePhone $null ';
+	}
+	if ($Office != "") {
+		$COMMAND = $COMMAND . "-Office " . $Office . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Office $null ';
+	}
+	if ($OfficePhone != "") {
+		$COMMAND = $COMMAND . "-OfficePhone " . $OfficePhone . " ";
+	} else {
+		$COMMAND = $COMMAND . '-OfficePhone $null ';
+	}
+	if ($Organization != "") {
+		$COMMAND = $COMMAND . "-Organization " . $Organization . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Organization $null ';
+	}
+	if ($OtherAttributes != "") {
+		$COMMAND = $COMMAND . "-OtherAttributes " . $OtherAttributes . " ";
+	} else {
+		$COMMAND = $COMMAND . '-OtherAttributes $null ';
+	}
+	if ($OtherName != "") {
+		$COMMAND = $COMMAND . "-OtherName " . $OtherName . " ";
+	} else {
+		$COMMAND = $COMMAND . '-OtherName $null ';
+	}
+	if ($PassThru != "") {
+		$COMMAND = $COMMAND . "-PassThru " . $PassThru . " ";
+	} else {
+		$COMMAND = $COMMAND . '-PassThru $null ';
+	}
+	if ($PasswordNeverExpires != "") {
+		$COMMAND = $COMMAND . "-PasswordNeverExpires " . $PasswordNeverExpires . " ";
+	} else {
+		$COMMAND = $COMMAND . '-PasswordNeverExpires $null ';
+	}
+	if ($PasswordNotRequired != "") {
+		$COMMAND = $COMMAND . "-PasswordNotRequired " . $PasswordNotRequired . " ";
+	} else {
+		$COMMAND = $COMMAND . '-PasswordNotRequired $null ';
+	}
+	if ($Path != "") {
+		$COMMAND = $COMMAND . "-Path " . $Path . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Path $null ';
+	}
+	if ($POBox != "") {
+		$COMMAND = $COMMAND . "-POBox " . $POBox . " ";
+	} else {
+		$COMMAND = $COMMAND . '-POBox $null ';
+	}
+	if ($PostalCode != "") {
+		$COMMAND = $COMMAND . "-PostalCode " . $PostalCode . " ";
+	} else {
+		$COMMAND = $COMMAND . '-PostalCode $null ';
+	}
+	if ($ProfilePath != "") {
+		$COMMAND = $COMMAND . "-ProfilePath " . $ProfilePath . " ";
+	} else {
+		$COMMAND = $COMMAND . '-ProfilePath $null ';
+	}
+	if ($SamAccountName != "") {
+		$COMMAND = $COMMAND . "-SamAccountName " . $SamAccountName . " ";
+	} else {
+		$COMMAND = $COMMAND . '-SamAccountName $null ';
+	}
+	if ($ScriptPath != "") {
+		$COMMAND = $COMMAND . "-ScriptPath " . $ScriptPath . " ";
+	} else {
+		$COMMAND = $COMMAND . '-ScriptPath $null ';
+	}
+	if ($Server != "") {
+		$COMMAND = $COMMAND . "-Server " . $Server . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Server $null ';
+	}
+	if ($ServicePrincipalNames != "") {
+		$COMMAND = $COMMAND . "-ServicePrincipalNames " . $ServicePrincipalNames . " ";
+	} else {
+		$COMMAND = $COMMAND . '-ServicePrincipalNames $null ';
+	}
+	if ($SmartcardLogonRequired != "") {
+		$COMMAND = $COMMAND . "-SmartcardLogonRequired " . $SmartcardLogonRequired . " ";
+	} else {
+		$COMMAND = $COMMAND . '-SmartcardLogonRequired $null ';
+	}
+	if ($State != "") {
+		$COMMAND = $COMMAND . "-State " . $State . " ";
+	} else {
+		$COMMAND = $COMMAND . '-State $null ';
+	}
+	if ($StreetAddress != "") {
+		$COMMAND = $COMMAND . "-StreetAddress " . $StreetAddress . " ";
+	} else {
+		$COMMAND = $COMMAND . '-StreetAddress $null ';
+	}
+	if ($Surname != "") {
+		$COMMAND = $COMMAND . "-Surname " . $Surname . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Surname $null ';
+	}
+	if ($Title != "") {
+		$COMMAND = $COMMAND . "-Title " . $Title . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Title $null ';
+	}
+	if ($TrustedForDelegation != "") {
+		$COMMAND = $COMMAND . "-TrustedForDelegation " . $TrustedForDelegation . " ";
+	} else {
+		$COMMAND = $COMMAND . '-TrustedForDelegation $null ';
+	}
+	if ($Type != "") {
+		$COMMAND = $COMMAND . "-Type " . $Type . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Type $null ';
+	}
+	if ($UserPrincipalName != "") {
+		$COMMAND = $COMMAND . "-UserPrincipalName " . $UserPrincipalName . " ";
+	} else {
+		$COMMAND = $COMMAND . '-UserPrincipalName $null ';
+	}
+	if ($Confirm != "") {
+		$COMMAND = $COMMAND . "-Confirm " . $Confirm . " ";
+	} else {
+		$COMMAND = $COMMAND . '-Confirm $null ';
+	}
+	if ($WhatIf != "") {
+		$COMMAND = $COMMAND . "-WhatIf " . $WhatIf . " ";
+	} else {
+		$COMMAND = $COMMAND . '-WhatIf $null ';
+	}
+	$COMMAND = $COMMAND . "\r\n";
+
+
+
+
+	$COMMAND = $Command . "} else {" . "\r\n";
 	
 
 
-	$COMMAND = $COMMAND . "new-aduser ";
+	$COMMAND = $COMMAND . "    New-ADUser ";
 	
 	if ($Name != "") {
 		$COMMAND = $COMMAND . "-Name " . $Name . " ";
@@ -282,18 +584,18 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	if ($WhatIf != "") {
 		$COMMAND = $COMMAND . "-WhatIf " . $WhatIf . " ";
 	}
-	$COMMAND = $COMMAND . "\r\n\r\n";
+	$COMMAND = $COMMAND . "\r\n";
 
 
-	// here are some variables that are hard coded. This is the best and easiest way I can think of to do the groups at the moment.
+	// If users are to be added to a group, then the SamAccountName is required.
 	if ($Group1Name != "") {
-		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group1Name\" %UserName%" . "\r\n\r\n";
+		$COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group1Name\" $SamAccountName\r\n";
 	}
 	if ($Group2Name != "") {
-		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group2Name\" %UserName%" . "\r\n\r\n";
+		$COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group2Name\" $SamAccountName\r\n";
 	}
 	if ($Group3Name != "") {
-		$COMMAND = $COMMAND . "Add-ADGroupMember \"$Group3Name\" %UserName%" . "\r\n\r\n";
+		$COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group3Name\" $SamAccountName\r\n";
 	}
 	
 
@@ -354,7 +656,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 }
 if ($ActionDisable != "" && $ActionDisableText != "") {
 	//make sure user exists first (powershell).
-	 $COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "Disable-ADAccount -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n" . "echo \"This user does not exist.\"" . "\r\n" . "}" . "\r\n";
+	 $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
 	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
@@ -398,7 +700,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 }
 if ($ActionDelete != "" && $ActionDeleteText != "") {
 	//make sure user exists first (powershell).
-         $COMMAND = "if (Get-aduser %UserName%)" . "\r\n" . "{" . "\r\n" . "Remove-ADUser -Identity %UserName%" . "\r\n" . "}" . "\r\n" . "else" . "\r\n" . "{" . "\r\n" . "echo \"This user does not exist.\"" . "\r\n" . "}" . "\r\n";
+         $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
         $sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
