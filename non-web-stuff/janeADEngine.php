@@ -100,20 +100,37 @@ if ($result->num_rows > 0) {
 
 
 if ($ActionCreate != "" && $ActionCreateText != "") {
-	//make sure user does NOT exist first (powershell).
 
-	$COMMAND = "if (Get-aduser $SamAccountName) {\r\n    echo \"This account already exists. Making sure it's enabled and updating its parameters.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
+
+
+	//See if the user exists first. If the user does, update it and move it to the right spot. If not, create.
+	$COMMAND = "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
+	
+	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"This account already exists. Making sure it's enabled and updating its parameters.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
+
+	 //Here, we move a user to where they should be.
+	$COMMAND = $COMMAND . "    Get-ADUser $SamAccountName | Move-ADObject ";
+
+	if ($Path != "") {
+		$COMMAND = $COMMAND . "-TargetPath " . $Path . " ";
+	}
+	if ($AuthType != "") {
+		$COMMAND = $COMMAND . "-AuthType " . $AuthType . " ";
+	}
+	if ($Credential != "") {
+		$COMMAND = $COMMAND . "-Credential " . $Credential . " ";
+	}
+	if ($Server != "") {
+		$COMMAND = $COMMAND . "-Server " . $Server . " ";
+	}
+	$COMMAND = $COMMAND . "\r\n";
+
 
 
 
 	//Here, for existing users, update their information according to the settings set.
-	$COMMAND = $COMMAND . "    Set-ADUser ";
-	
-	if ($Name != "") {
-		$COMMAND = $COMMAND . "-Name " . $Name . " ";
-	} else {
-		$COMMAND = $COMMAND . '-Name $null ';
-	}
+	$COMMAND = $COMMAND . "    Get-ADUser -Identity $SamAccountName | Set-ADUser ";
+
 	if ($AccountExpirationDate != "") {
 		$COMMAND = $COMMAND . "-AccountExpirationDate " . $AccountExpirationDate . " ";
 	} else {
@@ -308,11 +325,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 		$COMMAND = $COMMAND . "-PasswordNotRequired " . $PasswordNotRequired . " ";
 	} else {
 		$COMMAND = $COMMAND . '-PasswordNotRequired $null ';
-	}
-	if ($Path != "") {
-		$COMMAND = $COMMAND . "-Path " . $Path . " ";
-	} else {
-		$COMMAND = $COMMAND . '-Path $null ';
 	}
 	if ($POBox != "") {
 		$COMMAND = $COMMAND . "-POBox " . $POBox . " ";
