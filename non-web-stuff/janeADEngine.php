@@ -109,7 +109,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"This account already exists. Making sure it's enabled and updating its parameters.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
 
 	 //Here, we move a user to where they should be.
-	$COMMAND = $COMMAND . "    Get-ADUser $SamAccountName | Move-ADObject ";
+	$COMMAND = $COMMAND . "    Get-ADUser -Identity $SamAccountName | Move-ADObject ";
 
 	if ($Path != "") {
 		$COMMAND = $COMMAND . "-TargetPath " . $Path . " ";
@@ -138,13 +138,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	if ($AccountNotDelegated != "") {
 		$COMMAND = $COMMAND . "-AccountNotDelegated " . $AccountNotDelegated . " ";
-	} else {
-		$COMMAND = $COMMAND . '-AccountNotDelegated $null ';
-	}
-	if ($AccountPassword != "") {
-		$COMMAND = $COMMAND . "-AccountPassword " . $AccountPassword . " ";
-	} else {
-		$COMMAND = $COMMAND . '-AccountPassword $null ';
 	}
 	if ($AllowReversiblePasswordEncryption != "") {
 		$COMMAND = $COMMAND . "-AllowReversiblePasswordEncryption " . $AllowReversiblePasswordEncryption . " ";
@@ -154,7 +147,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	if ($AuthType != "") {
 		$COMMAND = $COMMAND . "-AuthType " . $AuthType . " ";
 	} else {
-		$COMMAND = $COMMAND . '-AuthType $null ';
+		$COMMAND = $COMMAND . '-AuthType Negotiate ';
 	}
 	if ($CannotChangePassword != "") {
 		$COMMAND = $COMMAND . "-CannotChangePassword " . $CannotChangePassword . " ";
@@ -188,8 +181,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	if ($Credential != "") {
 		$COMMAND = $COMMAND . "-Credential " . $Credential . " ";
-	} else {
-		$COMMAND = $COMMAND . '-Credential $null ';
 	}
 	if ($Department != "") {
 		$COMMAND = $COMMAND . "-Department " . $Department . " ";
@@ -266,11 +257,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	} else {
 		$COMMAND = $COMMAND . '-Initials $null ';
 	}
-	if ($Instance != "") {
-		$COMMAND = $COMMAND . "-Instance " . $Instance . " ";
-	} else {
-		$COMMAND = $COMMAND . '-Instance $null ';
-	}
 	if ($LogonWorkstations != "") {
 		$COMMAND = $COMMAND . "-LogonWorkstations " . $LogonWorkstations . " ";
 	} else {
@@ -301,11 +287,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	} else {
 		$COMMAND = $COMMAND . '-Organization $null ';
 	}
-	if ($OtherAttributes != "") {
-		$COMMAND = $COMMAND . "-OtherAttributes " . $OtherAttributes . " ";
-	} else {
-		$COMMAND = $COMMAND . '-OtherAttributes $null ';
-	}
 	if ($OtherName != "") {
 		$COMMAND = $COMMAND . "-OtherName " . $OtherName . " ";
 	} else {
@@ -313,8 +294,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	if ($PassThru != "") {
 		$COMMAND = $COMMAND . "-PassThru " . $PassThru . " ";
-	} else {
-		$COMMAND = $COMMAND . '-PassThru $null ';
 	}
 	if ($PasswordNeverExpires != "") {
 		$COMMAND = $COMMAND . "-PasswordNeverExpires " . $PasswordNeverExpires . " ";
@@ -363,8 +342,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	if ($SmartcardLogonRequired != "") {
 		$COMMAND = $COMMAND . "-SmartcardLogonRequired " . $SmartcardLogonRequired . " ";
-	} else {
-		$COMMAND = $COMMAND . '-SmartcardLogonRequired $null ';
 	}
 	if ($State != "") {
 		$COMMAND = $COMMAND . "-State " . $State . " ";
@@ -388,13 +365,6 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	if ($TrustedForDelegation != "") {
 		$COMMAND = $COMMAND . "-TrustedForDelegation " . $TrustedForDelegation . " ";
-	} else {
-		$COMMAND = $COMMAND . '-TrustedForDelegation $null ';
-	}
-	if ($Type != "") {
-		$COMMAND = $COMMAND . "-Type " . $Type . " ";
-	} else {
-		$COMMAND = $COMMAND . '-Type $null ';
 	}
 	if ($UserPrincipalName != "") {
 		$COMMAND = $COMMAND . "-UserPrincipalName " . $UserPrincipalName . " ";
@@ -403,13 +373,9 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	if ($Confirm != "") {
 		$COMMAND = $COMMAND . "-Confirm " . $Confirm . " ";
-	} else {
-		$COMMAND = $COMMAND . '-Confirm $null ';
 	}
 	if ($WhatIf != "") {
 		$COMMAND = $COMMAND . "-WhatIf " . $WhatIf . " ";
-	} else {
-		$COMMAND = $COMMAND . '-WhatIf $null ';
 	}
 	$COMMAND = $COMMAND . "\r\n";
 

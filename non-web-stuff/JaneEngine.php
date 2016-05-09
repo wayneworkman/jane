@@ -58,7 +58,7 @@ while(1) {
 	}
 
 
-
+	include 'JaneSambaService.php';
 	sleep($JaneEngine_Sleep_Time);
 
 } // end loop.
