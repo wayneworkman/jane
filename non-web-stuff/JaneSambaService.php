@@ -166,10 +166,10 @@ foreach($JaneGroupNames as $JaneGroupName) {
 	foreach($SystemLocalGroups as $SystemLocalGroup) {
 		if ($JaneGroupName == $SystemLocalGroup) {
 			$found = "true";
-			$command = "groupdel $JaneGroupNames[$i]";
-			echo shell_exec($command);
-			$command = "groupadd $JaneGroupNames[$i]";
-			echo shell_exec($command);
+			//$command = "groupdel $JaneGroupNames[$i]";
+			//echo shell_exec($command);
+			//$command = "groupadd $JaneGroupNames[$i]";
+			//echo shell_exec($command);
 			break;
 		} else {
 			$found = "false";
@@ -207,6 +207,12 @@ foreach($SystemLocalGroups as $SystemLocalGroup) {
 	$found = "false";
 }
 
+// Remove all users from all groups except for their own.
+foreach($JaneUsernames as $JaneUsername) {
+	$command = "usermod -G $JaneUsername $JaneUsername";
+	shell_exec($command);
+}
+
 
 
 
@@ -225,6 +231,8 @@ foreach($JaneUserIDs as $ID) {
 	}
 $i = $i + 1;
 }
+
+
 
 
 // ------------------- end groups ---------------//
