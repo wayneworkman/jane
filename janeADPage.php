@@ -140,6 +140,103 @@ if ($SessionIsVerified == 1) {
 
 
 
+
+New-Item “C:\abc\ach0208$" –type directory -Force
+New-SMBShare –Name “ach0208$” –Path “C:\abc\ach0208$” -FullAccess ach0208
+$acl = New-Object System.Security.AccessControl.DirectorySecurity
+$permission = "ach0208","FullControl","Allow"
+$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
+$acl.SetAccessRule($accessRule)
+$permission = "Administrators","FullControl","Allow"
+$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
+$acl.SetAccessRule($accessRule)
+$permission = "System","FullControl","Allow"
+$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
+$acl.SetAccessRule($accessRule)
+$acl.SetAccessRuleProtection($True, $True)
+$acl | Set-Acl C:\abc\ach0208$
+
+
+
+<div>
+        <span style="color:blue;" title="Create Share For Users
+            This option allows you to automate share creation on a per-user basis.
+            There are a few benfits to this, all of them are security related.
+
+            1. When using Redirected Folders, you do not need to setup a share for all users documents,
+               and you do not need to deal with the complexities of access based enumeration on a large share.
+               Each share is created with SMB access for the individual user it's intended for, and other optional
+               but suggested accounts and groups such as Administrators and System. With the default setup,
+               the only person that has access to the user's SMB share is the user themself.
+
+            2. This prevents Cryptowall from spreading through various users files that you have redirected,
+               by confining SMB and ACL permissions tightly to each individual user.
+
+            3. You do not need to be a security expert in order to create very secure shares via Jane.">
+        Create Share For Users
+        </span><br>
+<input type="radio" name="CreateShare" value="1"<?php if ($_SESSION['CreateShare'] == 1 ) { echo " checked"; }?>>True<br>
+<input type="radio" name="CreateShare" value="0"<?php if ($_SESSION['CreateShare'] == 0 ) { echo " checked"; }?>>False<br>
+<input type="radio" name="CreateShare" value="0"<?php if ($_SESSION['CreateShare'] == "" ) { echo " checked"; }?>>False<br><br>
+	If the above setting is enabled, the below fields must be completed.<br><br>
+	<span style="color:blue;" title="Base Directory
+            This is the directory where shares are to be created.
+            For example, C:\HomeDirectories or C:\UserFiles
+
+            Trailing slashes should be excluded. If they are included, they will be truncated. 
+            This path does not need to previously exist. 
+            If the entire path does not exist, it will be created.">
+        Base Directory
+        </span><br>
+	<input type="text" name="BaseDirectory" value="<?php echo htmlspecialchars($_SESSION['BaseDirectory']); ?>"></br>
+
+
+	<span style="color:blue;" title="Share Name
+            This is the name that will be used for creating the share folder, and will also be used as the share name.
+            For example, %UserName% or to make a hidden share, %UserName%$ or something unique like SouthDivision_%UserName%$
+
+            Trailing slashes should be excluded. If they are included, they will be truncated.
+            This path does not need to previously exist.
+            If the entire path does not exist, it will be created.
+
+            The only account given SMB permission is the user that is being processed.">
+        Share Name
+        </span><br>
+        <input type="text" name="ShareName" value="<?php echo htmlspecialchars($_SESSION['ShareName']); ?>"></br>
+
+	 <span style="color:blue;" title="ACL Permissions
+            This is the name that will be used for creating the share folder, and will also be used as the share name.
+            For example, %UserName% or to make a hidden share, %UserName%$ or something unique like SouthDivision_%UserName%$
+            Each user or group that is specified is given full ACL/UAC rights. It's important to note that these additional
+            permissions are not set within SMB.
+
+            Trailing slashes should be excluded. If they are included, they will be truncated.
+            This path does not need to previously exist.
+            If the directory does not exist, it will be created.">
+        ACL Permissions
+        </span><br>
+	<input type="checkbox" name="aclAdministrators" value="1" <?php if ($_SESSION['aclAdministrators'] == "1" ) { echo " checked"; }?>>Administrators<br>
+	<input type="checkbox" name="aclSystem" value="1" <?php if ($_SESSION['aclSystem'] == "1" ) { echo " checked"; }?>>System<br>
+	
+
+	<span style="color:blue;" title="Other ACL Permissions
+            This field allows you to assign other ACL based permissions.
+            Entries may be Account Names, Group names, or a combination thereof.
+            Items are comma delimited.
+
+            Example:
+            TechsGroup,Visitors,Albert,JoeSmith,jdk1234">
+        Other ACL Permissions 
+        </span><br>
+	<input type="text" name="aclOther" value="<?php echo htmlspecialchars($_SESSION['aclOther']); ?>"></br>
+	
+
+
+
+
+
+</div>
+
 <div>
         <span style="color:blue;" title="Group 1 Name
             Specifies a group that users should be placed into after account creation.">

@@ -35,7 +35,12 @@ $acl.SetAccessRuleProtection($True, $True)
 $acl | Set-Acl C:\abc\ach0208$
 
 
-
+CreateShare - radio control, 1, 0, or ""
+BaseDirectory - Textbox path the share will be made in.
+ShareName - textbox name of share
+aclAdministrators - checkbox with value "on"
+aclSystem - checkbox with value "on"
+aclOther - textbox other permissions to be set on the acl.
 
 
 

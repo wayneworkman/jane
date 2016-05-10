@@ -54,6 +54,12 @@ if ($SessionIsVerified == "1") {
 			$_SESSION['Group2Name'] = $row["Group2Name"];
 			$_SESSION['Group3Name'] = $row["Group3Name"];
 			$_SESSION['RemoveFromGroups'] = $row["RemoveFromGroups"];
+			$_SESSION['CreateShare'] = $row["CreateShare"];
+			$_SESSION['BaseDirectory'] = $row["BaseDirectory"];
+			$_SESSION['ShareName'] = $row["ShareName"];
+			$_SESSION['aclAdministrators'] = $row["aclAdministrators"];
+			$_SESSION['aclSystem'] = $row["aclSystem"];
+			$_SESSION['aclOther'] = $row["aclOther"];
 			$_SESSION['Name'] = $row["Name"];
 			$_SESSION['AccountExpirationDate'] = $row["AccountExpirationDate"];
 			$_SESSION['AccountNotDelegated'] = $row["AccountNotDelegated"];
@@ -125,6 +131,12 @@ if ($SessionIsVerified == "1") {
 		$_SESSION['Group2Name'] = "";
 		$_SESSION['Group3Name'] = "";
 		$_SESSION['RemoveFromGroups'] = "";
+		$_SESSION['CreateShare'] = "";
+		$_SESSION['BaseDirectory'] = "";
+		$_SESSION['ShareName'] = "";
+		$_SESSION['aclAdministrators'] = "";
+		$_SESSION['aclSystem'] = "";
+		$_SESSION['aclOther'] = "";
 		$_SESSION['Name'] = "";
 		$_SESSION['AccountExpirationDate'] = "";
 		$_SESSION['AccountNotDelegated'] = "";
