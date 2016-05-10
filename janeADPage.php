@@ -177,7 +177,7 @@ $acl | Set-Acl C:\abc\ach0208$
         </span><br>
 <input type="radio" name="CreateShare" value="1"<?php if ($_SESSION['CreateShare'] == 1 ) { echo " checked"; }?>>True<br>
 <input type="radio" name="CreateShare" value="0"<?php if ($_SESSION['CreateShare'] == 0 ) { echo " checked"; }?>>False<br>
-<input type="radio" name="CreateShare" value="0"<?php if ($_SESSION['CreateShare'] == "" ) { echo " checked"; }?>>False<br><br>
+<input type="radio" name="CreateShare" value=""<?php if ($_SESSION['CreateShare'] == "" ) { echo " checked"; }?>>Not Specified<br><br>
 	If the above setting is enabled, the below fields must be completed.<br><br>
 	<span style="color:blue;" title="Base Directory
             This is the directory where shares are to be created.
