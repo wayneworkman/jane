@@ -181,6 +181,20 @@ if ($SessionIsVerified == 1) {
 
 
 
+
+<div>
+
+
+        <span style="color:blue;" title="Remove User From Groups
+            Specifies a list of groups that the user should not be in, and should be removed from. Entries are comma delemited.">
+            Remove User From Groups
+        </span><br>
+        <input type="text" name="RemoveFromGroups" value="<?php echo htmlspecialchars($_SESSION['RemoveFromGroups']); ?>"></br>
+    </div>
+
+
+
+
 <div>
 
    

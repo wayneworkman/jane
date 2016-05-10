@@ -30,6 +30,7 @@ if ($result->num_rows > 0) {
 		$Group1Name = trim($row["Group1Name"]);
 		$Group2Name = trim($row["Group2Name"]);
 		$Group3Name = trim($row["Group3Name"]);
+		$RemoveFromGroups = trim($row["RemoveFromGroups"]);
 		$Name = trim($row["Name"]);
 		$AccountExpirationDate = trim($row["AccountExpirationDate"]);
 		$AccountNotDelegated = trim($row["AccountNotDelegated"]);
@@ -106,7 +107,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	//See if the user exists first. If the user does, update it and move it to the right spot. If not, create.
 	$COMMAND = "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
 	
-	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"This account already exists. Making sure it's enabled and updating its parameters.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
+	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"Account $SamAccountName already exists. Making sure it's enabled and updating its parameters, location, and groups.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
 
 	 //Here, we move a user to where they should be.
 	$COMMAND = $COMMAND . "    Get-ADUser -Identity $SamAccountName | Move-ADObject ";
@@ -379,13 +380,32 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	}
 	$COMMAND = $COMMAND . "\r\n";
 
+	//Add existing users to the user-defined groups.
+	// If users are to be added to a group, then the SamAccountName is required.
+        if ($Group1Name != "") {
+                $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group1Name\" $SamAccountName\r\n";
+        }
+        if ($Group2Name != "") {
+                $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group2Name\" $SamAccountName\r\n";
+        }
+        if ($Group3Name != "") {
+                $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group3Name\" $SamAccountName\r\n";
+        }
+
+	//Here, we remove users from groups that they should no longer be in.
+	if ($RemoveFromGroups != "") {
+		$GroupsToRemoveFrom = explode(",", $RemoveFromGroups);
+		foreach ($GroupsToRemoveFrom as $GroupToRemoveFrom) {
+			$COMMAND = $COMMAND . "    Remove-ADGroupMember \"$GroupToRemoveFrom\" $SamAccountName -Confirm:\$false\r\n";
+		}
+	}
 
 
 
 	$COMMAND = $COMMAND . "} else {" . "\r\n";
 	
 
-
+$COMMAND = $COMMAND . "    echo \"Account $SamAccountName does not exist. Creating it with the specified parameters and adding to specified groups.\"\r\n";
 	$COMMAND = $COMMAND . "    New-ADUser ";
 	
 	if ($Name != "") {

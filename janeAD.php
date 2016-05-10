@@ -53,6 +53,7 @@ if ($SessionIsVerified == "1") {
 			$_SESSION['Group1Name'] = $row["Group1Name"];
 			$_SESSION['Group2Name'] = $row["Group2Name"];
 			$_SESSION['Group3Name'] = $row["Group3Name"];
+			$_SESSION['RemoveFromGroups'] = $row["RemoveFromGroups"];
 			$_SESSION['Name'] = $row["Name"];
 			$_SESSION['AccountExpirationDate'] = $row["AccountExpirationDate"];
 			$_SESSION['AccountNotDelegated'] = $row["AccountNotDelegated"];
@@ -123,6 +124,7 @@ if ($SessionIsVerified == "1") {
 		$_SESSION['Group1Name'] = "";
 		$_SESSION['Group2Name'] = "";
 		$_SESSION['Group3Name'] = "";
+		$_SESSION['RemoveFromGroups'] = "";
 		$_SESSION['Name'] = "";
 		$_SESSION['AccountExpirationDate'] = "";
 		$_SESSION['AccountNotDelegated'] = "";
