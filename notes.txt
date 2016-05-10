@@ -16,17 +16,23 @@ Windows Server supports different levels of script authentication:
 Linux can sign these scripts and authenticate in this manner. Not within the scope of a 0.01 release - but absolutely going to be integrated in future versions.
 
 
-Notes on creating a share using powershell:
+Creating a share in powershell, setting permissions and ACLs, disabling inheritance, and then applying the rules.
+(The product of 4 hours of research... 14 lines of code.)
 
-setup a var forthe win32 share api.
-$Shares=[WMICLASS]"WIN32_Share"
-
-make a directory
-NEW-ITEM c:\NewShare -type Directory
-
-share the directory with a user.
-$Shares.Create(“C:\NewShare”,”wayne”,0)
-
+New-Item “C:\abc\ach0208$" –type directory -Force
+New-SMBShare –Name “ach0208$” –Path “C:\abc\ach0208$” -FullAccess ach0208
+$acl = New-Object System.Security.AccessControl.DirectorySecurity
+$permission = "ach0208","FullControl","Allow"
+$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
+$acl.SetAccessRule($accessRule)
+$permission = "Administrators","FullControl","Allow"
+$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
+$acl.SetAccessRule($accessRule)
+$permission = "System","FullControl","Allow"
+$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
+$acl.SetAccessRule($accessRule)
+$acl.SetAccessRuleProtection($True, $True)
+$acl | Set-Acl C:\abc\ach0208$
 
 
 
