@@ -140,24 +140,6 @@ if ($SessionIsVerified == 1) {
 
 
 
-
-New-Item “C:\abc\ach0208$" –type directory -Force
-New-SMBShare –Name “ach0208$” –Path “C:\abc\ach0208$” -FullAccess ach0208
-$acl = New-Object System.Security.AccessControl.DirectorySecurity
-$permission = "ach0208","FullControl","Allow"
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
-$acl.SetAccessRule($accessRule)
-$permission = "Administrators","FullControl","Allow"
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
-$acl.SetAccessRule($accessRule)
-$permission = "System","FullControl","Allow"
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
-$acl.SetAccessRule($accessRule)
-$acl.SetAccessRuleProtection($True, $True)
-$acl | Set-Acl C:\abc\ach0208$
-
-
-
 <div>
         <span style="color:blue;" title="Create Share For Users
             This option allows you to automate share creation on a per-user basis.

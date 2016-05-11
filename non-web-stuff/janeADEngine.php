@@ -31,6 +31,12 @@ if ($result->num_rows > 0) {
 		$Group2Name = trim($row["Group2Name"]);
 		$Group3Name = trim($row["Group3Name"]);
 		$RemoveFromGroups = trim($row["RemoveFromGroups"]);
+		$CreateShare = trim($row["CreateShare"]);
+		$BaseDirectory = trim($row["BaseDirectory"]);
+		$ShareName = trim($row["ShareName"]);
+		$aclAdministrators = trim($row["aclAdministrators"]);
+		$aclSystem = trim($row["aclSystem"]);
+		$aclOther = trim($row["aclOther"]);
 		$Name = trim($row["Name"]);
 		$AccountExpirationDate = trim($row["AccountExpirationDate"]);
 		$AccountNotDelegated = trim($row["AccountNotDelegated"]);
@@ -107,9 +113,10 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	//See if the user exists first. If the user does, update it and move it to the right spot. If not, create.
 	$COMMAND = "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
 	
-	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"Account $SamAccountName already exists. Making sure it's enabled and updating its parameters, location, and groups.\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
+	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"User $SamAccountName already exists, updating it...\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
 
 	 //Here, we move a user to where they should be.
+	$COMMAND = $COMMAND . "    echo \"Moving the account to the designated OU.\"\r\n";
 	$COMMAND = $COMMAND . "    Get-ADUser -Identity $SamAccountName | Move-ADObject ";
 
 	if ($Path != "") {
@@ -128,8 +135,9 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 
 
-
+	
 	//Here, for existing users, update their information according to the settings set.
+	$COMMAND = $COMMAND . "    echo \"Updating user information.\"\r\n";
 	$COMMAND = $COMMAND . "    Get-ADUser -Identity $SamAccountName | Set-ADUser ";
 
 	if ($AccountExpirationDate != "") {
@@ -383,12 +391,15 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	//Add existing users to the user-defined groups.
 	// If users are to be added to a group, then the SamAccountName is required.
         if ($Group1Name != "") {
+		$COMMAND = $COMMAND . "    echo \"Adding to group 1.\"\r\n";
                 $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group1Name\" $SamAccountName\r\n";
         }
         if ($Group2Name != "") {
+		$COMMAND = $COMMAND . "    echo \"Adding to group 2.\"\r\n";
                 $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group2Name\" $SamAccountName\r\n";
         }
         if ($Group3Name != "") {
+		$COMMAND = $COMMAND . "    echo \"Adding to group 3.\"\r\n";
                 $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group3Name\" $SamAccountName\r\n";
         }
 
@@ -396,8 +407,59 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	if ($RemoveFromGroups != "") {
 		$GroupsToRemoveFrom = explode(",", $RemoveFromGroups);
 		foreach ($GroupsToRemoveFrom as $GroupToRemoveFrom) {
+			$COMMAND = $COMMAND . "    echo \"Removing from group.\"\r\n";
 			$COMMAND = $COMMAND . "    Remove-ADGroupMember \"$GroupToRemoveFrom\" $SamAccountName -Confirm:\$false\r\n";
 		}
+	}
+
+
+
+
+
+
+	//Here, we create a share if share creation is set.
+	if ($CreateShare == 1) {
+		$COMMAND = $COMMAND . "    echo \"Creating directory for share.\"\r\n";
+		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$ShareName\" -type directory -Force\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
+		$COMMAND = $COMMAND . "    New-SMBShare -Name \"$ShareName\" -Path \"$BaseDirectory\\$ShareName\" -FullAccess $SamAccountName\r\n";
+		$COMMAND = $COMMAND . "    echo \"Creating acl object.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
+		$COMMAND = $COMMAND . "    echo \"Creating permission object.\"\r\n";
+		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting permissions to access rule object.\"\r\n";
+		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting access rules to acl.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+		
+
+		if ($aclAdministrators == 1) {
+			$COMMAND = $COMMAND . "    echo \"Setting Administrators to acl.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"Administrators\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+		}
+		if ($aclSystem == 1) {
+			$COMMAND = $COMMAND . "    echo \"Setting System to acl.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+		}
+		if ($aclOther != "") {
+			$OtherAcls = explode(",", $aclOther);
+			foreach ($OtherAcls as $OtherAcl) {
+				$COMMAND = $COMMAND . "    echo \"Adding other acl permissions.\"\r\n";
+				$COMMAND = $COMMAND . "    \$permission = \"$OtherAcl\",\"FullControl\",\"Allow\"\r\n";
+				$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+				$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+			}
+		}
+		$COMMAND = $COMMAND . "    echo \"Removing inheritance from acl.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
+		$COMMAND = $COMMAND . "    echo \"Applying acl to the new share.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$ShareName\r\n";
+		
+
 	}
 
 
@@ -405,7 +467,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	$COMMAND = $COMMAND . "} else {" . "\r\n";
 	
 
-$COMMAND = $COMMAND . "    echo \"Account $SamAccountName does not exist. Creating it with the specified parameters and adding to specified groups.\"\r\n";
+$COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating it.\"\r\n";
 	$COMMAND = $COMMAND . "    New-ADUser ";
 	
 	if ($Name != "") {
@@ -585,16 +647,77 @@ $COMMAND = $COMMAND . "    echo \"Account $SamAccountName does not exist. Creati
 	$COMMAND = $COMMAND . "\r\n";
 
 
+	//Add existing users to the user-defined groups.
 	// If users are to be added to a group, then the SamAccountName is required.
-	if ($Group1Name != "") {
-		$COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group1Name\" $SamAccountName\r\n";
+        if ($Group1Name != "") {
+		$COMMAND = $COMMAND . "    echo \"Adding to group 1.\"\r\n";
+                $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group1Name\" $SamAccountName\r\n";
+        }
+        if ($Group2Name != "") {
+		$COMMAND = $COMMAND . "    echo \"Adding to group 2.\"\r\n";
+                $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group2Name\" $SamAccountName\r\n";
+        }
+        if ($Group3Name != "") {
+		$COMMAND = $COMMAND . "    echo \"Adding to group 3.\"\r\n";
+                $COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group3Name\" $SamAccountName\r\n";
+        }
+
+	//Here, we remove users from groups that they should no longer be in.
+	if ($RemoveFromGroups != "") {
+		$GroupsToRemoveFrom = explode(",", $RemoveFromGroups);
+		foreach ($GroupsToRemoveFrom as $GroupToRemoveFrom) {
+			$COMMAND = $COMMAND . "    echo \"Removing from group.\"\r\n";
+			$COMMAND = $COMMAND . "    Remove-ADGroupMember \"$GroupToRemoveFrom\" $SamAccountName -Confirm:\$false\r\n";
+		}
 	}
-	if ($Group2Name != "") {
-		$COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group2Name\" $SamAccountName\r\n";
+
+	//Here, we create a share if share creation is set.
+	if ($CreateShare == 1) {
+		$COMMAND = $COMMAND . "    echo \"Creating directory for share.\"\r\n";
+		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$ShareName\" -type directory -Force\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
+		$COMMAND = $COMMAND . "    New-SMBShare -Name \"$ShareName\" -Path \"$BaseDirectory\\$ShareName\" -FullAccess $SamAccountName\r\n";
+		$COMMAND = $COMMAND . "    echo \"Creating acl object.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
+		$COMMAND = $COMMAND . "    echo \"Creating permission object.\"\r\n";
+		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting permissions to access rule object.\"\r\n";
+		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting access rules to acl.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+		
+
+		if ($aclAdministrators == 1) {
+			$COMMAND = $COMMAND . "    echo \"Setting Administrators to acl.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"Administrators\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+		}
+		if ($aclSystem == 1) {
+			$COMMAND = $COMMAND . "    echo \"Setting System to acl.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+		}
+		if ($aclOther != "") {
+			$OtherAcls = explode(",", $aclOther);
+			foreach ($OtherAcls as $OtherAcl) {
+				$COMMAND = $COMMAND . "    echo \"Adding other acl permissions.\"\r\n";
+				$COMMAND = $COMMAND . "    \$permission = \"$OtherAcl\",\"FullControl\",\"Allow\"\r\n";
+				$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
+				$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
+			}
+		}
+		$COMMAND = $COMMAND . "    echo \"Removing inheritance from acl.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
+		$COMMAND = $COMMAND . "    echo \"Applying acl to the new share.\"\r\n";
+		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$ShareName\r\n";
+		
+
 	}
-	if ($Group3Name != "") {
-		$COMMAND = $COMMAND . "    Add-ADGroupMember \"$Group3Name\" $SamAccountName\r\n";
-	}
+
+
+
 	
 
 	$COMMAND = $COMMAND . "}" . "\r\n";
@@ -654,7 +777,7 @@ $COMMAND = $COMMAND . "    echo \"Account $SamAccountName does not exist. Creati
 }
 if ($ActionDisable != "" && $ActionDisableText != "") {
 	//make sure user exists first (powershell).
-	 $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
+	 $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    echo \"Disabling user $SamAccountName.\"\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
 	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
@@ -698,7 +821,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 }
 if ($ActionDelete != "" && $ActionDeleteText != "") {
 	//make sure user exists first (powershell).
-         $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
+         $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    echo \"Deleting user $SamAccountName\"\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
         $sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
@@ -740,4 +863,7 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                 }
 	}
 }
+
+
+
 ?>
