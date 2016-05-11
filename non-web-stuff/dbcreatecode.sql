@@ -129,12 +129,16 @@ Group1Name VARCHAR(255),
 Group2Name VARCHAR(255),
 Group3Name VarChar(255),
 RemoveFromGroups VarChar(255),
+
+
 CreateShare VarChar(1),
 BaseDirectory VarChar(255),
 ShareName VarChar(255),
 aclAdministrators VarChar(1),
 aclSystem VarChar(1),
 aclOther VarChar(255),
+
+
 Name VARCHAR(255),
 AccountExpirationDate VARCHAR(255),
 AccountNotDelegated VARCHAR(1),

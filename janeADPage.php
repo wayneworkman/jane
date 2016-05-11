@@ -141,50 +141,69 @@ if ($SessionIsVerified == 1) {
 
 
 <div>
-        <span style="color:blue;" title="Create Share For Users
-            This option allows you to automate share creation on a per-user basis.
+        <span style="color:blue;" title="Create Folder for Users
+            This option allows you to automate folder creation on a per-user basis.
             There are a few benfits to this, all of them are security related.
 
-            1. When using Redirected Folders, you do not need to setup a share for all users documents,
-               and you do not need to deal with the complexities of access based enumeration on a large share.
-               Each share is created with SMB access for the individual user it's intended for, and other optional
-               but suggested accounts and groups such as Administrators and System. With the default setup,
-               the only person that has access to the user's SMB share is the user themself.
+            1. This individually sets ACL permissions for the user that the folder is intended
+               to belong to. What this means is other users in the domain will not have
+               privilages to view other uses folders in a large user share.
 
-            2. This prevents Cryptowall from spreading through various users files that you have redirected,
-               by confining SMB and ACL permissions tightly to each individual user.
+            2. This prevents Cryptowall from spreading through various users files by,
+               by confining SMB and ACL permissions tightly to each individual user, and
+               to other specified users and groups.
 
-            3. You do not need to be a security expert in order to create very secure shares via Jane.">
-        Create Share For Users
+            3. You do not need to be a security expert in order to create very secure
+               folders and  shares via Jane.">
+        Create Folder For Users
         </span><br>
-<input type="radio" name="CreateShare" value="1"<?php if ($_SESSION['CreateShare'] == 1 ) { echo " checked"; }?>>True<br>
-<input type="radio" name="CreateShare" value="0"<?php if ($_SESSION['CreateShare'] == 0 ) { echo " checked"; }?>>False<br>
-<input type="radio" name="CreateShare" value=""<?php if ($_SESSION['CreateShare'] == "" ) { echo " checked"; }?>>Not Specified<br><br>
-	If the above setting is enabled, the below fields must be completed.<br><br>
+<input type="radio" name="CreateFolder" value="1"<?php if ($_SESSION['CreateFolder'] == 1 ) { echo " checked"; }?>>True<br>
+<input type="radio" name="CreateFolder" value="0"<?php if ($_SESSION['CreateFolder'] == 0 ) { echo " checked"; }?>>False<br>
+<input type="radio" name="CreateFolder" value=""<?php if ($_SESSION['CreateFolder'] == "" ) { echo " checked"; }?>>Not Specified<br><br>
+	If the above setting is enabled, the below fields "Base Directory" and "Folder Name" must be completed.<br><br>
 	<span style="color:blue;" title="Base Directory
-            This is the directory where shares are to be created.
-            For example, C:\HomeDirectories or C:\UserFiles
+            This is the directory where folders are to be created.
+            For example, C:\HomeDirectories or C:\UserFiles or C:\UserShare$
 
-            Trailing slashes should be excluded. If they are included, they will be truncated. 
+            Trailing slashes should be excluded.
             This path does not need to previously exist. 
             If the entire path does not exist, it will be created.">
         Base Directory
         </span><br>
-	<input type="text" name="BaseDirectory" value="<?php echo htmlspecialchars($_SESSION['BaseDirectory']); ?>"></br>
+	<input type="text" name="BaseDirectory" value="<?php echo htmlspecialchars($_SESSION['BaseDirectory']); ?>"><br>
 
 
-	<span style="color:blue;" title="Share Name
-            This is the name that will be used for creating the share folder, and will also be used as the share name.
-            For example, %UserName% or to make a hidden share, %UserName%$ or something unique like SouthDivision_%UserName%$
 
-            Trailing slashes should be excluded. If they are included, they will be truncated.
+
+
+	<span style="color:blue;" title="Folder Name
+            This is the name that will be used for creating the folder, and will also
+            be used as the share name if that option is enabled. For example, %UserName%
+            or something unique like SouthDivision_%UserName% are acceptable.
+
+            Trailing slashes should be excluded.
+            This path does not need to previously exist.
+            If the entire path does not exist, it will be created.">
+        Folder Name
+        </span><br>
+        <input type="text" name="FolderName" value="<?php echo htmlspecialchars($_SESSION['FolderName']); ?>"><input type="checkbox" name="ShareThisFolder" value="1" <?php if ($_SESSION['ShareThisFolder'] == "1" ) { echo " checked"; }?>>
+
+
+	<span style="color:blue;" title="Share This Folder
+            The Folder Name is what will be used to create a share folder on a per-user basis, 
+            and will also be used as the share name. For example, %UserName% or to make a 
+            hidden share, %UserName%$ or something unique like SouthDivision_%UserName%$
+
+            Trailing slashes should be excluded.
             This path does not need to previously exist.
             If the entire path does not exist, it will be created.
 
             The only account given SMB permission is the user that is being processed.">
-        Share Name
+        Share This Folder (Per-User)
         </span><br>
-        <input type="text" name="ShareName" value="<?php echo htmlspecialchars($_SESSION['ShareName']); ?>"></br>
+
+
+
 
 	 <span style="color:blue;" title="ACL Permissions
             This is the name that will be used for creating the share folder, and will also be used as the share name.
@@ -212,7 +231,16 @@ if ($SessionIsVerified == 1) {
         </span><br>
 	<input type="text" name="aclOther" value="<?php echo htmlspecialchars($_SESSION['aclOther']); ?>"></br>
 	
+	
 
+        <input type="checkbox" name="DisableInheritance" value="1" <?php if ($_SESSION['DisableInheritance'] == "1" ) { echo " checked"; }?>>
+	<span style="color:blue;" title="Disable Inheritance
+            When this is enabled, inheritance on the user folder is disabled. Generally,
+            this is not desired because it causes files and folders created by the user to
+            only be accessable by that user only. However, this may be desired in highly
+            secure environments so the option is provided here for you.">
+        Disable Inheritance
+        </span><br>
 
 
 
