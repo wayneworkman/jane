@@ -31,12 +31,14 @@ if ($result->num_rows > 0) {
 		$Group2Name = trim($row["Group2Name"]);
 		$Group3Name = trim($row["Group3Name"]);
 		$RemoveFromGroups = trim($row["RemoveFromGroups"]);
-		$CreateShare = trim($row["CreateShare"]);
+		$CreateFolder = trim($row["CreateFolder"]);
 		$BaseDirectory = trim($row["BaseDirectory"]);
-		$ShareName = trim($row["ShareName"]);
+		$FolderName = trim($row["FolderName"]);
+		$ShareThisFolder = trim($row["ShareThisFolder"]);
 		$aclAdministrators = trim($row["aclAdministrators"]);
 		$aclSystem = trim($row["aclSystem"]);
 		$aclOther = trim($row["aclOther"]);
+		$DisableInheritance = trim($row["DisableInheritance"]);
 		$Name = trim($row["Name"]);
 		$AccountExpirationDate = trim($row["AccountExpirationDate"]);
 		$AccountNotDelegated = trim($row["AccountNotDelegated"]);
@@ -417,19 +419,22 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 
 
 
-	//Here, we create a share if share creation is set.
-	if ($CreateShare == 1) {
-		$COMMAND = $COMMAND . "    echo \"Creating directory for share.\"\r\n";
-		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$ShareName\" -type directory -Force\r\n";
-		$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
-		$COMMAND = $COMMAND . "    New-SMBShare -Name \"$ShareName\" -Path \"$BaseDirectory\\$ShareName\" -FullAccess $SamAccountName\r\n";
-		$COMMAND = $COMMAND . "    echo \"Creating acl object.\"\r\n";
+	//Here, we create a folder if folder creation is set.
+	if ($CreateFolder == 1) {
+		$COMMAND = $COMMAND . "    echo \"Creating directory for folder\"\r\n";
+		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$FolderName\" -type directory -Force\r\n";
+		
+
+		if ($ShareThisFolder == 1) {
+			$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
+			$COMMAND = $COMMAND . "    New-SMBShare -Name \"$FolderName\" -Path \"$BaseDirectory\\$FolderName\" -FullAccess $SamAccountName\r\n";
+		}
+
+
+		$COMMAND = $COMMAND . "    echo \"Setting user's permissions on folder.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
-		$COMMAND = $COMMAND . "    echo \"Creating permission object.\"\r\n";
 		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
-		$COMMAND = $COMMAND . "    echo \"Setting permissions to access rule object.\"\r\n";
 		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
-		$COMMAND = $COMMAND . "    echo \"Setting access rules to acl.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		
 
@@ -439,12 +444,14 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
+
 		if ($aclSystem == 1) {
 			$COMMAND = $COMMAND . "    echo \"Setting System to acl.\"\r\n";
 			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"Allow\"\r\n";
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
+
 		if ($aclOther != "") {
 			$OtherAcls = explode(",", $aclOther);
 			foreach ($OtherAcls as $OtherAcl) {
@@ -454,10 +461,14 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 				$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 			}
 		}
-		$COMMAND = $COMMAND . "    echo \"Removing inheritance from acl.\"\r\n";
-		$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
+
+		if ($DisableInheritance == 1) {
+			$COMMAND = $COMMAND . "    echo \"Removing inheritance from acl.\"\r\n";
+			$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
+		}
+
 		$COMMAND = $COMMAND . "    echo \"Applying acl to the new share.\"\r\n";
-		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$ShareName\r\n";
+		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$FolderName\r\n";
 		
 
 	}
@@ -671,19 +682,24 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 		}
 	}
 
-	//Here, we create a share if share creation is set.
-	if ($CreateShare == 1) {
-		$COMMAND = $COMMAND . "    echo \"Creating directory for share.\"\r\n";
-		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$ShareName\" -type directory -Force\r\n";
-		$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
-		$COMMAND = $COMMAND . "    New-SMBShare -Name \"$ShareName\" -Path \"$BaseDirectory\\$ShareName\" -FullAccess $SamAccountName\r\n";
-		$COMMAND = $COMMAND . "    echo \"Creating acl object.\"\r\n";
+
+
+	//Here, we create a folder if folder creation is set.
+	if ($CreateFolder == 1) {
+		$COMMAND = $COMMAND . "    echo \"Creating directory for folder\"\r\n";
+		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$FolderName\" -type directory -Force\r\n";
+		
+
+		if ($ShareThisFolder == 1) {
+			$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
+			$COMMAND = $COMMAND . "    New-SMBShare -Name \"$FolderName\" -Path \"$BaseDirectory\\$FolderName\" -FullAccess $SamAccountName\r\n";
+		}
+
+
+		$COMMAND = $COMMAND . "    echo \"Setting user's permissions on folder.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
-		$COMMAND = $COMMAND . "    echo \"Creating permission object.\"\r\n";
 		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
-		$COMMAND = $COMMAND . "    echo \"Setting permissions to access rule object.\"\r\n";
 		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
-		$COMMAND = $COMMAND . "    echo \"Setting access rules to acl.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		
 
@@ -693,12 +709,14 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
+
 		if ($aclSystem == 1) {
 			$COMMAND = $COMMAND . "    echo \"Setting System to acl.\"\r\n";
 			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"Allow\"\r\n";
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
+
 		if ($aclOther != "") {
 			$OtherAcls = explode(",", $aclOther);
 			foreach ($OtherAcls as $OtherAcl) {
@@ -708,10 +726,14 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 				$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 			}
 		}
-		$COMMAND = $COMMAND . "    echo \"Removing inheritance from acl.\"\r\n";
-		$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
+
+		if ($DisableInheritance == 1) {
+			$COMMAND = $COMMAND . "    echo \"Removing inheritance from acl.\"\r\n";
+			$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
+		}
+
 		$COMMAND = $COMMAND . "    echo \"Applying acl to the new share.\"\r\n";
-		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$ShareName\r\n";
+		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$FolderName\r\n";
 		
 
 	}

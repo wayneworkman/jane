@@ -130,6 +130,11 @@ Group2Name VARCHAR(255),
 Group3Name VarChar(255),
 RemoveFromGroups VarChar(255),
 
+CreateFolder VarChar(1),
+ShareThisFolder VarChar(1),
+DisableInheritance VarChar(1),
+
+
 
 CreateShare VarChar(1),
 BaseDirectory VarChar(255),

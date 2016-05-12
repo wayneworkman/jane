@@ -45,3 +45,11 @@ aclOther - textbox other permissions to be set on the acl.
 
 
 
+alter table janeAD drop ShareName;
+alter table janeAD add CreateShare VarChar(1);
+alter table janeAD add FolderName VarChar(255);
+alter table janeAD add CreateFolder VarChar(1);
+alter table janeAD add ShareThisFolder VarChar(1);
+alter table janeAD add DisableInheritance VarChar(1);
+
+
