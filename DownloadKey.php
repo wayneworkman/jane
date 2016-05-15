@@ -16,8 +16,8 @@ if ($SessionIsVerified == "1") {
 		header('Pragma: public');
 		header('Content-Length: ' . filesize($file));
 		readfile($file);
-		exit;
 	}
+	exit;
 }
 ?>
 
