@@ -21,7 +21,18 @@ for signing - I've signed the files with OpenSSL x.509 and imported the public c
 To set script authentication in windows server:
 Set-ExecutionPolicy unrestricted
 
+Example powershell file to run as a scheduled task:
 
+#This file should be stored locally on the server that will execute the import scripts,
+#and scheduled to run however often is needed. 
+#Paths and filenames need adjusted apropriately.
+#
+#Redirecting the output to a log file is optional but can help with diagnosing issues.
+
+powershell.exe -executionpolicy bypass -file Z:\abc.ps1 | Out-File z:\Jane.log -Append
+powershell.exe -executionpolicy bypass -file Z:\def.ps1 | Out-File z:\Jane.log -Append
+Remove-Item Z:\abc.ps1
+Remove-Item Z:\def.ps1
 
 
 

@@ -34,7 +34,7 @@ div{padding:10px;border:5px solid gray;margin:0}
     <span style="color:blue;" title="Settings NickName
             This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
             Settings NickName
-        </span><br>
+       </span><br>
         <input type="text" name="JaneSettingsNickName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsNickName']); ?>" readonly></br>
     
 <br>
@@ -67,6 +67,11 @@ This field can only be changed by Jane's Administrator.">
             WHERE
         </span><br>
         <input type="text" name="JaneSettingsWHERE" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsWHERE']); ?>" readonly></br>
+
+
+
+<br>
+<a href="DownloadScriptExample.php">Download Automation Script Example</a><br><br>
 
 </div>
 

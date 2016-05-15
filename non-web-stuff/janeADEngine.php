@@ -17,6 +17,8 @@ if ($result->num_rows > 0) {
 }
 $result->free();
 
+
+
 $sql = "SELECT * FROM `janeAD` WHERE `JaneSettingsID` = '$JaneSettingsID' LIMIT 1";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
@@ -110,10 +112,11 @@ if ($result->num_rows > 0) {
 
 if ($ActionCreate != "" && $ActionCreateText != "") {
 
-
+	//Echo Date in file.
+	$COMMAND = "Get-Date -Format G\r\n";
 
 	//See if the user exists first. If the user does, update it and move it to the right spot. If not, create.
-	$COMMAND = "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
+	$COMMAND = $COMMAND . "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
 	
 	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"User $SamAccountName already exists, updating it...\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
 
@@ -796,8 +799,14 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 	}
 }
 if ($ActionDisable != "" && $ActionDisableText != "") {
+
+
+	// Echo date.
+	$COMMAND = "Get-Date -Format G\r\n";
+
+
 	//make sure user exists first (powershell).
-	 $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    echo \"Disabling user $SamAccountName.\"\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
+	 $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n    echo \"Disabling user $SamAccountName.\"\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
 	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
@@ -840,8 +849,13 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 	}
 }
 if ($ActionDelete != "" && $ActionDeleteText != "") {
+	
+	// Echo date.
+	$COMMAND = "Get-Date -Format G\r\n";
+
+
 	//make sure user exists first (powershell).
-         $COMMAND = "if (Get-aduser $SamAccountName) {\r\n    echo \"Deleting user $SamAccountName\"\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
+         $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n    echo \"Deleting user $SamAccountName\"\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
         $sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
         $result = $link->query($sql);
         if ($result->num_rows > 0) {

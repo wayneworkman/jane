@@ -11,7 +11,7 @@ $SiteErrorMessage = "ERROR: There was a site problem. Report this to your Jane a
 $BadLoginError = "ERROR: Username and/or password is no good.";
 $IPBlockedMessage = "ERROR: You are blocked. Report this to your Jane administrator and try again later.";
 $PublicKey = "Jane.crt";
-
+$ScriptExample = "RunJaneScripts.ps1";
 
 $adminActionNames = array();
 
