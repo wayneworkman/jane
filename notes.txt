@@ -6,6 +6,9 @@ Show Active Sessions
 Modify Settings-Set Name,SMB Allowed IP, WHERE, and Group for Admins-only.
 
 
+lsof is available for Fedora. Can show if a file is being currently accessed. 
+
+
 Windows Server supports different levels of script authentication:
 
 	Restricted - No scripts can be run. Windows PowerShell can be used only in interactive mode.
@@ -13,43 +16,13 @@ Windows Server supports different levels of script authentication:
 	RemoteSigned - Downloaded scripts must be signed by a trusted publisher before they can be run.
 	Unrestricted - No restrictions; all Windows PowerShell scripts can be run.
 
-Linux can sign these scripts and authenticate in this manner. Not within the scope of a 0.01 release - but absolutely going to be integrated in future versions.
+for signing - I've signed the files with OpenSSL x.509 and imported the public certificate into windows certificate manager however the way that OpenSSL signs the files seems to be incompatible with how Powershell verifies files.
 
-
-Creating a share in powershell, setting permissions and ACLs, disabling inheritance, and then applying the rules.
-(The product of 4 hours of research... 14 lines of code.)
-
-New-Item “C:\abc\ach0208$" –type directory -Force
-New-SMBShare –Name “ach0208$” –Path “C:\abc\ach0208$” -FullAccess ach0208
-$acl = New-Object System.Security.AccessControl.DirectorySecurity
-$permission = "ach0208","FullControl","Allow"
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
-$acl.SetAccessRule($accessRule)
-$permission = "Administrators","FullControl","Allow"
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
-$acl.SetAccessRule($accessRule)
-$permission = "System","FullControl","Allow"
-$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $permission
-$acl.SetAccessRule($accessRule)
-$acl.SetAccessRuleProtection($True, $True)
-$acl | Set-Acl C:\abc\ach0208$
-
-
-CreateShare - radio control, 1, 0, or ""
-BaseDirectory - Textbox path the share will be made in.
-ShareName - textbox name of share
-aclAdministrators - checkbox with value "on"
-aclSystem - checkbox with value "on"
-aclOther - textbox other permissions to be set on the acl.
+To set script authentication in windows server:
+Set-ExecutionPolicy unrestricted
 
 
 
 
-alter table janeAD drop ShareName;
-alter table janeAD add CreateShare VarChar(1);
-alter table janeAD add FolderName VarChar(255);
-alter table janeAD add CreateFolder VarChar(1);
-alter table janeAD add ShareThisFolder VarChar(1);
-alter table janeAD add DisableInheritance VarChar(1);
 
 

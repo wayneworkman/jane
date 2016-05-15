@@ -21,7 +21,8 @@ if ($SessionIsVerified == "1") {
 
 	echo "<div>";
 	echo "<a href=\"logout.php\">Log Out</a><br>";
-	echo "<a href=\"LICENSE\">License</a><br><br>";
+	echo "<a href=\"LICENSE\">License</a><br>";
+	echo "<a href=\"DownloadKey.php\">Download Jane Public Key</a><br><br>";
 	echo "</div>";
 
 

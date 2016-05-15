@@ -430,13 +430,12 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			$COMMAND = $COMMAND . "    New-SMBShare -Name \"$FolderName\" -Path \"$BaseDirectory\\$FolderName\" -FullAccess $SamAccountName\r\n";
 		}
 
-
+		// Common settings every folder gets go here.
 		$COMMAND = $COMMAND . "    echo \"Setting user's permissions on folder.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
 		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
 		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
-		
 
 		if ($aclAdministrators == 1) {
 			$COMMAND = $COMMAND . "    echo \"Setting Administrators to acl.\"\r\n";
@@ -695,13 +694,12 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			$COMMAND = $COMMAND . "    New-SMBShare -Name \"$FolderName\" -Path \"$BaseDirectory\\$FolderName\" -FullAccess $SamAccountName\r\n";
 		}
 
-
+		// Permissions that every folder gets go here.
 		$COMMAND = $COMMAND . "    echo \"Setting user's permissions on folder.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
 		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
 		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
-		
 
 		if ($aclAdministrators == 1) {
 			$COMMAND = $COMMAND . "    echo \"Setting Administrators to acl.\"\r\n";
@@ -884,6 +882,18 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         file_put_contents($file, $current);
                 }
 	}
+}
+// Sign the resultant file, if it exists.
+
+
+
+
+//  openssl dgst -sha256 -sign "/jane/ssl/Jane.key" -out def.ps1.signed def.ps1
+
+
+
+if (file_exists($file)) {
+	exec("openssl dgst -sha256 -sign \"$PrivateKey\" -out $file.signed $file > /dev/null");
 }
 
 

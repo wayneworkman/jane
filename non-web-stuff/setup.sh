@@ -11,8 +11,7 @@ yum update -y
 #install packages
 
 # FEDORA 23
-dnf -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client
-
+dnf -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client openssl
 
 
 #CentOS 7
@@ -22,7 +21,8 @@ dnf -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php
 #  yum install yum-utils
 #  subscription-manager repos --enable=rhel-7-server-optional-rpms
 #  yum-config-manager --enable remi-php70
-#  yum -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client
+#  yum -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client openssl
+
 
 
 
@@ -46,10 +46,18 @@ mysql < dbcreatecode.sql
 php initialStoreLocalUsersAndGroups.php
 mkdir /jane
 mkdir /jane/imports
+mkdir /jane/ssl
+
+
+#make public/private key pair - non Root backed version:
+openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/jane/ssl/Jane.crt" -days 99999
+#The .key file is the private key. the .crt is the public key.
+
 chown -R jane:jane /jane/imports
 #set selinux to permissive.
 setenforce 0
 systemctl enable smb
+systemct start smb
 
 #Additionally, make sure the jane php files is put into /var/www/html/jane
 #set permissions on that with:  
