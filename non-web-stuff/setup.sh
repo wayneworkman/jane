@@ -59,6 +59,21 @@ setenforce 0
 systemctl enable smb
 systemct start smb
 
+#Start JaneEngine.php on boot.
+#Make these changes inside of /etc/rc.d/rc.local
+sleep 30
+/usr/bin/nohup /usr/bin/php /var/www/html/jane/non-web-stuff/JaneEngine.php &
+exit 0
+
+
+
+#make file executable with:
+chmod +x /etc/rc.d/rc.local
+
+
+ 
+
+
 #Additionally, make sure the jane php files is put into /var/www/html/jane
 #set permissions on that with:  
 
