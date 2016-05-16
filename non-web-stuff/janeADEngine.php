@@ -110,14 +110,14 @@ if ($result->num_rows > 0) {
 }
 
 
-$file = $PathToSMBShares . "$JaneSettingsGroupName/" .  $JaneSettingsNickName . ".ps1";
+$file = $PathToSMBShares . "$JaneSettingsGroupName/" . "Created-" . date("Y-m-d---") . $JaneSettingsNickName . ".ps1";
 
 // If there is a file and signature left over, move them.
 if (file_exists($file)) {
 
 	$basename = pathinfo($file,PATHINFO_BASENAME);
 	$dirname = pathinfo($file,PATHINFO_DIRNAME);
-	$NewFileName = $dirname . "/" . date("Y-m-d---h-ia---") . $basename;
+	$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
 	rename ($file, $NewFileName);
 }
 
@@ -125,7 +125,7 @@ if (file_exists("$file.signed")) {
 
 	$basename = pathinfo("$file.signed",PATHINFO_BASENAME);
 	$dirname = pathinfo("$file.signed",PATHINFO_DIRNAME);
-	$NewFileName = $dirname . "/" . date("Y-m-d---h-ia---") . $basename;
+	$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
 	rename ("$file.signed", $NewFileName);
 }
 
