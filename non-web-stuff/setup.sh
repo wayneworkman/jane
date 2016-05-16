@@ -50,7 +50,7 @@ mkdir /jane/ssl
 
 
 #make public/private key pair - non Root backed version:
-openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/jane/ssl/Jane.crt" -days 99999
+openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/var/www/html/jane/Jane.crt" -days 99999
 #The .key file is the private key. the .crt is the public key.
 
 chown -R jane:jane /jane/imports
