@@ -110,10 +110,35 @@ if ($result->num_rows > 0) {
 }
 
 
-if ($ActionCreate != "" && $ActionCreateText != "") {
+$file = $PathToSMBShares . "$JaneSettingsGroupName/" .  $JaneSettingsNickName . ".ps1";
 
+// If there is a file and signature left over, move them.
+if (file_exists($file)) {
+
+	$basename = pathinfo($file,PATHINFO_BASENAME);
+	$dirname = pathinfo($file,PATHINFO_DIRNAME);
+	$NewFileName = $dirname . "/" . date("Y-m-d---h-ia---") . $basename;
+	rename ($file, $NewFileName);
+}
+
+if (file_exists("$file.signed")) {
+
+	$basename = pathinfo("$file.signed",PATHINFO_BASENAME);
+	$dirname = pathinfo("$file.signed",PATHINFO_DIRNAME);
+	$NewFileName = $dirname . "/" . date("Y-m-d---h-ia---") . $basename;
+	rename ("$file.signed", $NewFileName);
+}
+
+
+
+
+if ($ActionCreate != "" && $ActionCreateText != "") {
+	
 	//Echo Date in file.
 	$COMMAND = "Get-Date -Format G\r\n";
+
+	//echo system time into comment for record keeping.
+	$COMMAND = $COMMAND . "#These commands were written on: " . date("Y/m/d - h:i:sa") . "\r\n";
 
 	//See if the user exists first. If the user does, update it and move it to the right spot. If not, create.
 	$COMMAND = $COMMAND . "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
@@ -786,7 +811,6 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 	
 
 			// Write commands for this user, for this setting, to the setting's file.
-			$file = $PathToSMBShares . "$JaneSettingsGroupName/" .  $JaneSettingsNickName . ".ps1";
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;	
@@ -804,6 +828,9 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 	// Echo date.
 	$COMMAND = "Get-Date -Format G\r\n";
 
+
+	//echo system time into comment for record keeping.
+	$COMMAND = $COMMAND . "#These commands were written on: " . date("Y/m/d - h:i:sa") . "\r\n";
 
 	//make sure user exists first (powershell).
 	 $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n    echo \"Disabling user $SamAccountName.\"\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
@@ -837,7 +864,6 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			$ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
 			// Write commands for this user, for this setting, to the setting's file.
-			$file = $PathToSMBShares . "$JaneSettingsGroupName/" . $JaneSettingsNickName . ".ps1";
 			if (file_exists($file)) {
 				$current = file_get_contents($file);
 				$current = $current . $ThisCOMMAND;
@@ -853,6 +879,8 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
 	// Echo date.
 	$COMMAND = "Get-Date -Format G\r\n";
 
+	//echo system time into comment for record keeping.
+	$COMMAND = $COMMAND . "#These commands were written on: " . date("Y/m/d - h:i:sa") . "\r\n";
 
 	//make sure user exists first (powershell).
          $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n    echo \"Deleting user $SamAccountName\"\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
@@ -886,7 +914,6 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         $ThisCOMMAND = str_replace("%StudentID%",$StudentID,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%UserName%",$UserName,$ThisCOMMAND);
                         // Write commands for this user, for this setting, to the setting's file.
-                        $file = $PathToSMBShares . "$JaneSettingsGroupName/" . $JaneSettingsNickName . ".ps1";
                         if (file_exists($file)) {
                                 $current = file_get_contents($file);
                                 $current = $current . $ThisCOMMAND;
@@ -899,14 +926,7 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
 }
 // Sign the resultant file, if it exists.
 
-
-
-
-//  openssl dgst -sha256 -sign "/jane/ssl/Jane.key" -out def.ps1.signed def.ps1
-
-
-
-if (file_exists($file)) {
+if (file_exists($file) && file_exists($PrivateKey)) {
 	exec("openssl dgst -sha256 -sign \"$PrivateKey\" -out $file.signed $file > /dev/null");
 }
 
