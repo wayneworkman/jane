@@ -56,11 +56,31 @@ if ($SessionIsVerified == "1") {
 		$CreateFolder = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['CreateFolder'])));
 		$BaseDirectory = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['BaseDirectory'])));
 		$FolderName = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['FolderName'])));
-		$ShareThisFolder = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['ShareThisFolder'])));
-		$aclAdministrators = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['aclAdministrators'])));
-		$aclSystem = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['aclSystem'])));
-		$aclOther = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['aclOther'])));
-		$DisableInheritance = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['DisableInheritance'])));
+		if (isset($_REQUEST['ShareThisFolder'])) {
+			$ShareThisFolder = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['ShareThisFolder'])));
+		} else {
+			$ShareThisFolder = "0";
+		}
+		if (isset($_REQUEST['aclAdministrators'])) {
+			$aclAdministrators = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['aclAdministrators'])));
+		} else {
+			$aclAdministrators = "0";
+		}
+		if (isset($_REQUEST['aclSystem'])) {
+			$aclSystem = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['aclSystem'])));
+		} else {
+			$aclSystem = "0";
+		}
+		if (isset($_REQUEST['aclOther'])) {
+			$aclOther = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['aclOther'])));
+		} else {
+			$aclOther = "0";
+		}
+		if (isset($_REQUEST['DisableInheritance'])) {
+			$DisableInheritance = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['DisableInheritance'])));
+		} else {
+			$DisableInheritance = "0";
+		}
 
 
 		$Name = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['Name'])));
