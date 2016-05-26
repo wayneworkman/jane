@@ -112,23 +112,32 @@ if ($result->num_rows > 0) {
 
 $file = $PathToSMBShares . "$JaneSettingsGroupName/" . "Created-" . date("Y-m-d---") . $JaneSettingsNickName . ".ps1";
 
+
+
 // If there is a file and signature left over, move them.
-if (file_exists($file)) {
+$sql = "SELECT * FROM `userDataToImport` WHERE $JaneSettingsWHERE LIMIT 1";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+	//Here, we know there is at least 1 row of data that needs processed. 
+	//So we will check for an existing file and move it if it exists.
 
-	$basename = pathinfo($file,PATHINFO_BASENAME);
-	$dirname = pathinfo($file,PATHINFO_DIRNAME);
-	$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
-	rename ($file, $NewFileName);
+
+	if (file_exists($file)) {
+
+		$basename = pathinfo($file,PATHINFO_BASENAME);
+		$dirname = pathinfo($file,PATHINFO_DIRNAME);
+		$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
+		rename ($file, $NewFileName);
+	}
+
+	if (file_exists("$file.signed")) {
+
+		$basename = pathinfo("$file.signed",PATHINFO_BASENAME);
+		$dirname = pathinfo("$file.signed",PATHINFO_DIRNAME);
+		$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
+		rename ("$file.signed", $NewFileName);
+	}
 }
-
-if (file_exists("$file.signed")) {
-
-	$basename = pathinfo("$file.signed",PATHINFO_BASENAME);
-	$dirname = pathinfo("$file.signed",PATHINFO_DIRNAME);
-	$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
-	rename ("$file.signed", $NewFileName);
-}
-
 
 
 
