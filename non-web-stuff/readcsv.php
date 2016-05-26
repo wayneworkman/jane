@@ -6,7 +6,7 @@ $symbols = array();
 $symbols += range('a', 'z');
 $symbols += range('A', 'Z');
 $symbols += range('0', '9');
-array_push($symbols,' ','-');
+array_push($symbols,' ','-'); // Allow spaces and hyphens.
 
 
 if (file_exists($PathToCSV)) {
