@@ -47,6 +47,7 @@ php initialStoreLocalUsersAndGroups.php
 mkdir /jane
 mkdir /jane/imports
 mkdir /jane/ssl
+mkdir /jane/service
 
 
 #make public/private key pair - non Root backed version:
@@ -62,7 +63,7 @@ systemct start smb
 #Start JaneEngine.php on boot.
 #Make these changes inside of /etc/rc.d/rc.local
 sleep 30
-/usr/bin/nohup /usr/bin/php /var/www/html/jane/non-web-stuff/JaneEngine.php &
+/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php &
 exit 0
 
 
