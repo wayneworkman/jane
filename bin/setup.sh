@@ -11,17 +11,17 @@ yum update -y
 #install packages
 
 # FEDORA 23
-dnf -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client openssl
+#dnf -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client openssl
 
 
 #CentOS 7
 
-#  yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-#  yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-#  yum install yum-utils
-#  subscription-manager repos --enable=rhel-7-server-optional-rpms
-#  yum-config-manager --enable remi-php70
-#  yum -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client openssl
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum install yum-utils
+subscription-manager repos --enable=rhel-7-server-optional-rpms
+yum-config-manager --enable remi-php70
+yum -y install mariadb mariadb-server php httpd php-mysqlnd php-gd php-mhash php-mcrypt samba samba-client openssl
 
 
 
