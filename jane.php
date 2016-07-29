@@ -139,7 +139,7 @@ if ($SessionIsVerified == "1") {
 
 		echo "WHERE:<br>";
 		echo "<input type=\"text\" name=\"JaneSettingsWHERE\"><br>";
-		echo "The WHERE setting is included as part of the SQL SELECT statement used with selecting data from the bulk data table. Any data matching this WHERE clause will be included in processing for this group of settings. After each returned record's successful processing, these records are deleted from the bulk table.<br>";
+		echo "The WHERE setting is included as part of the SQL SELECT statement used with selecting data from the bulk data table. Any data matching this WHERE clause will be included in processing for this group of settings. No escaping is performed on these values because they are directly used upon the database. Therefore they are only available to administrators.<br>";
                 echo "<br>";
 
 		echo "<input type=\"submit\">";

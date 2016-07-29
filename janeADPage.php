@@ -41,7 +41,7 @@ div{padding:10px;border:5px solid gray;margin:0}
 
  
 <span style="color:blue;" title="Group Name
-            This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
+            This field describes which samba share these settings are placed within.">
             Group Name
         </span><br>
         <input type="text" name="JaneSettingsGroupName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsGroupName']); ?>" readonly></br>
@@ -51,7 +51,7 @@ div{padding:10px;border:5px solid gray;margin:0}
 
 
 <span style="color:blue;" title="SMB Allowed IP
-            This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
+            This field describes the address(s) that are allowed access to the group's shared directory.">
             SMB Allowed IP
         </span><br>
         <input type="text" name="JaneSettingsSMBallowedIP" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsSMBallowedIP']); ?>" readonly></br>
@@ -528,7 +528,7 @@ if ($SessionIsVerified == 1) {
             -Country &quot;IN&quot;
             Default Value:
             Data Type: string">
-            Country
+            Country  -4 character max, two character value. Example:  "US"
         </span><br>
         <input type="text" name="Country" value="<?php echo htmlspecialchars($_SESSION['Country']); ?>"><br>
     </div>
