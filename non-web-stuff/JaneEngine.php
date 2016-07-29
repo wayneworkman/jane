@@ -19,8 +19,6 @@ while(1) {
 				while($row1 = $result1->fetch_assoc()) {
 					$JaneSettingsID = trim($row1["JaneSettingsID"]);
 
-
-
 					//Here, you filter out each setting type and send the JaneSettingsID to each respective settings type script.
 
 					//Active Directory
@@ -36,10 +34,6 @@ while(1) {
 
 
 					//Other goes here
-
-
-
-
 
 
 				}

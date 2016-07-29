@@ -155,7 +155,7 @@ Certificates VARCHAR(255),
 ChangePasswordAtLogon VARCHAR(1),
 City VARCHAR(255),
 Company VARCHAR(255),
-Country VARCHAR(255),
+Country VARCHAR(4), #Country in powershell only accepts two characters, but should be enclosed within double quotes.
 Credential VARCHAR(255),
 Department VARCHAR(255),
 Description VARCHAR(255),
