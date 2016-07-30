@@ -55,6 +55,10 @@ openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -
 #The .key file is the private key. the .crt is the public key.
 
 chown -R jane:jane /jane/imports
+chown -R jane:apache /jane/ssl
+chmod -R 770 /jane/ssl
+
+
 #set selinux to permissive.
 setenforce 0
 systemctl enable smb
