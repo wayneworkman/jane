@@ -38,7 +38,7 @@ systemctl restart firewalld.service
 
 #create user Jane
 useradd jane
-local password=janepassword
+password=janepassword
 echo -e "$password\n$password\n" | sudo passwd jane
 smbpasswd -a jane
 
