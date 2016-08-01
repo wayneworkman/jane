@@ -22,7 +22,7 @@ echo "       .d88P\"                             ";
 echo "      888P\"                               ";
 echo
 echo
-echo "   A free and open account provisioning tool."
+echo "   A free and open account provisioning solution."
 echo
 echo "   Version $janeVersion"
 echo
