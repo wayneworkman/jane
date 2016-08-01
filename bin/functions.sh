@@ -106,33 +106,26 @@ checkOrInstallPackage() {
     local silent="$2"
     local packageLocation=""
     if [[ "$silent" -eq 0 ]]; then
-        dots "Checking package $package"
+        dots "Installing package $package"
     fi
-    local packageExists=$(rpm -qa | grep $package)
-    if [[ ! -z "$packageExists" ]]; then
+    local useYum=$(command -v yum)
+    local useDnf=$(command -v dnf)
+    if [[ -e "$useDnf" ]]; then
+        dnf install "$package" -y > /dev/null 2>&1
         if [[ "$silent" -eq 0 ]]; then
-            echo "Already Installed"
+            [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
+        fi
+    elif [[ -e "$useYum" ]]; then
+        yum install "$package" -y > /dev/null 2>&1
+        if [[ "$silent" -eq 0 ]]; then
+            [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
         fi
     else
-        local useYum=$(command -v yum)
-        local useDnf=$(command -v dnf)
-        if [[ -e "$useDnf" ]]; then
-            dnf install "$package" -y > /dev/null 2>&1
-            if [[ "$silent" -eq 0 ]]; then
-                [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            fi
-        elif [[ -e "$useYum" ]]; then
-            yum install "$package" -y > /dev/null 2>&1
-            if [[ "$silent" -eq 0 ]]; then
-                [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            fi
-        else
-            #Unable to determine repo manager.
-            if [[ "$silent" -eq 0 ]]; then
-                echo "Unable to determine repo manager."
-            fi
-            return 1
+        #Unable to determine repo manager.
+        if [[ "$silent" -eq 0 ]]; then
+            echo "Unable to determine repo manager."
         fi
+        return 1
     fi
 }
 checkForRoot() {
@@ -169,10 +162,12 @@ setupFirewalld() {
     echo "Done"
 }
 createUserJane() {
+    dots "Creating user jane and setting password"
     useradd jane > /dev/null 2>&1
     password=janepassword
     echo -e "$password\n$password\n" | sudo passwd jane > /dev/null 2>&1
     echo -e "$password\n$password\n" | smbpasswd -a jane > /dev/null 2>&1
+    echo "Done"
 
 }
 setupDB() {
