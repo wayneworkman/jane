@@ -18,9 +18,9 @@ checkOrInstallPackage "php-mcrypt" "0"
 checkOrInstallPackage "samba" "0"
 checkOrInstallPackage "samba-client" "0"
 checkOrInstallPackage "openssl" "0"
-checkOrInstallPackage "firewalld" "0"
-setupFirewalld
-startAndEnableService "firewalld"
+#checkOrInstallPackage "firewalld" "0"
+#startAndEnableService "firewalld"
+#setupFirewalld
 startAndEnableService "httpd"
 startAndEnableService "smb"
 startAndEnableService "mysql"

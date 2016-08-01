@@ -149,7 +149,7 @@ startAndEnableService() {
     fi
     if [[ -e "$useSystemctl" ]]; then
         if [[ ! "$doMysqlAndMariadb" -eq 1 ]]; then
-            systemctl enable $theService  > /dev/null 2>&1
+            systemctl enable $theService > /dev/null 2>&1
             systemctl restart $theService > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
         else
@@ -181,9 +181,21 @@ startAndEnableService() {
 }
 setupFirewalld() {
     dots "Configure firewalld"
-    for service in http samba; do firewall-cmd --permanent --zone=public --add-service=$service; done > out
-    rm -f ${cwd}/out
-    echo "Done"
+    for service in http samba; do firewall-cmd --permanent --zone=public --remove-service=$service; done # > /dev/null 2>&1
+    for service in http samba; do firewall-cmd --permanent --zone=public --add-service=$service; done # > /dev/null 2>&1
+    local useSystemctl=$(command -v systemctl)
+    local useService=$(command -v service)
+    if [[ -e "$useSystemctl" ]]; then
+        systemctl enable firewalld > /dev/null 2>&1
+        systemctl restart firewalld > /dev/null 2>&1
+        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+    elif [[ -e "$useService" ]]; then
+        service firewalld enable  > /dev/null 2>&1
+        service firewalld restart > /dev/null 2>&1
+        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+    else
+        echo "Failed"
+    fi
 }
 createUserJane() {
     dots "Creating user jane and setting password"
