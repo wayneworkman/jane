@@ -314,7 +314,7 @@ startJaneOnBoot() {
 startJaneEngine() {
     dots "Starting JaneEngine"
     pkill -f JaneEngine.php
-    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &
+    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log > /dev/null 2>&1 &
     [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
 completed() {
