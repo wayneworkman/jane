@@ -1,7 +1,7 @@
 #!/bin/bash
 dots() {
-    local pad=$(printf "%0.1s" "."{1..70})
-    printf " * %s%*.*s" "$1" 0 $((70-${#1})) "$pad"
+    local pad=$(printf "%0.1s" "."{1..60})
+    printf " * %s%*.*s" "$1" 0 $((60-${#1})) "$pad"
     return 0
 }
 banner() {
@@ -24,11 +24,12 @@ echo
 echo
 echo "   A free and open account provisioning tool."
 echo
+echo "   Version $janeVersion"
 echo
 echo
 }
 updateServer() {
-    dots "Updating server, this could take a while."
+    dots "Updating system, this could take a while"
     local useYum=$(command -v yum)
     local useDnf=$(command -v dnf)
     if [[ -e "$useDnf" ]]; then
@@ -134,6 +135,17 @@ checkOrInstallPackage() {
         fi
     fi
 }
+checkForRoot() {
+    dots "Checking if I am root"
+    currentUser=$(whoami)
+    if [[ "$currentUser" == "root" ]]; then
+        echo "I am $currentUser"
+    else
+        echo "I am $currentUser"
+        exit
+    fi
+
+}
 startAndEnableService() {
     local useSystemctl=$(command -v systemctl)
     local useService=$(command -v service)
@@ -179,7 +191,7 @@ setupDB() {
     fi
 }
 createDirectories() {
-    dots "Checking and/or Creating directories"
+    dots "Setting up directories"
     if [[ ! -d "/jane" ]]; then
         mkdir /jane
     fi
@@ -189,13 +201,43 @@ createDirectories() {
     if [[ ! -d "/jane/ssl" ]]; then
         mkdir /jane/ssl
     fi
-    if [[ ! -d "/jane/service" ]]; then
-        mkdir /jane/service
-        cp -R $cwd/../service /jane
+    if [[ -d "/jane/service" ]]; then
+        if [[ -e "/jane/service/localVars.php" ]]; then
+            if [[ -e "/home/localVars.php" ]]; then 
+                rm -f /home/localVars.php
+            fi
+            cp /jane/service/localVars.php /home
+        fi
+        rm -rf /jane/service
+    fi
+    mkdir /jane/service
+    cp -R $cwd/../service /jane
+    if [[ -e "/home/localVars.php" ]]; then
+        if [[ -e "/jane/service/localVars.php" ]]; then 
+            rm -f /jane/service/localVars.php
+        fi
+        cp /home/localVars.php /jane/service
+        rm -f /home/localVars.php
+    fi
+    if [[ -e "/jane/service/initialStoreLocalUsersAndGroups.php" ]]; then 
         rm -f /jane/service/initialStoreLocalUsersAndGroups.php
     fi
-    if [[ ! -d "/var/www/html/jane" ]]; then
-        cp -R $cwd/../jane /var/www/html
+    if [[ -d "/var/www/html/jane" ]]; then
+        if [[ -e "/var/www/html/jane/vars.php" ]]; then
+            if [[ -e "/home/vars.php" ]]; then
+                rm -f /home/vars.php
+            fi
+            cp /var/www/html/jane/vars.php /home
+        fi
+        rm -rf /var/www/html/jane
+    fi
+    cp -R $cwd/../jane /var/www/html
+    if [[ -e "/home/vars.php" ]]; then
+        if [[ -e "/var/www/html/jane/vars.php" ]]; then
+            rm -f /var/www/html/jane/vars.php
+        fi
+        cp /home/vars.php /var/www/html/jane
+        rm -f /home/vars.php
     fi
     echo "Done"
 }
@@ -249,7 +291,7 @@ startJaneOnBoot() {
 }
 completed() {
 echo
-echo "Setup complete"
+echo "   Setup complete"
 echo
 }
 

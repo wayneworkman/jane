@@ -1,7 +1,9 @@
 #!/bin/bash
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$cwd/functions.sh"
+janeVersion="0.01"
 banner
+checkForRoot
 checkOS
 installRemiAndEpel
 updateServer
