@@ -18,10 +18,13 @@ checkOrInstallPackage "php-mcrypt" "0"
 checkOrInstallPackage "samba" "0"
 checkOrInstallPackage "samba-client" "0"
 checkOrInstallPackage "openssl" "0"
+checkOrInstallPackage "firewalld" "0"
 setupFirewalld
 startAndEnableService "firewalld"
 startAndEnableService "httpd"
 startAndEnableService "smb"
+startAndEnableService "mysql"
+startAndEnableService "mariadb"
 createUserJane
 setupDB
 createDirectories
