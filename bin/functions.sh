@@ -144,14 +144,37 @@ startAndEnableService() {
     local useService=$(command -v service)
     local theService="$1"
     dots "Restarting and enabling $theService"
+    if [[ "$theService" == "mysql" || "$theService" == "mariadb" ]]; then
+        local doMysqlAndMariadb="1"
+    fi
     if [[ -e "$useSystemctl" ]]; then
-        systemctl enable $theService  > /dev/null 2>&1
-        systemctl restart $theService > /dev/null 2>&1
-        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+        if [[ ! "$doMysqlAndMariadb" -eq 1 ]]; then
+            systemctl enable $theService  > /dev/null 2>&1
+            systemctl restart $theService > /dev/null 2>&1
+            [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+        else
+            systemctl enable mysql > /dev/null 2>&1
+            systemctl restart mysql > /dev/null 2>&1
+            local mysqlTry=$?
+            systemctl enable mariadb > /dev/null 2>&1
+            systemctl restart mariadb > /dev/null 2>&1
+            local mariadbTry=$?
+            [[ "$mysqlTry" -eq 0 || "$mariadbTry" -eq 0 ]] && echo "Ok" || echo "Failed"
+        fi
     elif [[ -e "$useService" ]]; then
-        service $theService enable > /dev/null 2>&1
-        service $theService restart > /dev/null 2>&1
-        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+        if [[ ! "$doMysqlAndMariadb" -eq 1 ]]; then
+            service $theService enable  > /dev/null 2>&1
+            service $theService restart > /dev/null 2>&1
+            [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+        else
+            service mysql enable > /dev/null 2>&1
+            service mysql restart > /dev/null 2>&1
+            local mysqlTry=$?
+            service mariadb enable > /dev/null 2>&1
+            service mariadb restart > /dev/null 2>&1
+            local mariadbTry=$?
+            [[ "$mysqlTry" -eq 0 || "$mariadbTry" -eq 0 ]] && echo "Ok" || echo "Failed"
+        fi
     else
         echo "Unable to determine service manager"
     fi

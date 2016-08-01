@@ -24,7 +24,6 @@ startAndEnableService "firewalld"
 startAndEnableService "httpd"
 startAndEnableService "smb"
 startAndEnableService "mysql"
-startAndEnableService "mariadb"
 createUserJane
 setupDB
 createDirectories
