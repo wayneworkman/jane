@@ -32,4 +32,5 @@ checkCert
 setPermissions
 setSELinuxToPermissive
 startJaneOnBoot
+startJaneEngine
 completed

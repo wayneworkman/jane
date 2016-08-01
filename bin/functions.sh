@@ -201,6 +201,10 @@ createDirectories() {
     if [[ ! -d "/jane/ssl" ]]; then
         mkdir /jane/ssl
     fi
+    if [[ ! -d "/jane/log" ]]; then
+        mkdir /jane/log
+        touch /jane/log/JaneEngine.log
+    fi
     if [[ -d "/jane/service" ]]; then
         if [[ -e "/jane/service/localVars.php" ]]; then
             if [[ -e "/home/localVars.php" ]]; then 
@@ -281,7 +285,7 @@ startJaneOnBoot() {
     janeEnabled=$(cat /etc/rc.d/rc.local | grep "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php &")    
     if [[ -z $janeEnabled ]]; then
         echo "sleep 30" >> /etc/rc.d/rc.local
-        echo "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php &" >> /etc/rc.d/rc.local
+        echo "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &" >> /etc/rc.d/rc.local
         echo "exit 0" >> /etc/rc.d/rc.local
         chmod +x /etc/rc.d/rc.local
         echo "Enabled"
@@ -289,7 +293,20 @@ startJaneOnBoot() {
         echo "Already Enabled"
     fi
 }
+startJaneEngine() {
+    dots "Starting JaneEngine"
+    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &
+    [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+}
 completed() {
+echo
+echo "   Access the Jane web interface here:"
+echo "   x.x.x.x/jane/login.php"
+echo
+echo "   Default credentials:"
+echo "   administrator : password"
+echo "   tech : password"
+echo
 echo
 echo "   Setup complete"
 echo
