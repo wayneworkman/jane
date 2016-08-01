@@ -181,8 +181,8 @@ startAndEnableService() {
 }
 setupFirewalld() {
     dots "Configure firewalld"
-    for service in http samba; do firewall-cmd --permanent --zone=public --remove-service=$service; done # > /dev/null 2>&1
-    for service in http samba; do firewall-cmd --permanent --zone=public --add-service=$service; done # > /dev/null 2>&1
+    #for service in http samba; do firewall-cmd --permanent --zone=public --remove-service=$service; done > /dev/null 2>&1
+    for service in http samba; do firewall-cmd --permanent --zone=public --add-service=$service; done > /dev/null 2>&1
     local useSystemctl=$(command -v systemctl)
     local useService=$(command -v service)
     if [[ -e "$useSystemctl" ]]; then
@@ -291,10 +291,11 @@ checkCert() {
 }
 setPermissions() {
     dots "Setting permissions"
-    chown -R jane:jane /jane/imports
-    chown -R jane:apache /jane/ssl
-    chown -R jane:apache /jane/service
-    chmod -R 770 /jane
+    chown -R root:jane /jane/imports
+    chown -R root:apache /jane/ssl
+    chown -R root:apache /jane/service
+    chmod -R 777 /jane
+    chmod -R 770 /jane/*
     chown -R apache:apache /var/www/html/jane
     chmod -R 555 /var/www/html/jane
     echo "Done"
@@ -313,7 +314,7 @@ startJaneOnBoot() {
         echo "No /etc/rc.d directory"
         exit
     fi
-    janeEnabled=$(cat /etc/rc.d/rc.local | grep "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php &")    
+    janeEnabled=$(cat /etc/rc.d/rc.local | grep "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &")    
     if [[ -z $janeEnabled ]]; then
         echo "sleep 30" >> /etc/rc.d/rc.local
         echo "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &" >> /etc/rc.d/rc.local
