@@ -1,7 +1,3 @@
-#drop user 'janeWeb'@'localhost';
-#drop user 'janeSystem'@'localhost';
-#drop database jane;
-
 CREATE DATABASE IF NOT EXISTS jane;
 
 USE jane;
@@ -90,6 +86,14 @@ CREATE TABLE blockedIPs(
 BlockedID int NOT NULL AUTO_INCREMENT,
 BlockedIP VARCHAR(255) NOT NULL UNIQUE,
 PRIMARY KEY (BlockedID)
+);
+
+CREATE TABLE globalSettings(
+settingID int NOT NULL AUTO_INCREMENT,
+settingKey varchar(255) NOT NULL,
+settingDesc longtext,
+settingValue varchar(255) NOT NULL,
+PRIMARY KEY (settingID)
 );
 
 CREATE UNIQUE INDEX BlockedIP_Indes
@@ -206,24 +210,21 @@ PRIMARY KEY (janeADid)
 );
 
 
-
-insert into janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) values ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
-#insert into janeGroups (JaneGroupName) VALUES ('administrator');
-insert into janeGroups (JaneGroupName) values ('administrators');
-insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'administrator'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'administrators'));
+INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','0');
 
 
+INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
+INSERT INTO janeGroups (JaneGroupName) VALUES ('administrators');
+INSERT INTO janeUserGroupAssociation (uID,gID) VALUES ((select JaneUserID FROM janeUsers WHERE JaneUsername = 'administrator'),(SELECT JaneGroupID FROM janeGroups WHERE JaneGroupName = 'administrators'));
 
-insert into janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) values ('tech','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
-#INSERT INTO janeGroups (JaneGroupName) VALUES ('tech');
-insert into janeGroups (JaneGroupName) values ('techs');
-insert into janeUserGroupAssociation (uID,gID) values ((select JaneUserID from janeUsers WHERE JaneUsername = 'tech'),(select JaneGroupID from janeGroups WHERE JaneGroupName = 'techs'));
 
+INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('tech','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
+INSERT INTO janeGroups (JaneGroupName) VALUES ('techs');
+INSERT INTO janeUserGroupAssociation (uID,gID) VALUES ((SELECT JaneUserID FROM janeUsers WHERE JaneUsername = 'tech'),(SELECT JaneGroupID FROM janeGroups WHERE JaneGroupName = 'techs'));
 
 
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('Active Directory','Standard Active Directory settings type.','janeAD');
 INSERT INTO janeSettingsTypes (SettingsTypeName,SettingsTypeDescription,SettingsTableName) VALUES ('OpenDirectory','Standard Open Directory settings type.','janeOD');
-
 
 
 INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%Action%','Add');
@@ -241,7 +242,6 @@ CREATE USER 'janeWeb'@'localhost' IDENTIFIED BY 'janewebpassword';
 CREATE USER 'janeSystem'@'localhost' IDENTIFIED BY 'janesystempassword';
 
 
-
 GRANT ALL ON jane.blockedIPs TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.Sessions TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.badLoginAttempts TO 'janeWeb'@'localhost';
@@ -252,6 +252,7 @@ GRANT ALL ON jane.janeSettingsTypes TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeUserGroupAssociation TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeUsers TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
+
 
 GRANT ALL ON jane.janeUserGroupAssociation TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeGroups TO 'janeSystem'@'localhost';
