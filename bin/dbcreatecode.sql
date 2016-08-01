@@ -142,7 +142,7 @@ DisableInheritance VarChar(1),
 
 CreateShare VarChar(1),
 BaseDirectory VarChar(255),
-ShareName VarChar(255),
+FolderName VarChar(255),
 aclAdministrators VarChar(1),
 aclSystem VarChar(1),
 aclOther VarChar(255),
