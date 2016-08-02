@@ -323,8 +323,8 @@ echo "   Access the Jane web interface here:"
 echo "   x.x.x.x/jane/login.php"
 echo
 echo "   Default credentials:"
-echo "   administrator : password"
-echo "   tech : password"
+echo "   administrator : changeme"
+echo "   tech : changeme"
 echo
 echo
 echo "   Setup complete"
