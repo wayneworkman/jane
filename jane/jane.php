@@ -139,7 +139,12 @@ if ($SessionIsVerified == "1") {
 
 		echo "WHERE:<br>";
 		echo "<input type=\"text\" name=\"JaneSettingsWHERE\"><br>";
-		echo "The WHERE setting is included as part of the SQL SELECT statement used with selecting data from the bulk data table. Any data matching this WHERE clause will be included in processing for this group of settings. No escaping is performed on these values because they are directly used upon the database. Therefore they are only available to administrators.<br>";
+		echo "Examples:<br>";
+                echo "<font color=\"red\">userGroup = &#39;Site 5&#39;</font><br>";
+                echo "<font color=\"red\">userGroup = &#39;South Branch&#39;</font><br>";
+                echo "<font color=\"red\">userGroup = &#39;Site 7&#39; OR userGroup = &#39;Site 8&#39;</font><br>";
+                echo "<br>";
+                echo "The WHERE setting is included as part of the SQL SELECT statement used with selecting data from the <font color=\"red\">userDataToImport</font> table. Any data matching this WHERE clause will be included in processing for this group of settings. No escaping is performed on these values because they are directly used upon the database. Therefore they are only available to administrators.<br>";
                 echo "<br>";
 
 		echo "<input type=\"submit\">";
