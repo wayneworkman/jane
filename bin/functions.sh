@@ -181,7 +181,8 @@ startAndEnableService() {
 }
 setupFirewalld() {
     dots "Configure firewalld"
-    for service in http samba; do firewall-cmd --permanent --zone=public --add-service=$service; done > /dev/null 2>&1
+    for service in http samba; do firewall-cmd --permanent --zone=public --add-service=$service; done > out
+    rm -f ${cwd}/out
     echo "Done"
 }
 createUserJane() {
