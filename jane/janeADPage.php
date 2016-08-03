@@ -83,8 +83,8 @@ This field can only be changed by Jane's Administrator.">
 
             Example for adding and disabling based on one variable:
 
-            Create when [Action] equals [Add]
-            Disable when [Action] equals [Drop]
+            Create when [userAction] equals [Add]
+            Disable when [userAction] equals [Drop]
             Delete when [] equals []
 
             Note: The only characters allowed in these fields are lowercase and uppercase Alhpha characters, and numeric 0 through 9. All other input will be parsed, never even being stored.">
