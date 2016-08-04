@@ -28,6 +28,39 @@ echo "   Version $janeVersion"
 echo
 echo
 }
+updateSchema() {
+    dots "Checking for schema updates"
+
+    local getOldSchemaVersion="SELECT settingValue FROM globalSettings WHERE settingKey = 'schemaVersion'"
+    local options="-sN"
+
+    if [[ $mysqlHost != "" ]]; then
+        local options="$options -h$mysqlHost"
+    fi
+    if [[ $mysqlUser != "" ]]; then
+        local options="$options -u$mysqlUser"
+    fi
+    if [[ $mysqlPass != "" ]]; then
+        local options="$options -p$mysqlPass"
+    fi
+    local options="$options -D jane -e"
+
+    local oldSchemaVersion=$(mysql $options "$getOldSchemaVersion") > /dev/null 2>&1
+
+    if [[ "$currentSchemaVersion" -gt "$oldSchemaVersion" ]]; then
+        echo "Needed"
+
+        local COUNTER=$oldSchemaVersion
+        while [[ "$COUNTER" -lt "$currentSchemaVersion" ]]; do
+            schema${COUNTER}
+            let COUNTER=COUNTER+1 
+        done
+
+    else
+        echo "Not needed"
+    fi
+
+}
 updateServer() {
     dots "Updating system, this could take a while"
     local useYum=$(command -v yum)

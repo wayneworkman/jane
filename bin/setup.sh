@@ -1,7 +1,10 @@
 #!/bin/bash
 cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$cwd/functions.sh"
+source "$cwd/schemaFunctions.sh"
+source "$cwd/mysqlCredentials.sh"
 janeVersion="0.01"
+currentSchemaVersion="2"
 banner
 checkForRoot
 checkOS
@@ -26,6 +29,7 @@ startAndEnableService "smb"
 startAndEnableService "mysql"
 createUserJane
 setupDB
+updateSchema
 createDirectories
 checkCert
 setPermissions

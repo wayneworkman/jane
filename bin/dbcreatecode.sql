@@ -15,6 +15,15 @@ userPassword VARCHAR(255),
 PRIMARY KEY (userID)
 );
 
+CREATE TABLE usernameTracking(
+trackingID int NOT NULL AUTO_INCREMENT,
+trackingImportedID VARCHAR(255),
+trackingUserName VARCHAR(255),
+trackingIsAbnormal VARCHAR(1),
+PRIMARY KEY (trackingID)
+);
+
+
 CREATE TABLE availableVariables(
 VariableID int NOT NULL AUTO_INCREMENT,
 VariableName VARCHAR(255) NOT NULL UNIQUE,
@@ -210,7 +219,7 @@ PRIMARY KEY (janeADid)
 );
 
 
-INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','1');
+INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','2');
 
 
 INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
@@ -253,6 +262,7 @@ GRANT ALL ON jane.janeUserGroupAssociation TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.janeUsers TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.availableVariables TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.globalSettings TO 'janeWeb'@'localhost';
+GRANT ALL ON jane.usernameTracking TO 'janeWeb'@'localhost';
 
 
 GRANT ALL ON jane.janeUserGroupAssociation TO 'janeSystem'@'localhost';
@@ -265,4 +275,7 @@ GRANT ALL ON jane.janeSettings TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.janeSettingsTypes TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.userDataToImport TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.globalSettings TO 'janeSystem'@'localhost';
+GRANT ALL ON jane.usernameTracking TO 'janeSystem'@'localhost';
+
+
 
