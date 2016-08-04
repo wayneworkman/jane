@@ -1,22 +1,9 @@
 <?php
 /*
- trackingID         | int(11)
- trackingImportedID | varchar(255)
- trackingUserName   | varchar(255)
- trackingIsAbnormal | varchar(1)
-
- ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')
-
-$isAbnormal
-
-
 check if the user ID is already in the usernameTracking table. If it is, use the existing username.
-
 If the ID doesn't exist, check if the given username is taken or not. If available, use it. If not, append a-z chars until it is.
 
 */
-
-
 
 //Range of characters to append to suggested usernames that are already taken.
 $alphas = range('a', 'z');
@@ -40,8 +27,6 @@ if ($resultTracking1->num_rows > 0) {
     $resultTracking2 = $link->query($sql);
     if ($resultTracking2->num_rows > 0) {
 
-
-
         //Username is taken. Append chars a-z until a free username is found.
         $isAbnormal="1"; //Mark as abnormal.
         foreach ($alphas as &$charToAppend) {
@@ -61,8 +46,6 @@ if ($resultTracking1->num_rows > 0) {
             }
         }
         unset($value);
-
-
 
 
     } else {

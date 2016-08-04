@@ -28,15 +28,13 @@ if (file_exists($PathToCSV)) {
 
 
 
-
-
-
-
-
 		//Ensure every single username is unique.
 		//If an abnormal username must be given, log it in the DB, and list abnormal usernames and IDs in the web UI for all to see.
                 $isAbnormal="0"; //Initially set abnormal to false.
+                //The below file is what ensures unique usernames. 
+                //You may comment this line to disable this functionality but doing so would risk duplicate usernames and errors.
                 include 'ensureUniqueUsernames.php';
+
 
 
 		$sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')";
