@@ -1,4 +1,53 @@
-#Takes db Schema from 1 to 2.
+
+
+schema2() {
+    local options="-sN"
+    if [[ $mysqlHost != "" ]]; then
+        local options="$options -h$mysqlHost"
+    fi
+    if [[ $mysqlUser != "" ]]; then
+        local options="$options -u$mysqlUser"
+    fi
+    if [[ $mysqlpass != "" ]]; then
+        local options="$options -p$mysqlPass"
+    fi
+    local options="$options -D jane -e"
+
+    local step1="ALTER TABLE usernameTracking ADD UNIQUE (trackingImportedID);"
+    local step2="ALTER TABLE usernameTracking ADD UNIQUE (trackingUserName);"
+    local step3="UPDATE globalSettings SET settingValue = '3' WHERE settingKey = 'schemaVersion'"
+
+    dots "Going from DB Schema 2 to 3"
+
+    mysql $options "$step1" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step1"
+        echo
+        exit
+    fi
+
+    mysql $options "$step2" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step2"
+        echo
+        exit
+    fi
+
+    mysql $options "$step3" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step3"
+        echo
+        exit
+    fi
+    echo "Done"
+}
+
 
 schema1() {
     local options="-sN"

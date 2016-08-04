@@ -29,16 +29,17 @@ if (file_exists($PathToCSV)) {
 
 
 
+
+
+
+
 		//Ensure every single username is unique.
 		//If an abnormal username must be given, log it in the DB, and list abnormal usernames and IDs in the web UI for all to see.
-
-
-
+                $isAbnormal="0"; //Initially set abnormal to false.
+                include 'ensureUniqueUsernames.php';
 
 
 		$sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')";
-
-
 		if ($userAction != "Category") { //this check is how the header line is skipped. "Catagory" can be replaced with a word that always appears in the header.
 			if ($link->query($sql)) {
 				// good
