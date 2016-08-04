@@ -13,26 +13,32 @@ $file1 = "Z:\Created-" + $(Get-Date -Format yyyy-MM-dd) + "---abc.ps1"
 #File 2 location:
 $file2 = "Z:\Created-" + $(Get-Date -Format yyyy-MM-dd) + "---def.ps1"
 
-#Check if file1 exists. If so, run it and redirect output to log, then delete file1 and file1.signed
-$FileExists = Test-Path $file1
+#Check if file exists. If so, run it and redirect output to log, then delete file and file.signed
+$currentFile = $file1
+$FileExists = Test-Path $currentFile
 If ($FileExists -eq $True) {
-    powershell.exe -executionpolicy bypass -windowstyle hidden -noninteractive -nologo -file $file1 2>&1 | Out-File $log -Append
-    Remove-Item $file1
-    $file1 = $file1 + ".signed"
-    $FileExists = Test-Path $file1
+    powershell.exe -executionpolicy bypass -windowstyle hidden -noninteractive -nologo -file $currentFile 2>&1 | Out-File $log -Append
+    Remove-Item $currentFile
+    $currentFile = $currentFile + ".signed"
+    $FileExists = Test-Path $currentFile
     If ($FileExists -eq $True) {
-        Remove-Item $file1
+        Remove-Item $currentFile
     }
 }
 
-#Check if file2 exists. If so, run it and redirect output to log, then delete file2 and file2.signed
-$FileExists = Test-Path $file2
+
+
+$currentFile = $file2
+$FileExists = Test-Path $currentFile
 If ($FileExists -eq $True) {
-    powershell.exe -executionpolicy bypass -windowstyle hidden -noninteractive -nologo -file $file2 2>&1 | Out-File $log -Append
-    Remove-Item $file2
-    $file2 = $file2 + ".signed"
-    $FileExists = Test-Path $file2
+    powershell.exe -executionpolicy bypass -windowstyle hidden -noninteractive -nologo -file $currentFile 2>&1 | Out-File $log -Append
+    Remove-Item $currentFile
+    $currentFile = $currentFile + ".signed"
+    $FileExists = Test-Path $currentFile
     If ($FileExists -eq $True) {
-        Remove-Item $file2
+        Remove-Item $currentFile
     }
 }
+
+
+
