@@ -35,7 +35,7 @@ div{padding:10px;border:5px solid gray;margin:0}
             This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
             Settings NickName
        </span><br>
-        <input type="text" name="JaneSettingsNickName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsNickName']); ?>" readonly></br>
+        <input type="text" name="JaneSettingsNickName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsNickName']); ?>" style="width:600px;" readonly></br>
     
 <br>
 
@@ -44,7 +44,7 @@ div{padding:10px;border:5px solid gray;margin:0}
             This field describes which samba share these settings are placed within.">
             Group Name
         </span><br>
-        <input type="text" name="JaneSettingsGroupName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsGroupName']); ?>" readonly></br>
+        <input type="text" name="JaneSettingsGroupName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsGroupName']); ?>" style="width:600px;" readonly></br>
 
 <br>
 
@@ -54,7 +54,7 @@ div{padding:10px;border:5px solid gray;margin:0}
             This field describes the address(s) that are allowed access to the group's shared directory.">
             SMB Allowed IP
         </span><br>
-        <input type="text" name="JaneSettingsSMBallowedIP" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsSMBallowedIP']); ?>" readonly></br>
+        <input type="text" name="JaneSettingsSMBallowedIP" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsSMBallowedIP']); ?>" style="width:600px;" readonly></br>
 
 <br>
 
@@ -66,7 +66,7 @@ It determines what data will be selected for import using the below settings.
 This field can only be changed by Jane's Administrator.">
             WHERE
         </span><br>
-        <input type="text" name="JaneSettingsWHERE" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsWHERE']); ?>" readonly></br>
+        <input type="text" name="JaneSettingsWHERE" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsWHERE']); ?>" style="width:600px;" readonly></br>
 
 
 
@@ -90,9 +90,9 @@ This field can only be changed by Jane's Administrator.">
             Note: The only characters allowed in these fields are lowercase and uppercase Alhpha characters, and numeric 0 through 9. All other input will be parsed, never even being stored.">
         Actions
         </span><br>
-        Create when <input type="text" name="ActionCreate" value="<?php echo htmlspecialchars($_SESSION['ActionCreate']); ?>"> equals <input type="text" name="ActionCreateText" value="<?php echo ($_SESSION['ActionCreateText']); ?>"></br>
-        Disable when <input type="text" name="ActionDisable" value="<?php echo htmlspecialchars($_SESSION['ActionDisable']); ?>"> equals <input type="text" name="ActionDisableText" value="<?php echo ($_SESSION['ActionDisableText']); ?>"></br>
-        Delete when <input type="text" name="ActionDelete" value="<?php echo htmlspecialchars($_SESSION['ActionDelete']); ?>"> equals <input type="text" name="ActionDeleteText" value="<?php echo ($_SESSION['ActionDeleteText']); ?>"></br>
+        Create when <input type="text" name="ActionCreate" value="<?php echo htmlspecialchars($_SESSION['ActionCreate']); ?>" style="width:300px;"> equals <input type="text" name="ActionCreateText" value="<?php echo ($_SESSION['ActionCreateText']); ?>" style="width:300px;"></br>
+        Disable when <input type="text" name="ActionDisable" value="<?php echo htmlspecialchars($_SESSION['ActionDisable']); ?>" style="width:300px;"> equals <input type="text" name="ActionDisableText" value="<?php echo ($_SESSION['ActionDisableText']); ?>" style="width:300px;"></br>
+        Delete when <input type="text" name="ActionDelete" value="<?php echo htmlspecialchars($_SESSION['ActionDelete']); ?>" style="width:300px;"> equals <input type="text" name="ActionDeleteText" value="<?php echo ($_SESSION['ActionDeleteText']); ?>" style="width:300px;"></br>
     </div>
 
 
@@ -175,7 +175,7 @@ if ($SessionIsVerified == 1) {
             If the entire path does not exist, it will be created.">
         Base Directory
         </span><br>
-	<input type="text" name="BaseDirectory" value="<?php echo htmlspecialchars($_SESSION['BaseDirectory']); ?>"><br>
+	<input type="text" name="BaseDirectory" value="<?php echo htmlspecialchars($_SESSION['BaseDirectory']); ?>" style="width:600px;"><br>
 
 
 
@@ -191,7 +191,7 @@ if ($SessionIsVerified == 1) {
             If the entire path does not exist, it will be created.">
         Folder Name
         </span><br>
-        <input type="text" name="FolderName" value="<?php echo htmlspecialchars($_SESSION['FolderName']); ?>"><input type="checkbox" name="ShareThisFolder" value="1" <?php if ($_SESSION['ShareThisFolder'] == "1" ) { echo " checked"; }?>>
+        <input type="text" name="FolderName" value="<?php echo htmlspecialchars($_SESSION['FolderName']); ?>" style="width:600px;"><input type="checkbox" name="ShareThisFolder" value="1" <?php if ($_SESSION['ShareThisFolder'] == "1" ) { echo " checked"; }?>>
 
 
 	<span style="color:blue;" title="Share This Folder
@@ -234,7 +234,7 @@ if ($SessionIsVerified == 1) {
             TechsGroup,Visitors,Albert,JoeSmith,jdk1234">
         Other ACL Permissions 
         </span><br>
-	<input type="text" name="aclOther" value="<?php echo htmlspecialchars($_SESSION['aclOther']); ?>"></br>
+	<input type="text" name="aclOther" value="<?php echo htmlspecialchars($_SESSION['aclOther']); ?>" style="width:600px;"></br>
 	
 	
 
@@ -257,7 +257,7 @@ if ($SessionIsVerified == 1) {
             Specifies a group that users should be placed into after account creation.">
 	Group 1 Name
         </span><br>
-        <input type="text" name="Group1Name" value="<?php echo htmlspecialchars($_SESSION['Group1Name']); ?>"></br>
+        <input type="text" name="Group1Name" value="<?php echo htmlspecialchars($_SESSION['Group1Name']); ?>" style="width:600px;"></br>
     </div>
 
 
@@ -273,7 +273,7 @@ if ($SessionIsVerified == 1) {
             Specifies a group that users should be placed into after account creation.">
             Group 2 Name
         </span><br>
-        <input type="text" name="Group2Name" value="<?php echo htmlspecialchars($_SESSION['Group2Name']); ?>"></br>
+        <input type="text" name="Group2Name" value="<?php echo htmlspecialchars($_SESSION['Group2Name']); ?>" style="width:600px;"></br>
     </div>
 
 
@@ -287,7 +287,7 @@ if ($SessionIsVerified == 1) {
             Specifies a group that users should be placed into after account creation.">
             Group 3 Name
         </span><br>
-        <input type="text" name="Group3Name" value="<?php echo htmlspecialchars($_SESSION['Group3Name']); ?>"></br>
+        <input type="text" name="Group3Name" value="<?php echo htmlspecialchars($_SESSION['Group3Name']); ?>" style="width:600px;"></br>
     </div>
 
 
@@ -301,7 +301,7 @@ if ($SessionIsVerified == 1) {
             Specifies a list of groups that the user should not be in, and should be removed from. Entries are comma delemited.">
             Remove User From Groups
         </span><br>
-        <input type="text" name="RemoveFromGroups" value="<?php echo htmlspecialchars($_SESSION['RemoveFromGroups']); ?>"></br>
+        <input type="text" name="RemoveFromGroups" value="<?php echo htmlspecialchars($_SESSION['RemoveFromGroups']); ?>" style="width:600px;"></br>
     </div>
 
 
@@ -319,7 +319,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Name
         </span><br>
-        <input type="text" name="Name" value="<?php echo htmlspecialchars($_SESSION['Name']); ?>"></br>
+        <input type="text" name="Name" value="<?php echo htmlspecialchars($_SESSION['Name']); ?>" style="width:600px;"></br>
     </div>
     <div>
         <span style="color:blue;" title="AccountExpirationDate
@@ -348,7 +348,7 @@ if ($SessionIsVerified == 1) {
             Data Type: System.Nullable[System.DateTime]">
             AccountExpirationDate
         </span><br>
-        <input type="text" name="AccountExpirationDate" value="<?php echo htmlspecialchars($_SESSION['AccountExpirationDate']); ?>"><br>
+        <input type="text" name="AccountExpirationDate" value="<?php echo htmlspecialchars($_SESSION['AccountExpirationDate']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="AccountNotDelegated
@@ -387,7 +387,7 @@ if ($SessionIsVerified == 1) {
             ">
             AccountPassword
         </span><br>
-        <input type="text" name="AccountPassword" value="<?php echo htmlspecialchars($_SESSION['AccountPassword']); ?>"><br>
+        <input type="text" name="AccountPassword" value="<?php echo htmlspecialchars($_SESSION['AccountPassword']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="AllowReversiblePasswordEncryption
@@ -426,7 +426,7 @@ if ($SessionIsVerified == 1) {
             Data Type: ADAuthType">
             AuthType
         </span><br>
-        <input type="text" name="AuthType" value="<?php echo htmlspecialchars($_SESSION['AuthType']); ?>"><br>
+        <input type="text" name="AuthType" value="<?php echo htmlspecialchars($_SESSION['AuthType']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="CannotChangePassword
@@ -477,7 +477,7 @@ if ($SessionIsVerified == 1) {
             Data Type: X509Certificate[]">
             Certificates
         </span><br>
-        <input type="text" name="Certificates" value="<?php echo htmlspecialchars($_SESSION['Certificates']); ?>"><br>
+        <input type="text" name="Certificates" value="<?php echo htmlspecialchars($_SESSION['Certificates']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="ChangePasswordAtLogon
@@ -506,7 +506,7 @@ if ($SessionIsVerified == 1) {
             Default Value:
             Data Type: string">City
         </span><br>
-        <input type="text" name="City" value="<?php echo htmlspecialchars($_SESSION['City']); ?>"><br>
+        <input type="text" name="City" value="<?php echo htmlspecialchars($_SESSION['City']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Company
@@ -518,7 +518,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Company
         </span><br>
-        <input type="text" name="Company" value="<?php echo htmlspecialchars($_SESSION['Company']); ?>"><br>
+        <input type="text" name="Company" value="<?php echo htmlspecialchars($_SESSION['Company']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Country
@@ -528,9 +528,9 @@ if ($SessionIsVerified == 1) {
             -Country &quot;IN&quot;
             Default Value:
             Data Type: string">
-            Country  -4 character max, two character value. Example:  "US"
+            Country  (4 character max, two character value. Example: "US")
         </span><br>
-        <input type="text" name="Country" value="<?php echo htmlspecialchars($_SESSION['Country']); ?>"><br>
+        <input type="text" name="Country" value="<?php echo htmlspecialchars($_SESSION['Country']); ?>" style="width:40px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Credential
@@ -549,7 +549,7 @@ if ($SessionIsVerified == 1) {
             Data Type: PSCredential">
             Credential
         </span><br>
-        <input type="text" name="Credential" value="<?php echo htmlspecialchars($_SESSION['Credential']); ?>"><br>
+        <input type="text" name="Credential" value="<?php echo htmlspecialchars($_SESSION['Credential']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Department
@@ -561,7 +561,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Department
         </span><br>
-        <input type="text" name="Department" value="<?php echo htmlspecialchars($_SESSION['Department']); ?>"><br>
+        <input type="text" name="Department" value="<?php echo htmlspecialchars($_SESSION['Department']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Description
@@ -573,7 +573,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Description
         </span><br>
-        <input type="text" name="Description" value="<?php echo htmlspecialchars($_SESSION['Description']); ?>"><br>
+        <input type="text" name="Description" value="<?php echo htmlspecialchars($_SESSION['Description']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="DisplayName
@@ -585,7 +585,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             DisplayName
         </span><br>
-        <input type="text" name="DisplayName" value="<?php echo htmlspecialchars($_SESSION['DisplayName']); ?>"><br>
+        <input type="text" name="DisplayName" value="<?php echo htmlspecialchars($_SESSION['DisplayName']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Division
@@ -597,7 +597,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Division
         </span><br>
-        <input type="text" name="Division" value="<?php echo htmlspecialchars($_SESSION['Division']); ?>"><br>
+        <input type="text" name="Division" value="<?php echo htmlspecialchars($_SESSION['Division']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="EmailAddress
@@ -609,7 +609,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             EmailAddress
         </span><br>
-        <input type="text" name="EmailAddress" value="<?php echo htmlspecialchars($_SESSION['EmailAddress']); ?>"><br>
+        <input type="text" name="EmailAddress" value="<?php echo htmlspecialchars($_SESSION['EmailAddress']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="EmployeeID
@@ -621,7 +621,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             EmployeeID
         </span><br>
-        <input type="text" name="EmployeeID" value="<?php echo htmlspecialchars($_SESSION['EmployeeID']); ?>"><br>
+        <input type="text" name="EmployeeID" value="<?php echo htmlspecialchars($_SESSION['EmployeeID']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="EmployeeNumber
@@ -633,7 +633,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             EmployeeNumber
         </span><br>
-        <input type="text" name="EmployeeNumber" value="<?php echo htmlspecialchars($_SESSION['EmployeeNumber']); ?>"><br>
+        <input type="text" name="EmployeeNumber" value="<?php echo htmlspecialchars($_SESSION['EmployeeNumber']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Enabled
@@ -661,7 +661,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Fax
         </span><br>
-        <input type="text" name="Fax" value="<?php echo htmlspecialchars($_SESSION['Fax']); ?>"><br>
+        <input type="text" name="Fax" value="<?php echo htmlspecialchars($_SESSION['Fax']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="GivenName
@@ -673,7 +673,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             GivenName
         </span><br>
-        <input type="text" name="GivenName" value="<?php echo htmlspecialchars($_SESSION['GivenName']); ?>"><br>
+        <input type="text" name="GivenName" value="<?php echo htmlspecialchars($_SESSION['GivenName']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="HomeDirectory
@@ -685,7 +685,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             HomeDirectory
         </span><br>
-        <input type="text" name="HomeDirectory" value="<?php echo htmlspecialchars($_SESSION['HomeDirectory']); ?>"><br>
+        <input type="text" name="HomeDirectory" value="<?php echo htmlspecialchars($_SESSION['HomeDirectory']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="HomeDrive
@@ -697,7 +697,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             HomeDrive
         </span><br>
-        <input type="text" name="HomeDrive" value="<?php echo htmlspecialchars($_SESSION['HomeDrive']); ?>"><br>
+        <input type="text" name="HomeDrive" value="<?php echo htmlspecialchars($_SESSION['HomeDrive']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="HomePage
@@ -709,7 +709,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             HomePage
         </span><br>
-        <input type="text" name="HomePage" value="<?php echo htmlspecialchars($_SESSION['HomePage']); ?>"><br>
+        <input type="text" name="HomePage" value="<?php echo htmlspecialchars($_SESSION['HomePage']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="HomePhone
@@ -721,7 +721,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             HomePhone
         </span><br>
-        <input type="text" name="HomePhone" value="<?php echo htmlspecialchars($_SESSION['HomePhone']); ?>"><br>
+        <input type="text" name="HomePhone" value="<?php echo htmlspecialchars($_SESSION['HomePhone']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Initials
@@ -733,7 +733,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Initials
         </span><br>
-        <input type="text" name="Initials" value="<?php echo htmlspecialchars($_SESSION['Initials']); ?>"><br>
+        <input type="text" name="Initials" value="<?php echo htmlspecialchars($_SESSION['Initials']); ?>" style="width:300px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Instance
@@ -757,7 +757,7 @@ if ($SessionIsVerified == 1) {
             Data Type: ADUser">
             Instance
         </span><br>
-        <input type="text" name="Instance" value="<?php echo htmlspecialchars($_SESSION['Instance']); ?>"><br>
+        <input type="text" name="Instance" value="<?php echo htmlspecialchars($_SESSION['Instance']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="LogonWorkstations
@@ -771,7 +771,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             LogonWorkstations
         </span><br>
-        <input type="text" name="LogonWorkstations" value="<?php echo htmlspecialchars($_SESSION['LogonWorkstations']); ?>"><br>
+        <input type="text" name="LogonWorkstations" value="<?php echo htmlspecialchars($_SESSION['LogonWorkstations']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Manager
@@ -794,7 +794,7 @@ if ($SessionIsVerified == 1) {
             Data Type: ADUser">
             Manager
         </span><br>
-        <input type="text" name="Manager" value="<?php echo htmlspecialchars($_SESSION['Manager']); ?>"><br>
+        <input type="text" name="Manager" value="<?php echo htmlspecialchars($_SESSION['Manager']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="MobilePhone
@@ -807,7 +807,7 @@ if ($SessionIsVerified == 1) {
             Attributes">
             MobilePhone
         </span><br>
-        <input type="text" name="MobilePhone" value="<?php echo htmlspecialchars($_SESSION['MobilePhone']); ?>"><br>
+        <input type="text" name="MobilePhone" value="<?php echo htmlspecialchars($_SESSION['MobilePhone']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Office
@@ -819,7 +819,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Office
         </span><br>
-        <input type="text" name="Office" value="<?php echo htmlspecialchars($_SESSION['Office']); ?>"><br>
+        <input type="text" name="Office" value="<?php echo htmlspecialchars($_SESSION['Office']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="OfficePhone
@@ -831,7 +831,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             OfficePhone
         </span><br>
-        <input type="text" name="OfficePhone" value="<?php echo htmlspecialchars($_SESSION['OfficePhone']); ?>"><br>
+        <input type="text" name="OfficePhone" value="<?php echo htmlspecialchars($_SESSION['OfficePhone']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Organization
@@ -843,7 +843,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Organization
         </span><br>
-        <input type="text" name="Organization" value="<?php echo htmlspecialchars($_SESSION['Organization']); ?>"><br>
+        <input type="text" name="Organization" value="<?php echo htmlspecialchars($_SESSION['Organization']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="OtherAttributes
@@ -869,7 +869,7 @@ if ($SessionIsVerified == 1) {
             Data Type: hashtable">
             OtherAttributes
         </span><br>
-        <input type="text" name="OtherAttributes" value="<?php echo htmlspecialchars($_SESSION['OtherAttributes']); ?>"><br>
+        <input type="text" name="OtherAttributes" value="<?php echo htmlspecialchars($_SESSION['OtherAttributes']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="OtherName
@@ -881,7 +881,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             OtherName
         </span><br>
-        <input type="text" name="OtherName" value="<?php echo htmlspecialchars($_SESSION['OtherName']); ?>"><br>
+        <input type="text" name="OtherName" value="<?php echo htmlspecialchars($_SESSION['OtherName']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="PassThru
@@ -890,7 +890,7 @@ if ($SessionIsVerified == 1) {
             Data Type: switch">
             PassThru
         </span><br>
-        <input type="text" name="PassThru" value="<?php echo htmlspecialchars($_SESSION['PassThru']); ?>"><br>
+        <input type="text" name="PassThru" value="<?php echo htmlspecialchars($_SESSION['PassThru']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="PasswordNeverExpires
@@ -951,7 +951,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Path
         </span><br>
-        <input type="text" name="Path" value="<?php echo htmlspecialchars($_SESSION['Path']); ?>"><br>
+        <input type="text" name="Path" value="<?php echo htmlspecialchars($_SESSION['Path']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="POBox
@@ -963,7 +963,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             POBox
         </span><br>
-        <input type="text" name="POBox" value="<?php echo htmlspecialchars($_SESSION['POBox']); ?>"><br>
+        <input type="text" name="POBox" value="<?php echo htmlspecialchars($_SESSION['POBox']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="PostalCode
@@ -975,7 +975,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             PostalCode
         </span><br>
-        <input type="text" name="PostalCode" value="<?php echo htmlspecialchars($_SESSION['PostalCode']); ?>"><br>
+        <input type="text" name="PostalCode" value="<?php echo htmlspecialchars($_SESSION['PostalCode']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="ProfilePath
@@ -984,7 +984,7 @@ if ($SessionIsVerified == 1) {
             The following examples show how to set this parameter to a local path and to a UNC path. -ProfilePath " E:\users\profiles\saraDavis" -ProfilePath &quot;\\users\profiles\saraDavis&quot; Default Value: Data Type: string">
             ProfilePath
         </span><br>
-        <input type="text" name="ProfilePath" value="<?php echo htmlspecialchars($_SESSION['ProfilePath']); ?>"><br>
+        <input type="text" name="ProfilePath" value="<?php echo htmlspecialchars($_SESSION['ProfilePath']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="SamAccountName
@@ -998,7 +998,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             <font color="red">*</font>SamAccountName
         </span><br>
-        <input type="text" name="SamAccountName" value="<?php echo htmlspecialchars($_SESSION['SamAccountName']); ?>"><br>
+        <input type="text" name="SamAccountName" value="<?php echo htmlspecialchars($_SESSION['SamAccountName']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="ScriptPath
@@ -1010,7 +1010,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             ScriptPath
         </span><br>
-        <input type="text" name="ScriptPath" value="<?php echo htmlspecialchars($_SESSION['ScriptPath']); ?>"><br>
+        <input type="text" name="ScriptPath" value="<?php echo htmlspecialchars($_SESSION['ScriptPath']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Server
@@ -1040,7 +1040,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Server
         </span><br>
-        <input type="text" name="Server" value="<?php echo htmlspecialchars($_SESSION['Server']); ?>"><br>
+        <input type="text" name="Server" value="<?php echo htmlspecialchars($_SESSION['Server']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="ServicePrincipalNames
@@ -1069,7 +1069,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string[]">
             ServicePrincipalNames
         </span><br>
-        <input type="text" name="ServicePrincipalNames" value="<?php echo htmlspecialchars($_SESSION['ServicePrincipalNames']); ?>"><br>
+        <input type="text" name="ServicePrincipalNames" value="<?php echo htmlspecialchars($_SESSION['ServicePrincipalNames']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="SmartcardLogonRequired
@@ -1097,7 +1097,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             State
         </span><br>
-        <input type="text" name="State" value="<?php echo htmlspecialchars($_SESSION['State']); ?>"><br>
+        <input type="text" name="State" value="<?php echo htmlspecialchars($_SESSION['State']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="StreetAddress
@@ -1109,7 +1109,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             StreetAddress
         </span><br>
-        <input type="text" name="StreetAddress" value="<?php echo htmlspecialchars($_SESSION['StreetAddress']); ?>"><br>
+        <input type="text" name="StreetAddress" value="<?php echo htmlspecialchars($_SESSION['StreetAddress']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Surname
@@ -1121,7 +1121,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Surname
         </span><br>
-        <input type="text" name="Surname" value="<?php echo htmlspecialchars($_SESSION['Surname']); ?>"><br>
+        <input type="text" name="Surname" value="<?php echo htmlspecialchars($_SESSION['Surname']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Title
@@ -1133,7 +1133,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Title
         </span><br>
-        <input type="text" name="Title" value="<?php echo htmlspecialchars($_SESSION['Title']); ?>"><br>
+        <input type="text" name="Title" value="<?php echo htmlspecialchars($_SESSION['Title']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="TrustedForDelegation
@@ -1161,7 +1161,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             Type
         </span><br>
-        <input type="text" name="Type" value="<?php echo htmlspecialchars($_SESSION['Type']); ?>"><br>
+        <input type="text" name="Type" value="<?php echo htmlspecialchars($_SESSION['Type']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="UserPrincipalName
@@ -1170,7 +1170,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             UserPrincipalName
         </span><br>
-        <input type="text" name="UserPrincipalName" value="<?php echo htmlspecialchars($_SESSION['UserPrincipalName']); ?>"><br>
+        <input type="text" name="UserPrincipalName" value="<?php echo htmlspecialchars($_SESSION['UserPrincipalName']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="Confirm
@@ -1179,7 +1179,7 @@ if ($SessionIsVerified == 1) {
             Data Type: SwitchParameter">
             Confirm
         </span><br>
-        <input type="text" name="Confirm" value="<?php echo htmlspecialchars($_SESSION['Confirm']); ?>"><br>
+        <input type="text" name="Confirm" value="<?php echo htmlspecialchars($_SESSION['Confirm']); ?>" style="width:600px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="WhatIf
@@ -1188,7 +1188,7 @@ if ($SessionIsVerified == 1) {
             Data Type: SwitchParameter">
             WhatIf
         </span><br>
-        <input type="text" name="WhatIf" value="<?php echo htmlspecialchars($_SESSION['WhatIf']); ?>"><br>
+        <input type="text" name="WhatIf" value="<?php echo htmlspecialchars($_SESSION['WhatIf']); ?>" style="width:100px;"><br>
     </div>
     <p><p><p>
     <input type="submit" value="Submit">
