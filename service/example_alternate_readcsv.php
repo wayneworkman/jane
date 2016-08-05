@@ -1,5 +1,8 @@
 <?php
 
+// To use this file, after installation, replace 'readcsv.php' inside /jane/service/JaneEngine.php with this file's name.
+// The line is towards the top.
+
 
 //Allowed characters within user data:
 $symbols = array();
