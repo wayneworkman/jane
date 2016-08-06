@@ -134,11 +134,11 @@ if ($SessionIsVerified == "1") {
                 echo "<br>";
 
 		echo "IP Allowed Access:<br>";
-		echo "<input type=\"text\" name=\"JaneSettingsSMBallowedIP\"><br>";
+		echo "<input type=\"text\" name=\"JaneSettingsSMBallowedIP\" style=\"width:600px;\"><br>";
 		echo "<br>";
 
 		echo "WHERE:<br>";
-		echo "<input type=\"text\" name=\"JaneSettingsWHERE\"><br>";
+		echo "<input type=\"text\" name=\"JaneSettingsWHERE\" style=\"width:600px;\"><br>";
 		echo "Examples:<br>";
                 echo "<font color=\"red\">userGroup = &#39;Site 5&#39;</font><br>";
                 echo "<font color=\"red\">userGroup = &#39;South Branch&#39;</font><br>";
