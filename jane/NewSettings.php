@@ -29,7 +29,7 @@ if ($SessionIsVerified == "1") {
 		} else {
 			// Not all fields completed.
 			$link->close();
-			die ("Not all fields completed.");
+			die ($incomplete);
 		}
 	} else {
 		// not an admin, redirect to jane.php

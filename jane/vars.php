@@ -10,6 +10,7 @@ $PasswordDefault = "changeme";
 $SiteErrorMessage = "ERROR: There was a site problem. Report this to your Jane administrator and try again later.";
 $BadLoginError = "ERROR: Username and/or password is no good.";
 $IPBlockedMessage = "ERROR: You are blocked. Report this to your Jane administrator and try again later.";
+$incomplete = "ERROR: Not all fields completed.";
 $PublicKey = "Jane.crt";
 $ScriptExample = "RunJaneScripts.ps1";
 

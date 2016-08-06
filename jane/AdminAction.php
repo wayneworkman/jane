@@ -12,7 +12,7 @@ if ($SessionIsVerified == "1") {
 			global $link;
 			global $SiteErrorMessage;
 			global $NextURL;
-			echo "$sql<br>";
+			//echo "$sql<br>";
 			if ($link->query($sql)) {
 				// good, send back to NextURL
 				$NextURL="jane.php";
@@ -29,100 +29,136 @@ if ($SessionIsVerified == "1") {
 		//Get data from form submission.
 		$adminAction = $link->real_escape_string(trim($_REQUEST['adminAction']));
 		$adminActionText = $link->real_escape_string(trim($_REQUEST['adminActionText']));
-
+		
 		//Strip spaces
 		$adminActionText = str_replace(' ', '', $adminActionText);
+
+		//If adminActionText is nothing, unset it.
+		if ($adminActionText == "") {
+			unset($adminActionText);
+			die ($incomplete);
+		}
 
 		$uID = $link->real_escape_string(trim($_REQUEST['uID']));
 		$gID = $link->real_escape_string(trim($_REQUEST['gID']));
 
-		//echo "$adminAction<br>";
+		//if uID is nothing, unset it.
+		if ($uID == "") {
+			unset($uID);
+		}
 
+		//if gID is nothing, unset it.
+		if ($gID == "") {
+			unset($gID);
+		}
 
 		//Determine action and carry out action.
-
 		switch ($adminAction) {
 
 			case $AddNewUser:
-				if ($adminActionText != "" && $PasswordDefault != "") {
+				if (isset($adminActionText, $PasswordDefault)) {
 					$NewPassword = password_hash($PasswordDefault, PASSWORD_DEFAULT);
 					$sql = "INSERT INTO `janeUsers` (`JaneUsername`,`JanePassword`,`JaneSMBPassword`,`JaneUserEnabled`) VALUES ('$adminActionText','$NewPassword','$PasswordDefault','1')";
 					doQuery();
+				} else {
+					die ($incomplete);
 				}
 				break;
 
 			case $DeleteSelectedUser:
-				if ($uID != "") {
+				if (isset($uID)) {
 					$sql = "DELETE FROM `janeUserGroupAssociation` WHERE `uID` = '$uID'";
 					doQuery();
 					$sql = "DELETE FROM `Sessions` WHERE `SessionUserID` = '$uID'";
 					doQuery();
 					$sql = "DELETE FROM `janeUsers` WHERE `JaneUserID` = '$uID'";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $EnableSelectedUser:
-				if ($uID != "") {
+				if (isset($uID)) {
 					$sql = "UPDATE `janeUsers` SET `JaneUserEnabled` = '1' WHERE `JaneUserID` = '$uID'";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $DisableSelectedUser:
-				if ($uID != "") {
+				if (isset($uID)) {
 					$sql = "UPDATE `janeUsers` SET `JaneUserEnabled` = '0' WHERE `JaneUserID` = '$uID'";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $ResetSelectedUsersJanePassword:
-				if ($uID != "") {
+				if (isset($uID)) {
 					$NewPassword = password_hash($PasswordDefault, PASSWORD_DEFAULT);
 					$sql = "UPDATE `janeUsers` SET `JanePassword` = '$NewPassword' WHERE `JaneUserID` = $uID";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $ResetSelectedUsersSMBPassword:
-				if ($uID != "") {
+				if (isset($uID)) {
 					$sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$PasswordDefault' WHERE `JaneUserID` = $uID";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $CreateNewGroup:
-				if ($adminActionText != "") {
+				if (isset($adminActionText)) {
 					$sql = "INSERT INTO `janeGroups` (`JaneGroupName`) VALUES ('$adminActionText')";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $DeleteSelectedGroup:
-				if ($gID != "") {
+				if (isset($gID)) {
 					$sql = "DELETE FROM `janeUserGroupAssociation` WHERE `gID` = '$gID'";
 					doQuery();
 					$sql = "DELETE FROM `janeGroups` WHERE `JaneGroupID` = '$gID'";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $AddSelectedUserToSelectedGroup:
-				if ($gID != "" && $uID != "") {
+				if (isset($gID, $uID)) {
 					$sql = "INSERT INTO janeUserGroupAssociation (uID,gID) VALUES ($uID,$gID)";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $RemoveSelectedUserFromSelectedGroup:
-				if ($gID != "" && $uID != "") {
+				if (isset($gID, $uID)) {
 					$sql = "DELETE FROM `janeUserGroupAssociation` WHERE `uID` = '$uID' AND `gID` = '$gID'";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $BlockIP:
-				if ($adminActionText != "") {
+				if (isset($adminActionText)) {
 					$sql = "INSERT INTO `blockedIPs` (`BlockedIP`) VALUES ('$adminActionText')";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 			case $UnblockIP:
-				if ($adminActionText != "") {
+				if (isset($adminActionText)) {
 					$sql = "DELETE FROM `blockedIPs` WHERE `BlockedIP` = '$adminActionText'";
 					doQuery();
-				}
+				} else {
+                                        die ($incomplete);
+                                }
 				break;
 		}
 
