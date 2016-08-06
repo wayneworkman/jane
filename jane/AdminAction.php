@@ -29,10 +29,14 @@ if ($SessionIsVerified == "1") {
 		//Get data from form submission.
 		$adminAction = $link->real_escape_string(trim($_REQUEST['adminAction']));
 		$adminActionText = $link->real_escape_string(trim($_REQUEST['adminActionText']));
+
+		//Strip spaces
+		$adminActionText = str_replace(' ', '', $adminActionText);
+
 		$uID = $link->real_escape_string(trim($_REQUEST['uID']));
 		$gID = $link->real_escape_string(trim($_REQUEST['gID']));
 
-		echo "$adminAction<br>";
+		//echo "$adminAction<br>";
 
 
 		//Determine action and carry out action.

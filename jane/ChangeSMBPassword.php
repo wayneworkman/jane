@@ -16,7 +16,9 @@ if ($SessionIsVerified == "1") {
 				$StoredSMBPassword = trim($row["JaneSMBPassword"]);
 			}
 		}
-
+		if (!isset($StoredSMBPassword)) {
+			$StoredSMBPassword = "";
+		}
 		if ($StoredSMBPassword == $OldSMBPassword) {
 
 			$sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$NewSMBPassword' WHERE `JaneUserID` = $JaneUserID";
@@ -29,7 +31,11 @@ if ($SessionIsVerified == "1") {
 				$link->close();
 				die ($SiteErrorMessage);
 			}
-		}
+		} else {
+                        //Mistyped password.
+                        $link->close();
+                        die ($BadLoginError);
+                }
 	}
 
 } else {

@@ -304,6 +304,10 @@ createDirectories() {
         rm -rf /var/www/html/jane
     fi
     cp -R $cwd/../jane /var/www/html
+    if [[ -e "/var/www/html/index.php" ]]; then
+        rm -f "/var/www/html/index.php"
+    fi
+    mv /var/www/html/jane/redirect.php /var/www/html/index.php
     if [[ -e "/home/vars.php" ]]; then
         if [[ -e "/var/www/html/jane/vars.php" ]]; then
             rm -f /var/www/html/jane/vars.php
@@ -320,7 +324,7 @@ checkCert() {
         dots "Creating certs"
         [[ -e "/jane/ssl/Jane.key" ]] && rm -f /jane/ssl/Jane.key
         [[ -e "/var/www/html/jane/Jane.crt" ]] && rm -f /var/www/html/jane/Jane.crt
-        openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/var/www/html/jane/Jane.crt" -days 99999 -passin pass:'' -subj "/C=''/ST=''/L=''/O=''/OU=''/CN=''/emailAddress=''"  > /dev/null 2>&1 
+        openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/var/www/html/jane/Jane.crt" -days 99999 -passin pass:'' -subj "/C=''/ST=''/L=''/O=''/OU=''/CN=''/emailAddress=''" > /dev/null 2>&1 
         [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
     else
         echo "Exists"
@@ -328,19 +332,21 @@ checkCert() {
 }
 setPermissions() {
     dots "Setting permissions"
-    chown -R root:jane /jane/imports
-    chown -R root:apache /jane/ssl
-    chown -R root:apache /jane/service
-    chmod -R 777 /jane
-    chmod -R 770 /jane/*
-    chown -R apache:apache /var/www/html/jane
-    chmod -R 555 /var/www/html/jane
+    chown -R root:jane /jane/imports > /dev/null 2>&1
+    chown -R root:apache /jane/ssl > /dev/null 2>&1
+    chown -R root:apache /jane/service > /dev/null 2>&1
+    chmod -R 777 /jane > /dev/null 2>&1
+    chmod -R 770 /jane/* > /dev/null 2>&1
+    chown -R apache:apache /var/www/html/jane > /dev/null 2>&1
+    chmod -R 555 /var/www/html/jane > /dev/null 2>&1
+    chown apache:apache /var/www/html/index.php > /dev/null 2>&1
+    chmod 555 /var/www/html/index.php > /dev/null 2>&1
     echo "Ok"
 }
 setSELinuxToPermissive() {
     dots "Setting SELinux to permissive"
-    setenforce 0
-    sed -i.bak 's/^.*\SELINUX=enforcing\b.*$/SELINUX=permissive/' /etc/selinux/config
+    setenforce 0 > /dev/null 2>&1
+    sed -i.bak 's/^.*\SELINUX=enforcing\b.*$/SELINUX=permissive/' /etc/selinux/config > /dev/null 2>&1
     [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
 startJaneOnBoot() {

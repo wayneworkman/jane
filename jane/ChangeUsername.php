@@ -8,6 +8,9 @@ if ($SessionIsVerified == "1") {
 	// Do actions here.
 	$OldUsername = $link->real_escape_string(trim($_REQUEST['OldUsername']));
 	$NewUsername = $link->real_escape_string(trim($_REQUEST['NewUsername']));
+	
+	//Strip spaces.
+	$NewUsername = str_replace(' ', '', $NewUsername);
 
 	if ($OldUsername != "" && $NewUsername != "") {
 
