@@ -14,7 +14,7 @@ if ($SessionIsVerified == "1") {
 		$JaneSettingsSMBallowedIP = $link->real_escape_string(trim($_REQUEST['JaneSettingsSMBallowedIP']));
 		$JaneSettingsWHERE = $link->real_escape_string(trim($_REQUEST['JaneSettingsWHERE']));
 
-		if (isset($JaneSettingsNickName) && isset($JaneSettingsTypeID) && isset($JaneSettingGroupID) && isset($JaneSettingsSMBallowedIP) && isset($JaneSettingsWHERE)) {
+		if (isset($JaneSettingsNickName, $JaneSettingsTypeID, $JaneSettingsGroupID, $JaneSettingsSMBallowedIP, $JaneSettingsWHERE)) {
 
 			$sql = "INSERT INTO janeSettings (JaneSettingsNickName,JaneSettingsWHERE,JaneSettingsGroupID,JaneSettingsTypeID,JaneSettingsSMBallowedIP) VALUES ('$JaneSettingsNickName','$JaneSettingsWHERE','$JaneSettingsGroupID','$JaneSettingsTypeID','$JaneSettingsSMBallowedIP')";
 			if ($link->query($sql)) {
