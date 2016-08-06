@@ -16,9 +16,23 @@ if ($SessionIsVerified == "1") {
 				$StoredSMBPassword = trim($row["JaneSMBPassword"]);
 			}
 		}
-		if (!isset($StoredSMBPassword)) {
-			$StoredSMBPassword = "";
+
+		if ($StoredSMBPassword == "") {
+			unset($StoredSMBPassword);
 		}
+		if ($OldSMBPassword == "") {
+			unset($OldSMBPassword);
+		}
+		if ($NewSMBPassword == "") {
+			unset($NewSMBPassword);
+		}
+
+		if (!isset($StoredSMBPassword, $OldSMBPassword, $NewSMBPassword)) {
+			die ($incomplete);
+		}
+
+
+
 		if ($StoredSMBPassword == $OldSMBPassword) {
 
 			$sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$NewSMBPassword' WHERE `JaneUserID` = $JaneUserID";

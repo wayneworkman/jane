@@ -12,7 +12,15 @@ if ($SessionIsVerified == "1") {
 	//Strip spaces.
 	$NewUsername = str_replace(' ', '', $NewUsername);
 
-	if ($OldUsername != "" && $NewUsername != "") {
+	if ($OldUsername == "") {
+		unset($OldUsername);
+	}
+
+	if ($NewUsername == "") {
+		unset($NewUsername);
+	}
+
+	if (isset($OldUsername, $NewUsername)) {
 
 		$sql = "UPDATE `janeUsers` SET `janeUsername` = '$NewUsername' WHERE `JaneUserID` = $JaneUserID and `JaneUserName`='$OldUsername'";
 
@@ -26,6 +34,8 @@ if ($SessionIsVerified == "1") {
 			$link->close();
 			die ($SiteErrorMessage);
 		}
+	} else {
+		die ($incomplete);
 	}
 
 } else {

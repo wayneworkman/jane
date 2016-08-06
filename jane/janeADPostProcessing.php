@@ -10,7 +10,7 @@ if ($SessionIsVerified == "1") {
 	} else {
 		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID' and `JaneSettingsGroupID` IN (SELECT `gID` FROM `janeUserGroupAssociation` WHERE `uID` = '$JaneUserID')";
 	}
-	echo "$sql <br>\n";
+	//echo "$sql <br>\n";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
 
@@ -142,7 +142,15 @@ if ($SessionIsVerified == "1") {
 		$Confirm = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['Confirm'])));
 		$WhatIf = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['WhatIf'])));
 
-
+		//Sam Account Name is the only required field for adding and updating users.
+		// Enforce that it is set to something.
+		if ($SamAccountName == "") {
+			unset($SamAccountName);
+		}
+		if (!isset($SamAccountName)) {
+			die ($incomplete);
+		}
+		
 
 		$sql = "SELECT * FROM `janeAD` WHERE `JaneSettingsID` = '$JaneSettingsID'";
 		$result = $link->query($sql);

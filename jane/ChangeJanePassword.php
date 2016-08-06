@@ -9,7 +9,14 @@ if ($SessionIsVerified == "1") {
 	$OldJanePassword = $link->real_escape_string(trim($_REQUEST['OldJanePassword']));
 	$NewJanePassword = $link->real_escape_string(trim($_REQUEST['NewJanePassword']));
 	
-	if ($OldJanePassword != "" && $NewJanePassword != "") {
+	if ($OldJanePassword == "" ) {
+		unset($OldJanePassword);
+	}
+	if ($NewJanePassword == "" ) {
+		unset($NewJanePassword);
+	}
+
+	if (isset($OldJanePassword, $NewJanePassword)) {
 
 
 		$sql = "SELECT `JanePassword` FROM `janeUsers` WHERE `JaneUserID` = '$JaneUserID'";
@@ -39,6 +46,8 @@ if ($SessionIsVerified == "1") {
 			$link->close();
 			die ($BadLoginError);
 		}
+	} else {
+		die ($incomplete);
 	}
 } else {
 	$NextURL="login.php";
