@@ -232,12 +232,16 @@ setupFirewalld() {
 }
 createUserJane() {
     dots "Creating user jane and setting password"
-    useradd jane > /dev/null 2>&1
-    password=janepassword
-    echo -e "$password\n$password\n" | sudo passwd jane > /dev/null 2>&1
-    echo -e "$password\n$password\n" | smbpasswd -a jane > /dev/null 2>&1
-    echo "Done"
-
+    doesJaneExist=$(getent passwd jane)
+    if [[ -z "$doesJaneExist" ]]; then
+        useradd jane > /dev/null 2>&1
+        password=janepassword
+        echo -e "$password\n$password\n" | sudo passwd jane > /dev/null 2>&1
+        echo -e "$password\n$password\n" | smbpasswd -a jane > /dev/null 2>&1
+        echo "Done"
+    else
+        echo "Exists"
+    fi
 }
 setupDB() {
     dots "Checking for jane database"
@@ -307,7 +311,7 @@ createDirectories() {
         cp /home/vars.php /var/www/html/jane
         rm -f /home/vars.php
     fi
-    echo "Done"
+    echo "Ok"
 }
 checkCert() {
     dots "Checking for certificates"
@@ -319,7 +323,7 @@ checkCert() {
         openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/var/www/html/jane/Jane.crt" -days 99999 -passin pass:'' -subj "/C=''/ST=''/L=''/O=''/OU=''/CN=''/emailAddress=''"  > /dev/null 2>&1 
         [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
     else
-        echo "Present"
+        echo "Exists"
     fi
 }
 setPermissions() {
@@ -331,7 +335,7 @@ setPermissions() {
     chmod -R 770 /jane/*
     chown -R apache:apache /var/www/html/jane
     chmod -R 555 /var/www/html/jane
-    echo "Done"
+    echo "Ok"
 }
 setSELinuxToPermissive() {
     dots "Setting SELinux to permissive"
@@ -355,7 +359,7 @@ startJaneOnBoot() {
         chmod +x /etc/rc.d/rc.local
         echo "Enabled"
     else
-        echo "Already Enabled"
+        echo "Exists"
     fi
 }
 startJaneEngine() {
