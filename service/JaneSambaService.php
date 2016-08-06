@@ -308,7 +308,7 @@ foreach($JaneSettingsGroupName as $GroupName) {
 
 
 // If the directory exists locally but not in the DB, delete it.
-
+// Don't delete existing folders. No need.
 
 
 
@@ -350,6 +350,11 @@ foreach($JaneSettingsGroupName as $GroupName) {
 		}
 		$result->free();
 	}
+
+	//Remove duplicate IPs.
+	$AllowedIPArray = explode( " " , $JaneSettingsSMBallowedIP );
+	$AllowedIPArray = array_unique( $AllowedIPArray );
+	$JaneSettingsSMBallowedIP = implode(" " , $AllowedIPArray);
 
 
 
