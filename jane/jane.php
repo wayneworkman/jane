@@ -38,9 +38,9 @@ if ($SessionIsVerified == "1") {
 	echo "<select name='SettingsNickName'>";
 	echo "<option value='0'>Pick Settings NickName</option>";
 	if ($isAdministrator == 1) {
-		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings";
+		$sql = "SELECT `JaneSettingsNickName`,`JaneSettingsID` FROM `janeSettings`";
 	} else {
-		$sql = "SELECT JaneSettingsNickName,JaneSettingsID FROM janeSettings WHERE JaneSettingsGroupID IN (SELECT gID FROM janeUserGroupAssociation WHERE uID = '$JaneUserID')";
+		$sql = "SELECT `JaneSettingsNickName`,`JaneSettingsID` FROM `janeSettings` WHERE `JaneSettingsGroupID` IN (SELECT `gID` FROM `janeUserGroupAssociation` WHERE `uID` = '$JaneUserID')";
 	}
 	$result = $link->query($sql);
 	while($row = $result->fetch_assoc()) {
@@ -105,7 +105,7 @@ if ($SessionIsVerified == "1") {
 		echo "Settings Type:<br>";
 		echo "<select name='NewSettingsType'>";
 		echo "<option value='0'>Pick Settings Type</option>";
-		$sql = "SELECT SettingsTypeID,SettingsTypeName from janeSettingsTypes";
+		$sql = "SELECT `SettingsTypeID`,`SettingsTypeName` from `janeSettingsTypes`";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
@@ -120,7 +120,7 @@ if ($SessionIsVerified == "1") {
 		echo "Settings Group:<br>";
 		echo "<select name='NewSettingsGroup'>";
                 echo "<option value='0'>Pick Group</option>";
-                $sql = "SELECT JaneGroupID,JaneGroupName from janeGroups";
+                $sql = "SELECT `JaneGroupID`,`JaneGroupName` from `janeGroups`";
                 $result = $link->query($sql);
                 if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
@@ -171,7 +171,7 @@ if ($SessionIsVerified == "1") {
 
 		echo "<select name='uID'>";
 		echo "<option value=''>Pick User</option>";
-		$sql = "SELECT JaneUsername,JaneUserID from janeUsers";
+		$sql = "SELECT `JaneUsername`,`JaneUserID` from `janeUsers`";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
@@ -187,7 +187,7 @@ if ($SessionIsVerified == "1") {
 
 		echo "<select name='gID'>";
 		echo "<option value=''>Pick Group</option>";
-		$sql = "SELECT JaneGroupID,JaneGroupName from janeGroups";
+		$sql = "SELECT `JaneGroupID`,`JaneGroupName` from `janeGroups`";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
@@ -277,7 +277,7 @@ if ($SessionIsVerified == "1") {
 
 		//Recent bad login attempts.
 		echo "<font color=\"red\">Recent bad login attempts:</font><br>";
-		$sql = "SELECT badUsername,badREMOTE_ADDR,badHTTP_USER_AGENT FROM badLoginAttempts ORDER BY badREQUEST_TIME desc LIMIT 40";
+		$sql = "SELECT `badUsername`,`badREMOTE_ADDR`,`badHTTP_USER_AGENT` FROM `badLoginAttempts` ORDER BY `badREQUEST_TIME` desc LIMIT 40";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
@@ -296,13 +296,13 @@ if ($SessionIsVerified == "1") {
 
 		//List abnormal users for all Jane users to see.
 		echo "<div>";
-		echo "<font color=\"red\">List of abnormal usernames with IDs:</font><br>";
-		$sql = "SELECT `trackingImportedID`, `trackingUserName` FROM `usernameTracking`WHERE `trackingIsAbnormal`='1' ORDER BY `trackingImportedID` desc";
+		echo "<font color=\"red\">List of abnormal usernames (ID userGroup Username):</font><br>";
+		$sql = "SELECT `trackingImportedID`, `trackingUserName`, `userGroup` FROM `usernameTracking`WHERE `trackingIsAbnormal`='1' ORDER BY `trackingImportedID` desc";
 		echo "<br>";
 		$result = $link->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
-				echo "&emsp;&emsp;" . $row["trackingImportedID"] . "&emsp;" . $row["trackingUserName"] . "<br>";
+				echo "&emsp;&emsp;" . $row["trackingImportedID"] . "&emsp;" . $row["userGroup"] . "&emsp;" . $row["trackingUserName"] . "<br>";
 			}
 			$result->free();
 		}
