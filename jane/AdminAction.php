@@ -30,17 +30,20 @@ if ($SessionIsVerified == "1") {
 		$adminAction = $link->real_escape_string(trim($_REQUEST['adminAction']));
 		$adminActionText = $link->real_escape_string(trim($_REQUEST['adminActionText']));
 		
+
+		$uID = $link->real_escape_string(trim($_REQUEST['uID']));
+		$gID = $link->real_escape_string(trim($_REQUEST['gID']));
+
+
 		//Strip spaces
 		$adminActionText = str_replace(' ', '', $adminActionText);
+
 
 		//If adminActionText is nothing, unset it.
 		if ($adminActionText == "") {
 			unset($adminActionText);
-			die ($incomplete);
 		}
 
-		$uID = $link->real_escape_string(trim($_REQUEST['uID']));
-		$gID = $link->real_escape_string(trim($_REQUEST['gID']));
 
 		//if uID is nothing, unset it.
 		if ($uID == "") {
@@ -51,6 +54,7 @@ if ($SessionIsVerified == "1") {
 		if ($gID == "") {
 			unset($gID);
 		}
+
 
 		//Determine action and carry out action.
 		switch ($adminAction) {
