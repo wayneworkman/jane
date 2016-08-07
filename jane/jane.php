@@ -292,6 +292,23 @@ if ($SessionIsVerified == "1") {
 		echo "</form>";
 
 	}
+
+
+		//List abnormal users for all Jane users to see.
+		echo "<div>";
+		echo "<font color=\"red\">List of abnormal usernames with IDs:</font><br>";
+		$sql = "SELECT `trackingImportedID`, `trackingUserName` FROM `usernameTracking`WHERE `trackingIsAbnormal`='1' ORDER BY `trackingImportedID` desc";
+		echo "<br>";
+		$result = $link->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				echo "&emsp;&emsp;" . $row["trackingImportedID"] . "&emsp;" . $row["trackingUserName"] . "<br>";
+			}
+			$result->free();
+		}
+		echo "</div>";
+
+
 	echo "<br>";
 	echo "</body>";
 	echo "</html>";
