@@ -6,7 +6,7 @@ If the ID doesn't exist, check if the given username is taken or not. If availab
 */
 
 //Range of characters to append to suggested usernames that are already taken.
-$alphas = range('a', 'z');
+$alphas = range('1', '9');
 
 
 $sql = "SELECT `trackingUserName`, `trackingIsAbnormal` FROM `usernameTracking` WHERE `trackingImportedID`='$userImportedID' LIMIT 1";
