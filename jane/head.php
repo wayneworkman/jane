@@ -58,6 +58,22 @@ echo "div{padding:10px;border:5px solid gray;margin:0}";
 echo "<!--";
 echo ".tab { margin-left: 40px; }";
 echo "-->";
+echo "table {";
+echo "    font-family: arial, sans-serif;";
+echo "    border-collapse: collapse;";
+echo "    width: 100%;";
+echo "}";
+
+echo "td, th {";
+echo "    border: 1px solid #dddddd;";
+echo "    text-align: left;";
+echo "    padding: 8px;";
+echo "}";
+
+echo "tr:nth-child(even) {";
+echo "    background-color: #dddddd;";
+echo "}";
+
 echo "</style>";
 echo "</head>";
 echo "<body>";
@@ -74,18 +90,27 @@ echo "      <a href=\"ChangeSMBPasswordPage.php\">Change SMB Password</a>";
 echo "    </div>";
 echo "  </li>";
 if ($isAdministrator == 1) {
-	echo "    <li class=\"dropdown\">";
-	echo "    <a href=\"#\" class=\"dropbtn\">Administrator Actions</a>";
-	echo "    <div class=\"dropdown-content\">";
-	echo "      <a href=\"NewSettingsPage.php\">New Settings</a>";
-	echo "      <a href=\"AdminActionPage.php\">User, Group, and IP Management</a>";
-	echo "      <a href=\"ListGroups.php\">List Groups</a>";
-        echo "      <a href=\"ListUsers.php\">List Users</a>";
-        echo "      <a href=\"BlockedIPs.php\">List Blocked IPs</a>";
-        echo "      <a href=\"BadLoginAttempts.php\">Bad Login Attempts</a>";
-	echo "    </div>";
-        echo "   </li>";
-	echo "  <li><a href=\"serverStatus.php\">Server Status</a></li>";
+
+    echo "    <li class=\"dropdown\">";
+    echo "    <a href=\"#\" class=\"dropbtn\">Administrator Actions</a>";
+    echo "    <div class=\"dropdown-content\">";
+    echo "      <a href=\"NewSettingsPage.php\">New Settings</a>";
+    echo "      <a href=\"AdminActionPage.php\">User, Group, and IP Management</a>";
+    echo "      <a href=\"ListGroups.php\">List Groups</a>";
+    echo "      <a href=\"ListUsers.php\">List Users</a>";
+    echo "      <a href=\"BlockedIPs.php\">List Blocked IPs</a>";
+    echo "      <a href=\"BadLoginAttempts.php\">Bad Login Attempts</a>";
+    echo "      <a href=\"usernameTracking.php\">Username Tracking</a>";
+    echo "    </div>";
+    echo "   </li>";
+        
+    echo "    <li class=\"dropdown\">";
+    echo "    <a href=\"#\" class=\"dropbtn\">Server Maintence</a>";
+    echo "    <div class=\"dropdown-content\">";
+    echo "      <a href=\"serverStatus.php\">Server Status</a>";
+    echo "    </div>";
+    echo "   </li>";
+
 }
 echo "  <li><a href=\"ListAbnormalUsers.php\">Abnormal Users</a></li>";
 echo "  <li><a href=\"DownloadKey.php\">Jane Public Key</a></li>";
