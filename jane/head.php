@@ -88,7 +88,7 @@ if ($isAdministrator == 1) {
 }
 echo "  <li><a href=\"ListAbnormalUsers.php\">Abnormal Users</a></li>";
 echo "  <li><a href=\"DownloadKey.php\">Jane Public Key</a></li>";
-echo "  <li><a href=\"LICENSE\">License</a></li>";
+echo "  <li><a href=\"showLicense.php\">License</a></li>";
 echo "  <li><a href=\"logout.php\">Log Out</a></li>";
 echo "  </li>";
 echo "</ul>";
