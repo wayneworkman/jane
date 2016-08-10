@@ -304,6 +304,7 @@ createDirectories() {
         rm -rf /var/www/html/jane
     fi
     cp -R $cwd/../jane /var/www/html
+    touch /var/www/html/jane/serverStatus.txt
     if [[ -e "/var/www/html/index.php" ]]; then
         rm -f "/var/www/html/index.php"
     fi
@@ -341,6 +342,7 @@ setPermissions() {
     chmod -R 555 /var/www/html/jane > /dev/null 2>&1
     chown apache:apache /var/www/html/index.php > /dev/null 2>&1
     chmod 555 /var/www/html/index.php > /dev/null 2>&1
+    chmod 775 /var/www/html/jane/serverStatus.txt
     echo "Ok"
 }
 setSELinuxToPermissive() {

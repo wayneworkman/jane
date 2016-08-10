@@ -85,6 +85,7 @@ if ($isAdministrator == 1) {
         echo "      <a href=\"BadLoginAttempts.php\">Bad Login Attempts</a>";
 	echo "    </div>";
         echo "   </li>";
+	echo "  <li><a href=\"serverStatus.php\">Server Status</a></li>";
 }
 echo "  <li><a href=\"ListAbnormalUsers.php\">Abnormal Users</a></li>";
 echo "  <li><a href=\"DownloadKey.php\">Jane Public Key</a></li>";
