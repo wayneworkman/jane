@@ -51,7 +51,7 @@ foreach($JaneUsernames as $JaneUsername) {
 		if ($JaneUsername == $SystemLocalUser) {
 			$found = "true";
 			// Update password.
-			$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin";
+			$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin > /dev/null 2>&1";
 			echo shell_exec($command);
 			$command = "(echo $JaneSMBPasswords[$i]; echo $JaneSMBPasswords[$i]) | smbpasswd -s $JaneUsernames[$i]";
 			echo shell_exec($command);
