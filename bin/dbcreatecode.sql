@@ -17,9 +17,10 @@ PRIMARY KEY (userID)
 
 CREATE TABLE usernameTracking(
 trackingID int NOT NULL AUTO_INCREMENT,
-trackingImportedID VARCHAR(255),
-trackingUserName VARCHAR(255),
+trackingImportedID VARCHAR(255) UNIQUE,
+trackingUserName VARCHAR(255) UNIQUE,
 trackingIsAbnormal VARCHAR(1),
+userGroup VARCHAR(255),
 PRIMARY KEY (trackingID)
 );
 
@@ -219,7 +220,7 @@ PRIMARY KEY (janeADid)
 );
 
 
-INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','2');
+INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','4');
 
 
 INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
