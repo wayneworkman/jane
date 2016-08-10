@@ -4,7 +4,7 @@ include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
 	include 'head.php';
-	
+	echo "<title>Home</title>";
 
 	echo "<div>";
 	echo "<form action=\"EditOrDeleteSettings.php\" method=\"post\">";

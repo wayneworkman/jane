@@ -6,7 +6,7 @@ if ($SessionIsVerified == "1") {
     include 'head.php';
 
     if ($isAdministrator == 1) {
-
+        echo "<title>New Settings</title>";
         echo "<div>";
         echo "<form action=\"NewSettings.php\" method=\"post\">";
         echo "New Settings<br>";

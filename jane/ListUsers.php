@@ -32,7 +32,7 @@ if ($SessionIsVerified == "1") {
             $result->free();
         }
 
-
+        echo "<title>List Users</title>";
         echo "<div>";
         echo "<form>";
         // List group's users, and user's groups.	

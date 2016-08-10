@@ -6,7 +6,7 @@ if ($SessionIsVerified == "1") {
     include 'head.php';
 
     if ($isAdministrator == 1) {
-
+        echo "<title>User, Group, and IP Management</title>";
         echo "<div>";
         echo "<form action=\"AdminAction.php\" method=\"post\">";
         echo "User, Group, and IP Management<br>";

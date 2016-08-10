@@ -7,7 +7,7 @@ if ($SessionIsVerified == "1") {
 
     if ($isAdministrator == 1) {
 
-
+        echo "<title>List Blocked IPs</title>";
         echo "<div>";
         echo "<form>";
         $sql = "SELECT `BlockedIP` FROM `blockedIPs`";

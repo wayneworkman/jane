@@ -4,7 +4,7 @@ include 'verifysession.php';
 if ($SessionIsVerified == "1") {
     include 'connect2db.php';
     include 'head.php';
-
+    echo "<title>Change SMB Password</title>";
     echo "<div>";
     echo "<form action=\"ChangeSMBPassword.php\" method=\"post\">";
     echo "Change SMB Password<br>";

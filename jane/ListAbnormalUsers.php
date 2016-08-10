@@ -7,6 +7,7 @@ if ($SessionIsVerified == "1") {
 
 
     //List abnormal users for all Jane users to see.
+    echo "<title>Abnormal Users</title>";
     echo "<div>";
     echo "<font color=\"red\">List of abnormal usernames (ID userGroup Username):</font><br>";
     $sql = "SELECT `trackingImportedID`, `trackingUserName`, `userGroup` FROM `usernameTracking`WHERE `trackingIsAbnormal`='1' ORDER BY `trackingImportedID` desc";

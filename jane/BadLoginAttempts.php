@@ -6,7 +6,7 @@ if ($SessionIsVerified == "1") {
     include 'head.php';
 
     if ($isAdministrator == 1) {
-
+        echo "<title>Bad Login Attempts</title>";
         echo "<div>";
         //Recent bad login attempts.
         echo "<font color=\"red\">Recent bad login attempts:</font><br>";

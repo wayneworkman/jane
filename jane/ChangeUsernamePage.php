@@ -4,7 +4,7 @@ include 'verifysession.php';
 if ($SessionIsVerified == "1") {
     include 'connect2db.php';
     include 'head.php';
-
+    echo "<title>Change Username</title>";
     echo "<div>";
     echo "<form action=\"ChangeUsername.php\" method=\"post\">";
     echo "Change Username<br>";
