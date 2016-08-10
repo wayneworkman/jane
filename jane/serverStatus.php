@@ -9,8 +9,6 @@ if ($SessionIsVerified == "1") {
 
 		//clean file, echo first line and following command outputs.
 		exec("echo \" \" > $serverStatus");
-		exec("echo \" \" >> $serverStatus");
-		exec("echo \" \" >> $serverStatus");
 		exec("echo \"-----------------------------------Partition Usage\" >> $serverStatus");
 		exec("echo \" \" >> $serverStatus");
 		exec("df -h >> $serverStatus");
