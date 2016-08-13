@@ -6,19 +6,39 @@ if ($SessionIsVerified == "1") {
 	$JaneSettingsID = $link->real_escape_string(htmlspecialchars_decode(trim($_SESSION['JaneSettingsID'])));
 
 	if ($isAdministrator == 1) {
-		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID'";
+		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID' LIMIT 1";
 	} else {
-		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID' and `JaneSettingsGroupID` IN (SELECT `gID` FROM `janeUserGroupAssociation` WHERE `uID` = '$JaneUserID')";
+		$sql = "SELECT * FROM `janeSettings` WHERE `JaneSettingsID` = '$JaneSettingsID' and `JaneSettingsGroupID` IN (SELECT `gID` FROM `janeUserGroupAssociation` WHERE `uID` = '$JaneUserID') LIMIT 1";
 	}
-	//echo "$sql <br>\n";
+	
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
+            //Only do anything if the user has permissions to modify the settings ID.
 
-		// Escape user inputs for security
+
+
+		// Escape user inputs for security.
 		$JaneSettingsNickName = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['JaneSettingsNickName'])));
-		$JaneSettingsGroupName = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['JaneSettingsGroupName'])));
+		//Strip spaces from nickname
+		$JaneSettingsNickName = str_replace(' ', '', $JaneSettingsNickName);
+
+		$JaneSettingsGroupID = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['JaneSettingsGroupID'])));
 		$JaneSettingsSMBallowedIP = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['JaneSettingsSMBallowedIP'])));
-		$JaneSettingsWHERE = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['JaneSettingsNickName'])));
+		$JaneSettingsWHERE = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['JaneSettingsWHERE'])));
+
+
+		if ($isAdministrator == 1) {
+			//If user is administrator, update Admin-Only settings for this settings-set.
+			$sql = "UPDATE `janeSettings` SET `JaneSettingsNickName` = '$JaneSettingsNickName',`JaneSettingsGroupID` = '$JaneSettingsGroupID',`JaneSettingsSMBallowedIP` = '$JaneSettingsSMBallowedIP',`JaneSettingsWHERE` = '$JaneSettingsWHERE' WHERE `JaneSettingsID`='$JaneSettingsID'";
+			if ($link->query($sql)) {
+				// good.
+			} else {
+				// Error
+				$link->close();
+				die ("$SiteErrorMessage");
+			}
+		}
+
 
 
 		$symbols = array();
@@ -26,7 +46,7 @@ if ($SessionIsVerified == "1") {
 		$symbols += range('A', 'Z');
 		$symbols += range('0', '9');
 
-
+                //Strip user inputs of everything not in $symbols for injection protection.
 		$ActionCreate = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionCreate'])));
 		$ActionDisable = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionDisable'])));
 		$ActionDelete = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionDelete'])));
@@ -36,7 +56,7 @@ if ($SessionIsVerified == "1") {
 		
 
 
-
+                //Trim user input.
 		$ActionCreate = $link->real_escape_string(trim($ActionCreate));
 		$ActionDisable = $link->real_escape_string(trim($ActionDisable));
 		$ActionDelete = $link->real_escape_string(trim($ActionDelete));
@@ -173,7 +193,7 @@ if ($SessionIsVerified == "1") {
 		} else {
 			// Error
 			$link->close();
-			die ($SiteErrorMessage);
+			die ("$SiteErrorMessage");
 		}
 	} else {
 		// user has no permisson to manipulate the given ID or Given ID does not exist.

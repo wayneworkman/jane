@@ -11,61 +11,128 @@ if ($SessionIsVerified != "1") {
     echo htmlspecialchars($_SESSION['JaneSettingsNickName']);
     echo "</title>";
 }
-?>
+
+echo "<form action=\"janeADPostProcessing.php\" method=\"post\">";
+
+if ($isAdministrator == 1) {
+    include 'connect2db.php';
+
+    echo "<div>";
+    echo "<font color=\"red\"><b>Jane Settings</b></font><br><br>";
+
+    //Make name, IP, WHERE, and Group adjustable for administrators only.
+    echo "<span style=\"color:blue;\" title=\"Settings NickName";
+    echo "This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.\">";
+    echo "Settings NickName";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsNickName\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsNickName']);
+    echo "\" style=\"width:600px;\"></br>";
+    echo "<br>";
 
 
-
-<form action="janeADPostProcessing.php" method="post">
-
-    <div>
-	<font color="red"><b>Jane Settings</b></font><br><br>    
-
-
-
-    <span style="color:blue;" title="Settings NickName
-            This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.">
-            Settings NickName
-       </span><br>
-        <input type="text" name="JaneSettingsNickName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsNickName']); ?>" style="width:600px;" readonly></br>
+    echo "<span style=\"color:blue;\" title=\"Group Name";
+    echo "This field describes which samba share these settings are placed within.\">";
+    echo "Group Name<br>";
     
-<br>
+    echo "<select name='JaneSettingsGroupID' style=\"width:600px;\">";
 
- 
-<span style="color:blue;" title="Group Name
-            This field describes which samba share these settings are placed within.">
-            Group Name
-        </span><br>
-        <input type="text" name="JaneSettingsGroupName" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsGroupName']); ?>" style="width:600px;" readonly></br>
-
-<br>
-
-
-
-<span style="color:blue;" title="SMB Allowed IP
-            This field describes the address(s) that are allowed access to the group's shared directory.">
-            SMB Allowed IP
-        </span><br>
-        <input type="text" name="JaneSettingsSMBallowedIP" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsSMBallowedIP']); ?>" style="width:600px;" readonly></br>
-
-<br>
+    $sql = "SELECT `JaneGroupID`,`JaneGroupName` from `janeGroups`";
+    $result = $link->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            if (trim($row['JaneGroupName']) == htmlspecialchars($_SESSION['JaneSettingsGroupName'])) {
+                echo "<option selected=\"selected\" value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
+            } else {
+                echo "<option value='" . trim($row['JaneGroupID']) . "'>" . trim($row['JaneGroupName']) . "</option>";
+            }
+        }
+        $result->free();
+    } else {
+        echo "<option value='no_groups'>no_settings</option>";
+    }
+    echo "</select><br>";
+    echo "<br>";
 
 
+    echo "<span style=\"color:blue;\" title=\"SMB Allowed IP";
+    echo "This field describes the address(s) that are allowed access to the group's shared directory.\">";
+    echo "SMB Allowed IP";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsSMBallowedIP\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsSMBallowedIP']);
+    echo "\" style=\"width:600px;\"></br>";
+    echo "<br>";
 
-<span style="color:blue;" title="WHERE
-            This is the SQL matching set by Jane's Administrator. 
-It determines what data will be selected for import using the below settings.
-This field can only be changed by Jane's Administrator.">
-            WHERE
-        </span><br>
-        <input type="text" name="JaneSettingsWHERE" value="<?php echo htmlspecialchars($_SESSION['JaneSettingsWHERE']); ?>" style="width:600px;" readonly></br>
+
+    echo "<span style=\"color:blue;\" title=\"WHERE";
+    echo "This is the SQL matching set by Jane's Administrator.";
+    echo "It determines what data will be selected for import using the below settings.";
+    echo "This field can only be changed by Jane's Administrator.\">";
+    echo "WHERE";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsWHERE\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsWHERE']);
+    echo "\" style=\"width:600px;\"></br>";
+    echo "<br>";
+
+    echo "<a href=\"DownloadScriptExample.php\">Download Automation Script Example</a><br><br>";
+    echo "</div>";
 
 
+} else {
 
-<br>
-<a href="DownloadScriptExample.php">Download Automation Script Example</a><br><br>
+    //Non-adjustable fields for non-administrators.
+    echo "<div>";
+    echo "<font color=\"red\"><b>Jane Settings</b></font><br><br>";
+    echo "The below four(4) fields may only be changed by a Jane administrator.<br><br>";
+    //Make name, IP, WHERE, and Group adjustable for administrators only.
+    echo "<span style=\"color:blue;\" title=\"Settings NickName";
+    echo "This field is stored in the DB but not used for anything other than reference for users to describe the settings set for these sepcific import settings.\">";
+    echo "Settings NickName";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsNickName\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsNickName']);
+    echo "\" style=\"width:600px;\" readonly></br>";
+    echo "<br>";
 
-</div>
 
+    echo "<span style=\"color:blue;\" title=\"Group Name";
+    echo "This field describes which samba share these settings are placed within.\">";
+    echo "Group Name";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsGroupID\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsGroupName']);
+    echo "\" style=\"width:600px;\" readonly></br>";
+    echo "<br>";
+
+
+    echo "<span style=\"color:blue;\" title=\"SMB Allowed IP";
+    echo "This field describes the address(s) that are allowed access to the group's shared directory.\">";
+    echo "SMB Allowed IP";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsSMBallowedIP\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsSMBallowedIP']);
+    echo "\" style=\"width:600px;\" readonly></br>";
+    echo "<br>";
+
+
+    echo "<span style=\"color:blue;\" title=\"WHERE";
+    echo "This is the SQL matching set by Jane's Administrator.";
+    echo "It determines what data will be selected for import using the below settings.";
+    echo "This field can only be changed by Jane's Administrator.\">";
+    echo "WHERE";
+    echo "</span><br>";
+    echo "<input type=\"text\" name=\"JaneSettingsWHERE\" value=\"";
+    echo htmlspecialchars($_SESSION['JaneSettingsWHERE']);
+    echo "\" style=\"width:600px;\" readonly></br>";
+    echo "<br>";
+
+    echo "<a href=\"DownloadScriptExample.php\">Download Automation Script Example</a><br><br>";
+    echo "</div>";
+
+}
+?>
 
 
 <div>
