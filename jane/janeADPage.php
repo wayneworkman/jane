@@ -3,27 +3,18 @@ include 'vars.php';
 include 'verifysession.php';
 
 if ($SessionIsVerified != "1") {
-	$NextURL="login.php";
-	header("Location: $NextURL");
+    $NextURL="login.php";
+    header("Location: $NextURL");
+} else {
+    include 'head.php';
+    echo "<title>";
+    echo htmlspecialchars($_SESSION['JaneSettingsNickName']);
+    echo "</title>";
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<title>Jane</title>
 
 
-<style>
-div{padding:10px;border:5px solid gray;margin:0}
-//div{width:600px;padding:10px;border:5px solid gray;margin:0}
-</style>
-
-
-</head>
-<body>
-<a href="jane.php">Back</a><br>
 <form action="janeADPostProcessing.php" method="post">
 
     <div>
