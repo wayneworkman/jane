@@ -22,7 +22,7 @@ checkOrInstallPackage "samba" "0"
 checkOrInstallPackage "samba-client" "0"
 checkOrInstallPackage "openssl" "0"
 checkOrInstallPackage "firewalld" "0"
-checkOrInstallPackage "ntpd" "0"
+checkOrInstallPackage "ntp" "0"
 startAndEnableService "firewalld"
 setupFirewalld
 startAndEnableService "ntpd"
