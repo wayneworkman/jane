@@ -14,6 +14,12 @@ $incomplete = "ERROR: Not all fields completed.";
 $PublicKey = "Jane.crt";
 $ScriptExample = "RunJaneScripts.ps1";
 
+//Timezone info.
+$TimeZone="America/Chicago";
+//Find a listing of timezones here:
+//  http://php.net/manual/en/timezones.php
+date_default_timezone_set($TimeZone);
+
 $adminActionNames = array();
 
 $AddNewUser = "Add New User";

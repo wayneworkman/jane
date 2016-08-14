@@ -105,9 +105,10 @@ if ($isAdministrator == 1) {
     echo "   </li>";
         
     echo "    <li class=\"dropdown\">";
-    echo "    <a href=\"#\" class=\"dropbtn\">Server Maintence</a>";
+    echo "    <a href=\"#\" class=\"dropbtn\">Server Information</a>";
     echo "    <div class=\"dropdown-content\">";
     echo "      <a href=\"serverStatus.php\">Server Status</a>";
+    echo "      <a href=\"showSessions.php\">Show Sessions</a>";
     echo "    </div>";
     echo "   </li>";
 
