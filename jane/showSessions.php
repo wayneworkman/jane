@@ -17,7 +17,7 @@ if ($SessionIsVerified == "1") {
 	$sql = "SELECT `Sessions`.`REQUEST_TIME`, `janeUsers`.`JaneUsername`, `Sessions`.`REMOTE_ADDR`, `Sessions`.`HTTP_USER_AGENT` FROM `Sessions` INNER JOIN `janeUsers` ON `Sessions`.`SessionUserID`=`janeUsers`.`JaneUserID` ORDER BY `Sessions`.`REQUEST_TIME` DESC;";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
-	echo "Number of sessions: $result->num_rows<br><br>";
+	echo "Number of session records: $result->num_rows<br><br>";
 	echo "<table>\n";
 	echo "<tr>\n";
         echo "<th>REQUEST_TIME</th>\n";

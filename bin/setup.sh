@@ -26,6 +26,8 @@ checkOrInstallPackage "ntp" "0"
 startAndEnableService "firewalld"
 setupFirewalld
 startAndEnableService "ntpd"
+#Optional - set timezone, uncomment below line if you want to use it.
+#setTimezone "America/Chicago"
 startAndEnableService "httpd"
 startAndEnableService "smb"
 startAndEnableService "mysql"

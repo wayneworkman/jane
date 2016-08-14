@@ -161,6 +161,12 @@ checkOrInstallPackage() {
         return 1
     fi
 }
+setTimezone() {
+    local serverTimeZone="$1"
+    dots "Setting Timezone"
+    timedatectl set-timezone $serverTimeZone
+    [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+}
 checkForRoot() {
     dots "Checking if I am root"
     currentUser=$(whoami)
