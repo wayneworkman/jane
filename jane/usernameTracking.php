@@ -12,7 +12,7 @@ if ($SessionIsVerified == "1") {
 	echo "<br><br>";
 
 
-$sql = "SELECT * FROM `usernameTracking` ORDER BY `trackingIsAbnormal` ASC, `trackingImportedID` ASC";
+$sql = "SELECT * FROM `usernameTracking` ORDER BY `trackingIsAbnormal` DESC, `trackingImportedID` ASC";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
 	echo "<table>\n";
