@@ -120,6 +120,7 @@ $sql = "SELECT * FROM `userDataToImport` WHERE $JaneSettingsWHERE LIMIT 1";
 	if ($result->num_rows > 0) {
 	//Here, we know there is at least 1 row of data that needs processed. 
 	//So we will check for an existing file and move it if it exists.
+	//Then process Add, Disable, and Delete, and sign any resultant file.
 
 
 	if (file_exists($file)) {
@@ -137,7 +138,7 @@ $sql = "SELECT * FROM `userDataToImport` WHERE $JaneSettingsWHERE LIMIT 1";
 		$NewFileName = $dirname . "/" . "Renamed-" . date("Y-m-d_h-ia---") . $basename;
 		rename ("$file.signed", $NewFileName);
 	}
-}
+
 
 
 
@@ -933,12 +934,12 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                 }
 	}
 }
-// Sign the resultant file, if it exists.
+// Sign the resultant script, if it exists, and if the private key exists.
 
 if (file_exists($file) && file_exists($PrivateKey)) {
 	exec("openssl dgst -sha256 -sign \"$PrivateKey\" -out $file.signed $file > /dev/null");
 }
 
-
+}
 
 ?>
