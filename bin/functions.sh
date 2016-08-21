@@ -379,7 +379,7 @@ startJaneOnBoot() {
 }
 startJaneEngine() {
     dots "Starting JaneEngine"
-    pkill -f JaneEngine.php
+    pkill -f JaneEngine.php > /dev/null 2>&1
     nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log > /dev/null 2>&1 &
     [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
