@@ -109,6 +109,7 @@ if ($isAdministrator == 1) {
     echo "    <div class=\"dropdown-content\">";
     echo "      <a href=\"serverStatus.php\">Server Status</a>";
     echo "      <a href=\"showSessions.php\">Show Sessions</a>";
+    echo "      <a href=\"showJaneEngineLog.php\">Jane Engine Log</a>";
     echo "    </div>";
     echo "   </li>";
 

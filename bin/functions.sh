@@ -349,6 +349,7 @@ setPermissions() {
     chown -R root:jane /jane/imports > /dev/null 2>&1
     chown -R root:apache /jane/ssl > /dev/null 2>&1
     chown -R root:apache /jane/service > /dev/null 2>&1
+    chown -R root:apache /jane/log > /dev/null 2>&1
     chmod -R 777 /jane > /dev/null 2>&1
     chmod -R 770 /jane/* > /dev/null 2>&1
     chown -R apache:apache /var/www/html/jane > /dev/null 2>&1
@@ -390,7 +391,7 @@ startJaneOnBoot() {
 startJaneEngine() {
     dots "Starting JaneEngine"
     pkill -f JaneEngine.php > /dev/null 2>&1
-    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log > /dev/null 2>&1 &
+    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &
     [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
 completed() {
