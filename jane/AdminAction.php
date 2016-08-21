@@ -15,7 +15,7 @@ if ($SessionIsVerified == "1") {
 			//echo "$sql<br>";
 			if ($link->query($sql)) {
 				// good, send back to NextURL
-				$NextURL="jane.php";
+				$NextURL="AdminActionPage.php";
 				header("Location: $NextURL");
 			} else {
 				// Error
