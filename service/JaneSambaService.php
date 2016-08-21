@@ -52,9 +52,9 @@ foreach($JaneUsernames as $JaneUsername) {
 			$found = "true";
 			// Update password.
 			$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin > /dev/null 2>&1";
-			echo shell_exec($command);
+			shell_exec($command);
 			$command = "(echo $JaneSMBPasswords[$i]; echo $JaneSMBPasswords[$i]) | smbpasswd -s $JaneUsernames[$i]";
-			echo shell_exec($command);
+			shell_exec($command);
 			break;
 		} else {
 			$found = "false";
@@ -63,11 +63,11 @@ foreach($JaneUsernames as $JaneUsername) {
 	if ($found == "false") {
 		// Make user here
 		$command = "useradd $JaneUsernames[$i]";
-		echo shell_exec($command);
+		shell_exec($command);
 		$command = "echo $JaneSMBPasswords[$i] | passwd $JaneUsernames[$i] --stdin";
-		echo shell_exec($command);
+		shell_exec($command);
 		$command = "(echo $JaneSMBPasswords[$i]; echo $JaneSMBPasswords[$i]) | smbpasswd -a -s $JaneUsernames[$i]";
-		echo shell_exec($command);
+		shell_exec($command);
 	}
 	$i = $i + 1;
 }
@@ -87,9 +87,9 @@ foreach($SystemLocalUsers as $SystemLocalUser) {
 		if ($SystemLocalUsers[$i] != "") {
 			//Delete the acccount.
 			$command = "smbpasswd -s -x $SystemLocalUsers[$i]";
-			echo shell_exec($command);
+			shell_exec($command);
 			$command = "userdel -r $SystemLocalUsers[$i]";
-			echo shell_exec($command);
+			shell_exec($command);
 		}
 	}
 	$i = $i + 1;
@@ -166,10 +166,7 @@ foreach($JaneGroupNames as $JaneGroupName) {
 	foreach($SystemLocalGroups as $SystemLocalGroup) {
 		if ($JaneGroupName == $SystemLocalGroup) {
 			$found = "true";
-			//$command = "groupdel $JaneGroupNames[$i]";
-			//echo shell_exec($command);
-			//$command = "groupadd $JaneGroupNames[$i]";
-			//echo shell_exec($command);
+			//Do nothing here.
 			break;
 		} else {
 			$found = "false";
@@ -178,7 +175,7 @@ foreach($JaneGroupNames as $JaneGroupName) {
 	if ($found == "false") {
 		// Make group here
 		$command = "groupadd $JaneGroupNames[$i]";
-		echo shell_exec($command);
+		shell_exec($command);
 	}
 	$i = $i + 1;
 }
@@ -200,7 +197,7 @@ foreach($SystemLocalGroups as $SystemLocalGroup) {
 		if ($SystemLocalGroups[$i] != "") {
 			//Delete the group.
 			$command = "groupdel $SystemLocalGroups[$i]";
-			echo shell_exec($command);
+			shell_exec($command);
 		}
 	}
 	$i = $i + 1;
@@ -289,19 +286,19 @@ foreach($JaneSettingsGroupName as $GroupName) {
 		// Make directory here.
 		if ($GroupName != "") {
 			$command = "mkdir $PathToSMBShares$GroupName";
-			echo shell_exec($command);
+			shell_exec($command);
 			$command = "chown -R root:$GroupName $PathToSMBShares$GroupName";
-                        echo shell_exec($command);
+                        shell_exec($command);
 			$command = "chmod -R 770 $PathToSMBShares$GroupName";
-			echo shell_exec($command);
+			shell_exec($command);
 		}
 	} else {
 		if ($GroupName != "") {
 			//Here, the directory already exists and should be there, but we are going to reset ownership to the proper ownership.
 			$command = "chown -R root:$GroupName $PathToSMBShares$GroupName";
-			echo shell_exec($command);
+			shell_exec($command);
 			$command = "chmod -R 770 $PathToSMBShares$GroupName";
-			echo shell_exec($command);
+			shell_exec($command);
 		}
 	}
 }
@@ -456,7 +453,7 @@ if ($Current_SMB_Checksum != $New_SMB_Checksum) {
 		rename($tmpFile, $SMB_TO_USE);
 		// Restart smb service.
 		$command = "systemctl restart smb";
-		echo shell_exec($command);
+		shell_exec($command);
 	}
 }
 
