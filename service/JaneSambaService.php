@@ -51,7 +51,7 @@ foreach($JaneUsernames as $JaneUsername) {
 	foreach($SystemLocalUsers as $SystemLocalUser) {
 		if ($JaneUsername == $SystemLocalUser) {
 			$found = "true";
-			// Update password.
+			// Update password for Linux user and Samba user.
 			$command = "chpasswd <<< '$JaneUsernames[$i]:$JaneSMBPasswords[$i]'";
 			shell_exec($command);
 			$command = "(echo '$JaneSMBPasswords[$i]'; echo '$JaneSMBPasswords[$i]') | smbpasswd -s '$JaneUsernames[$i]'";
@@ -63,11 +63,9 @@ foreach($JaneUsernames as $JaneUsername) {
 	}
 	if ($found == "false") {
 		// Make user here
-		echo "\n";
 		$rightNow = new DateTime("@" . time());
                 $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-                echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nCreating user '$JaneUsernames[$i]'\n";
+                echo $rightNow->format("F j, Y, g:i a") . " Creating user '$JaneUsernames[$i]'\n";
 		$command = "useradd '$JaneUsernames[$i]'";
 		shell_exec($command);
 		$command = "chpasswd <<< '$JaneUsernames[$i]:$JaneSMBPasswords[$i]'";
@@ -92,11 +90,9 @@ foreach($SystemLocalUsers as $SystemLocalUser) {
 	if ($found == "false") {
 		if ($SystemLocalUsers[$i] != "") {
 			//Delete the acccount.
-			echo "\n";
 			$rightNow = new DateTime("@" . time());
 			$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-			echo $rightNow->format("F j, Y, g:i a") . "\n";
-			echo "\nDeleting user '$SystemLocalUsers[$i]'\n";
+			echo $rightNow->format("F j, Y, g:i a") . " Deleting user '$SystemLocalUsers[$i]'\n";
 			$command = "smbpasswd -s -x '$SystemLocalUsers[$i]'";
 			shell_exec($command);
 			$command = "userdel -r '$SystemLocalUsers[$i]'";
@@ -184,11 +180,9 @@ foreach($JaneGroupNames as $JaneGroupName) {
 	}
 	if ($found == "false") {
 		// Make group here
-		echo "\n";
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nCreating group '$JaneGroupNames[$i]'\n";
+		echo $rightNow->format("F j, Y, g:i a") . " Creating group '$JaneGroupNames[$i]'\n";
 		$command = "groupadd '$JaneGroupNames[$i]'";
 		shell_exec($command);
 	}
@@ -212,11 +206,9 @@ foreach($SystemLocalGroups as $SystemLocalGroup) {
 	if ($found == "false") {
 		if ($SystemLocalGroups[$i] != "") {
 			//Delete the group.
-			echo "\n";
 			$rightNow = new DateTime("@" . time());
 			$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-			echo $rightNow->format("F j, Y, g:i a") . "\n";
-			echo "\nDeleting group '$SystemLocalGroups[$i]'\n";
+			echo $rightNow->format("F j, Y, g:i a") . " Deleting group '$SystemLocalGroups[$i]'\n";
 			$command = "groupdel '$SystemLocalGroups[$i]'";
 			shell_exec($command);
 		}
@@ -306,11 +298,9 @@ foreach($JaneSettingsGroupName as $GroupName) {
 	if ($found == "false") {
 		// Make directory here.
 		if ($GroupName != "") {
-			echo "\n";
 			$rightNow = new DateTime("@" . time());
 			$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-			echo $rightNow->format("F j, Y, g:i a") . "\n";
-			echo "\nCreating directory '$PathToSMBShares$GroupName'\n";
+			echo $rightNow->format("F j, Y, g:i a") . " Creating directory '$PathToSMBShares$GroupName'\n";
 			$command = "mkdir '$PathToSMBShares$GroupName'";
 			shell_exec($command);
 			$command = "chown -R root:'$GroupName' '$PathToSMBShares$GroupName'";
@@ -410,8 +400,7 @@ if (file_exists($tmpFile)) {
 	if (file_exists($tmpFile)) {
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nDeleting the temporary SMB config file from \"$tmpFile\" failed for some reason. Check permissions and maybe SELinux. Ensure that JaneEngine.php is running as root.\n";
+		echo $rightNow->format("F j, Y, g:i a") . " Deleting the temporary SMB config file from \"$tmpFile\" failed for some reason. Check permissions and maybe SELinux. Ensure that JaneEngine.php is running as root.\n";
         } else {
 		file_put_contents($tmpFile, $smbconf);
 	}
@@ -434,15 +423,13 @@ if (file_exists($SMB_TO_USE)) {
 	if ($tmp != $Current_SMB_Checksum) {
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nThe SMB configuration file \"$SMB_TO_USE\" failed to be checksumed correctly. No action will be taken with the SMB configuration file or the SMB service. This can be due to RAM issues, a failing HDD or possibly other causes.\n";
+		echo $rightNow->format("F j, Y, g:i a") . " The SMB configuration file \"$SMB_TO_USE\" failed to be checksumed correctly. No action will be taken with the SMB configuration file or the SMB service. This can be due to RAM issues, a failing HDD or possibly other causes.\n";
 			$Current_SMB_Checksum = "0";
 	}
 } else {
 	$rightNow = new DateTime("@" . time());
 	$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-	echo $rightNow->format("F j, Y, g:i a") . "\n";
-	echo "\nThe SMB configuration file \"$SMB_TO_USE\" does not exist. Because of this, the temporary SMB file will not be swapped out in place of where the current SMB file should be. You should investigate why it's missing. Is the path correct? Is Samba installed? Are permissions OK? Could it be SELinux?\n";
+	echo $rightNow->format("F j, Y, g:i a") . " The SMB configuration file \"$SMB_TO_USE\" does not exist. Because of this, the temporary SMB file will not be swapped out in place of where the current SMB file should be. You should investigate why it's missing. Is the path correct? Is Samba installed? Are permissions OK? Could it be SELinux?\n";
 	$Current_SMB_Checksum = "0";
 }
 
@@ -459,15 +446,13 @@ if (file_exists($tmpFile)) {
 	if ($tmp != $New_SMB_Checksum) {
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nThe new SMB configuration file \"$tmpFile\" failed to be checksumed correctly. No action will be taken with the SMB configuration file or the SMB service. This can be due to RAM issues, a failing HDD or possibly other causes.\n";
+		echo $rightNow->format("F j, Y, g:i a") . " The new SMB configuration file \"$tmpFile\" failed to be checksumed correctly. No action will be taken with the SMB configuration file or the SMB service. This can be due to RAM issues, a failing HDD or possibly other causes.\n";
 		$New_SMB_Checksum = "1";
 	}
 } else {
 	$rightNow = new DateTime("@" . time());
 	$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-	echo $rightNow->format("F j, Y, g:i a") . "\n";
-	echo "\nThe new SMB configuration file \"$tmpFile\" was supposed to be written moments ago, but does not exist now. Because of this, the temporary SMB file will not be moved into the position of the current SMB file. Something might be wrong with permissions, the path, or possibly SELinux. The partition might be full as well. You should investigate.\n";
+	echo $rightNow->format("F j, Y, g:i a") . " The new SMB configuration file \"$tmpFile\" was supposed to be written moments ago, but does not exist now. Because of this, the temporary SMB file will not be moved into the position of the current SMB file. Something might be wrong with permissions, the path, or possibly SELinux. The partition might be full as well. You should investigate.\n";
 	$New_SMB_Checksum = "1";
 }
 
@@ -481,8 +466,7 @@ if ($Current_SMB_Checksum != $New_SMB_Checksum) {
 	if ($New_SMB_Checksum != "1" && $Current_SMB_Checksum != "0") {
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nThe newly generated SMB files checksum does not match the checksum of the currently in use SMB file. Attempting to move the current file to \"$SMB_TO_USE.old\" and attempting to place the newly generated file \"$tmpFile\" in it's place.\n";
+		echo $rightNow->format("F j, Y, g:i a") . " The newly generated SMB files checksum does not match the checksum of the currently in use SMB file. Attempting to move the current file to \"$SMB_TO_USE.old\" and attempting to place the newly generated file \"$tmpFile\" in it's place.\n";
 		// Move old file.
 		if (file_exists($SMB_TO_USE)) {
 			// Delete pre-existing old file.
@@ -497,8 +481,7 @@ if ($Current_SMB_Checksum != $New_SMB_Checksum) {
 		// Restart smb service.
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . "\n";
-		echo "\nRestarting Samba.\n";
+		echo $rightNow->format("F j, Y, g:i a") . " Restarting Samba.\n";
 		$command = 'systemctl restart smb';
 		shell_exec($command);
 	}
