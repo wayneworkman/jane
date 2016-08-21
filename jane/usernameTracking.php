@@ -15,6 +15,7 @@ if ($SessionIsVerified == "1") {
 $sql = "SELECT * FROM `usernameTracking` ORDER BY `trackingIsAbnormal` DESC, `trackingImportedID` ASC";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
+	echo "Number of usernames being tracked: $result->num_rows<br><br>";
 	echo "<table>\n";
 	echo "<tr>\n";
 	echo "<th>trackingImportedID</th>\n";
