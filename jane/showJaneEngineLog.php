@@ -13,7 +13,7 @@ if ($SessionIsVerified == "1") {
 		echo "<title>Jane Engine Log</title>";
 		echo "<div>";
 		echo "<pre>";
-		include "$JaneEngineLog";
+		echo file_get_contents($JaneEngineLog);
 		echo "</pre>";
 		echo "</div>";
 		echo "</body>";

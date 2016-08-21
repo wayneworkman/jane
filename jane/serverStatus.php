@@ -9,6 +9,10 @@ if ($SessionIsVerified == "1") {
 
 		//clean file, echo first line and following command outputs.
 		exec("echo \" \" > $serverStatus");
+		exec("echo \"-----------------------------------Jane Engine running?\" >> $serverStatus");
+		exec("echo \" \" >> $serverStatus");
+		exec("ps -aux | grep \"[J]ane\" >> $serverStatus");
+		exec("echo \" \" >> $serverStatus");
 		exec("echo \"-----------------------------------Partition Usage\" >> $serverStatus");
 		exec("echo \" \" >> $serverStatus");
 		exec("df -h >> $serverStatus");
@@ -34,7 +38,7 @@ if ($SessionIsVerified == "1") {
 		echo "<title>Server Status</title>";
 		echo "<div>";
 		echo "<pre>";
-		include "$serverStatus";
+		echo file_get_contents($serverStatus);
 		echo "</pre>";
 		echo "</div>";
 		echo "</body>";
