@@ -7,12 +7,12 @@ If the ID doesn't exist, check if the given username is taken or not. If availab
 
 //Range of characters to append to suggested usernames that are already taken.
 $alphas = range('1', '9');
-
+$lastSeen = time();
 
 $sql = "SELECT `trackingUserName`, `trackingIsAbnormal` FROM `usernameTracking` WHERE `trackingImportedID`='$userImportedID' LIMIT 1";
 $resultTracking1 = $link->query($sql);
 if ($resultTracking1->num_rows > 0) {
-    
+ 
 	//user is already established, reuse existing username, update userGroup only if abnormal, and exit.
 	while($rowTracking1 = $resultTracking1->fetch_assoc()) {
 		$userUserName = trim($rowTracking1["trackingUserName"]);
@@ -28,8 +28,18 @@ if ($resultTracking1->num_rows > 0) {
 			// good
 		} else {
 			// Error
-			echo "\nCould not update existing abnormal users userGroup in the usernameTracking table. Attempted SQL:\n\n$sql\n\n";
+			echo " Could not update existing abnormal users userGroup in the usernameTracking table for ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
 		}
+	}
+
+
+	//Update last seen.
+	$sql = "UPDATE `usernameTracking` SET `lastSeen` = '$lastSeen' WHERE `trackingImportedID`='$userImportedID'";
+	if ($link->query($sql)) {
+		// good
+	} else {
+		// Error
+		echo " Could not update lastSeen field in usernameTracking table for pre-existing ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
 	}
 
 } else {
@@ -47,13 +57,13 @@ if ($resultTracking1->num_rows > 0) {
 			$resultTracking3 = $link->query($sql);
 			if ($resultTracking3->num_rows == 0) { //Note:  num_rows == 0 to check for no rows returned.
 				//Abnormal username is available. Store it and exit.
-				$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`userGroup`) VALUES ('$userImportedID','$possibleUsername','$isAbnormal','$userGroup')";
+				$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`userGroup`,`lastSeen`) VALUES ('$userImportedID','$possibleUsername','$isAbnormal','$userGroup','$lastSeen')";
 				if ($link->query($sql)) {
 					// good, return new username.
 					$userUserName=$possibleUsername;
 				} else {
 					// Error
-					echo "\nCould not store new user into usernameTracking table. Attempted SQL:\n\n$sql\n\n";
+					echo " Could not store new user into usernameTracking table for abnormal username with ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
 				}
 			}
 		}
@@ -62,12 +72,12 @@ if ($resultTracking1->num_rows > 0) {
 	} else {
 
 		//Username is available. Store only necessary user information and exit.
-		$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`) VALUES ('$userImportedID','$userUserName','$isAbnormal')";
+		$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`lastSeen`) VALUES ('$userImportedID','$userUserName','$isAbnormal','$lastSeen')";
 		if ($link->query($sql)) {
 			// good
 		} else {
 			// Error
-			echo "\nCould not store new user into usernameTracking table. Attempted SQL:\n\n$sql\n\n";
+			echo " Could not store new user into usernameTracking table for ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
 		}
 	}
 }

@@ -4,7 +4,7 @@ source "$cwd/functions.sh"
 source "$cwd/schemaFunctions.sh"
 source "$cwd/mysqlCredentials.sh"
 janeVersion="0.01"
-currentSchemaVersion="4"
+currentSchemaVersion="5"
 banner
 checkForRoot
 checkOS
@@ -22,6 +22,7 @@ checkOrInstallPackage "samba-client" "0"
 checkOrInstallPackage "openssl" "0"
 checkOrInstallPackage "firewalld" "0"
 checkOrInstallPackage "ntp" "0"
+checkOrInstallPackage "lsof" "0"
 startAndEnableService "firewalld"
 setupFirewalld
 startAndEnableService "ntpd"

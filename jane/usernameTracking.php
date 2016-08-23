@@ -20,28 +20,35 @@ if ($result->num_rows > 0) {
 	echo "<tr>\n";
 	echo "<th>trackingImportedID</th>\n";
 	echo "<th>trackingUserName</th>\n";
+	echo "<th>lastSeen</th>\n";
 	echo "<th>userGroup</th>\n";
 	echo "</tr>\n";
         while($row = $result->fetch_assoc()) {
 
-                $trackingImportedID = trim($row["trackingImportedID"]);
-                $trackingUserName = trim($row["trackingUserName"]);
-                $userGroup = trim($row["userGroup"]);
+		$trackingImportedID = trim($row["trackingImportedID"]);
+		$trackingUserName = trim($row["trackingUserName"]);
+		$userGroup = trim($row["userGroup"]);
+		$lastSeen = trim($row["lastSeen"]);
+
+		$lastSeen = new DateTime("@$lastSeen");
+		$lastSeen->setTimezone(new DateTimeZone("$TimeZone"));
+
 
 		echo "<tr>\n";
 		echo "<td>$trackingImportedID</td>\n";
 		echo "<td>$trackingUserName</td>\n";
+		echo "<td>" . $lastSeen->format("F j, Y, g:i a") . "</td>\n";
 		echo "<td>$userGroup</td>\n";
 		echo "</tr>\n";
 
-        }
+	}
 	echo "</table>\n";
 }
 
 	echo "<br>";
-        echo "</div>";
-        echo "</body>";
-        echo "</html>";
+	echo "</div>";
+	echo "</body>";
+	echo "</html>";
     }
 } else {
     //Not an admin, redirect to home.
