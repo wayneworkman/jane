@@ -221,7 +221,7 @@ PRIMARY KEY (janeADid)
 );
 
 
-INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','4');
+INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','5');
 
 
 INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
