@@ -21,6 +21,7 @@ trackingImportedID VARCHAR(255) UNIQUE,
 trackingUserName VARCHAR(255) UNIQUE,
 trackingIsAbnormal VARCHAR(1),
 userGroup VARCHAR(255),
+lastSeen int,
 PRIMARY KEY (trackingID)
 );
 
