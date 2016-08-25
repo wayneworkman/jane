@@ -19,7 +19,7 @@ while (file_exists($PathToCSV)) {
 	if ($isFileClosed != "1") {
 		$rightNow = new DateTime("@" . time());
 		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . " Import file is still open, delaying until next iteration.\n";
+		echo $rightNow->format("F j, Y, g:i a") . " Import file '$PathToCSV' is still open, delaying until next iteration.\n";
 		break;
 	}
 
@@ -27,7 +27,7 @@ while (file_exists($PathToCSV)) {
 	$csv = fopen($PathToCSV,'r') or die(" Failed to open file '$PathToCSV'\n");
 	$rightNow = new DateTime("@" . time());
 	$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-	echo $rightNow->format("F j, Y, g:i a") . " Successfully opened File: '$PathToCSV'\n";
+	echo $rightNow->format("F j, Y, g:i a") . " Successfully opened File: '$PathToCSV' - begining import.\n";
 
 	while($csv_line = fgetcsv($csv)) {
 		list($userAction, $userImportedID, $userFirstName, $userMiddleName, $userLastName, $userPassword, $userGroup) = $csv_line;
@@ -66,10 +66,30 @@ while (file_exists($PathToCSV)) {
 			}
 		}
 	}
+
+	$rightNow = new DateTime("@" . time());
+        $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
+        echo $rightNow->format("F j, Y, g:i a") . " Import from '$PathToCSV' is complete.\n";
+
+
 	fclose($csv) or die(" Can't close file '$PathToCSV'\n");
-	// below line sets aside old import files, can be commented out to not preserve incoming data.
-	//copy($PathToCSV, $PathToCSV . "." . date('Y-m-d'));
-	// below line deletes current import file.
-	unlink($PathToCSV);
+	$rightNow = new DateTime("@" . time());
+        $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
+        echo $rightNow->format("F j, Y, g:i a") . " Successfully closed file '$PathToCSV'\n";
+
+
+	// below lines sets aside old import files, can be commented out to not preserve import files.
+	//copy($PathToCSV, $PathToCSV . "." . date('Y-m-d')) or die(" Can't copy file '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'\n";
+	//$rightNow = new DateTime("@" . time());
+        //$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
+        //echo $rightNow->format("F j, Y, g:i a") . " Successfully copied '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'\n";
+	
+
+
+	// below lines deletes current import file.
+	unlink($PathToCSV) or die(" Can't delete file '$PathToCSV'\n");
+	$rightNow = new DateTime("@" . time());
+        $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
+        echo $rightNow->format("F j, Y, g:i a") . " Import file '$PathToCSV' successfully deleted.\n";
 }
 ?>
