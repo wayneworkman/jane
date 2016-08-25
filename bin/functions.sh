@@ -402,6 +402,11 @@ startJaneOnBoot() {
         echo "Exists"
     fi
 }
+stopJaneEngine() {
+    dots "Stopping JaneEngine"
+    pkill -f JaneEngine.php > /dev/null 2>&1
+    [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+}
 startJaneEngine() {
     dots "Starting JaneEngine"
     pkill -f JaneEngine.php > /dev/null 2>&1

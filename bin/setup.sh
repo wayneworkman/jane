@@ -8,6 +8,7 @@ currentSchemaVersion="5"
 banner
 checkForRoot
 checkOS
+stopJaneEngine
 installRemiAndEpel
 updateServer
 checkOrInstallPackage "mariadb" "0"

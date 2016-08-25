@@ -27,7 +27,7 @@ while (file_exists($PathToCSV)) {
 	$csv = fopen($PathToCSV,'r') or die(" Failed to open file '$PathToCSV'\n");
 	$rightNow = new DateTime("@" . time());
 	$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-	echo $rightNow->format("F j, Y, g:i a") . " Successfully opened File: '$PathToCSV' - begining import.\n";
+	echo $rightNow->format("F j, Y, g:i a") . " Successfully opened file: '$PathToCSV' - begining import.\n";
 
 	while($csv_line = fgetcsv($csv)) {
 		list($userAction, $userImportedID, $userFirstName, $userMiddleName, $userLastName, $userPassword, $userGroup) = $csv_line;
