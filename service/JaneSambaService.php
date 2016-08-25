@@ -277,7 +277,7 @@ if ($modifyGroupsAllowed == "1") {
 
 
 
-if ($modifyUsersAllowed == "1" & $modifyGroupsAllowed == "1") {
+if ($modifyUsersAllowed == "1" && $modifyGroupsAllowed == "1") {
 
 
 	// Get JaneSettings values for shares.

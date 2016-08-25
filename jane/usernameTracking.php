@@ -18,7 +18,8 @@ if ($SessionIsVerified == "1") {
 
 			echo "<form action=\"clearUsernameTracking.php\" method=\"post\">\n";
 			echo "Clear usernames not seen in the last\n";
-			echo " <input type=\"text\" name=\"years\" value=\"15\" style=\"width:20px;\"> years - \n";
+			echo " <input type=\"text\" name=\"years\" value=\"15\" style=\"width:20px;\"> years.<br>\n";
+			echo "<input type=\"checkbox\" name=\"ConfirmDelete\" value=\"Confirmed\">Confirm Delete<br>\n";
 			echo "<input type=\"submit\" value=\"Clear Usernames\">\n";
 			echo "<br><br>\n";
 

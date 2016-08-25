@@ -314,6 +314,12 @@ createDirectories() {
             fi
             cp /var/www/html/jane/vars.php /home
         fi
+        if [[ -e "/var/www/html/jane/Jane.crt" ]]; then
+            if [[ -e "/home/Jane.crt" ]]; then
+                rm -f /home/Jane.crt
+            fi
+            cp /var/www/html/jane/Jane.crt /home
+        fi
         rm -rf /var/www/html/jane
     fi
     cp -R $cwd/../jane /var/www/html
@@ -329,6 +335,13 @@ createDirectories() {
         cp /home/vars.php /var/www/html/jane
         rm -f /home/vars.php
     fi
+    if [[ -e "/home/Jane.crt" ]]; then
+        if [[ -e "/var/www/html/jane/Jane.crt" ]]; then
+            rm -f /var/www/html/jane/Jane.crt
+        fi
+        cp /home/Jane.crt /var/www/html/jane
+        rm -f /home/Jane.crt
+    fi
     echo "Ok"
 }
 checkCert() {
@@ -339,6 +352,7 @@ checkCert() {
         [[ -e "/jane/ssl/Jane.key" ]] && rm -f /jane/ssl/Jane.key
         [[ -e "/var/www/html/jane/Jane.crt" ]] && rm -f /var/www/html/jane/Jane.crt
         openssl req -nodes -x509 -sha256 -newkey rsa:4096 -keyout "/jane/ssl/Jane.key" -out "/var/www/html/jane/Jane.crt" -days 99999 -passin pass:'' -subj "/C=''/ST=''/L=''/O=''/OU=''/CN=''/emailAddress=''" > /dev/null 2>&1 
+        echo "Created new key pair." >> /jane/log/JaneEngine.log
         [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
     else
         echo "Exists"
