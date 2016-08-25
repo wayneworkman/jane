@@ -102,12 +102,10 @@ installRemiAndEpel() {
             dnf install http://rpms.remirepo.net/fedora/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             dnf config-manager --set-enabled remi-php70 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            sleep 3
         elif [[ -e "$useYum" ]]; then
             yum install http://rpms.remirepo.net/fedora/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             yum config-manager --set-enabled remi-php70 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            sleep 3
         fi
     elif [[ "$ID" == "centos" ]]; then
         if [[ -e "$useDnf" ]]; then
@@ -232,11 +230,9 @@ setupFirewalld() {
     local useSystemctl=$(command -v systemctl)
     local useService=$(command -v service)
     if [[ -e "$useSystemctl" ]]; then
-        systemctl enable firewalld > /dev/null 2>&1
         systemctl restart firewalld > /dev/null 2>&1
         [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
     elif [[ -e "$useService" ]]; then
-        service firewalld enable  > /dev/null 2>&1
         service firewalld restart > /dev/null 2>&1
         [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
     else
