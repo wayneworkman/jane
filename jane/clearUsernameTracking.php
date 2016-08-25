@@ -11,7 +11,7 @@ if ($SessionIsVerified == "1") {
 		$years = $link->real_escape_string(trim($_REQUEST['years']));
 		$thisMoment = time();
 
-		if (is_numeric($years) && $ConfirmDelete == "Confirmed") {
+		if ((is_numeric($years)) && ($ConfirmDelete == "Confirmed")) {
 			$timeDifference = ( $thisMoment - ($years * 31536000)); // 1 year in seconds is 31536000.
 
 			$sql = "DELETE FROM `usernameTracking` WHERE `lastSeen` <= '$timeDifference'";
