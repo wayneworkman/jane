@@ -6,17 +6,24 @@ if ($SessionIsVerified == "1") {
     include 'head.php';
 
     if ($isAdministrator == 1) {
-        echo "<title>Show Sessions</title>";
+        echo "<title>Sessions</title>";
         echo "<div>";
-        echo "Show Sessions<br>";
-	echo "<br><br>";
-	echo "<form action=\"clearSessions.php\" method=\"post\">";
-	echo "<input type=\"submit\" value=\"Clear All Session Data\">";
+        echo "Sessions<br>";
 	echo "<br><br>";
 
 	$sql = "SELECT `Sessions`.`REQUEST_TIME`, `janeUsers`.`JaneUsername`, `Sessions`.`REMOTE_ADDR`, `Sessions`.`HTTP_USER_AGENT` FROM `Sessions` INNER JOIN `janeUsers` ON `Sessions`.`SessionUserID`=`janeUsers`.`JaneUserID` ORDER BY `Sessions`.`REQUEST_TIME` DESC;";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
+
+	echo "<form action=\"clearSessions.php\" method=\"post\">\n";
+	echo "Clear session data older than\n";
+	echo " <input type=\"text\" name=\"days\" value=\"1\" style=\"width:20px;\"> days.<br>\n";
+	echo "<input type=\"checkbox\" name=\"ConfirmDelete\" value=\"Confirmed\">Confirm Delete<br>\n";
+	echo "<input type=\"submit\" value=\"Clear Session Data\">\n";
+	echo "<br><br>\n";
+
+
+
 	echo "Number of session records: $result->num_rows<br><br>";
 	echo "<table>\n";
 	echo "<tr>\n";
