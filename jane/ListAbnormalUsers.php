@@ -7,20 +7,38 @@ if ($SessionIsVerified == "1") {
 
 
     //List abnormal users for all Jane users to see.
-    echo "<title>Abnormal Users</title>";
-    echo "<div>";
-    echo "<font color=\"red\">List of abnormal usernames (ID userGroup Username):</font><br>";
+    echo "<title>Abnormal Users</title>\n";
+    echo "<div>\n";
+    echo "<font color=\"red\">List of abnormal usernames</font><br><br>\n";
     $sql = "SELECT `trackingImportedID`, `trackingUserName`, `userGroup` FROM `usernameTracking`WHERE `trackingIsAbnormal`='1' ORDER BY `trackingImportedID` desc";
-    echo "<br>";
+
     $result = $link->query($sql);
     if ($result->num_rows > 0) {
+
+	echo "<table>\n";
+        echo "<tr>\n";
+        echo "<th>ID</th>\n";
+        echo "<th>Username</th>\n";
+        echo "<th>UserGroup</th>\n";
+        echo "</tr>\n";
         while($row = $result->fetch_assoc()) {
-            echo "&emsp;&emsp;" . $row["trackingImportedID"] . "&emsp;" . $row["userGroup"] . "&emsp;" . $row["trackingUserName"] . "<br>";
+
+                $abnormalID = trim($row["trackingImportedID"]);
+                $abnormalUsername = trim($row["trackingUserName"]);
+                $abnormalUserGroup = trim($row["userGroup"]);
+
+                echo "<tr>\n";
+                echo "<td>$abnormalID</td>\n";
+                echo "<td>$abnormalUsername</td>\n";
+                echo "<td>$abnormalUserGroup</td>\n";
+                echo "</tr>\n";
+
         }
+	echo "</table>\n";
         $result->free();
     }
-    echo "</div>";
-    echo "</body>";
-    echo "</html";
+    echo "</div>\n";
+    echo "</body>\n";
+    echo "</html>\n";
 }
 ?>
