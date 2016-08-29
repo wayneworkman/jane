@@ -10,14 +10,14 @@ if ($SessionIsVerified == "1") {
 
 		//build page.
 		include 'head.php';
-		echo "<title>Jane Engine Log</title>";
-		echo "<div>";
-		echo "<pre>";
+		echo "<title>Jane Engine Log</title>\n";
+		echo "<div>\n";
+		echo "<pre>\n";
 		echo file_get_contents($JaneEngineLog);
-		echo "</pre>";
-		echo "</div>";
-		echo "</body>";
-		echo "</html>";
+		echo "</pre>\n";
+		echo "</div>\n";
+		echo "</body>\n";
+		echo "</html>\n";
 
 
         } else {
