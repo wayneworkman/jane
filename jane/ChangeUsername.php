@@ -3,7 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
-
+	include 'functions.php';
 
 	// Do actions here.
 	$OldUsername = $link->real_escape_string(trim($_REQUEST['OldUsername']));
@@ -15,16 +15,12 @@ if ($SessionIsVerified == "1") {
 	if ($OldUsername == "") {
 		unset($OldUsername);
 	}
-
 	if ($NewUsername == "") {
 		unset($NewUsername);
 	}
 
 	if (isset($OldUsername, $NewUsername)) {
-
 		$sql = "UPDATE `janeUsers` SET `janeUsername` = '$NewUsername' WHERE `JaneUserID` = $JaneUserID and `JaneUserName`='$OldUsername'";
-
-
 		if ($link->query($sql)) {
 			// good, send back to jane.php
 			$NextURL="jane.php";
@@ -32,10 +28,10 @@ if ($SessionIsVerified == "1") {
 		} else {
 			// Error
 			$link->close();
-			die ($SiteErrorMessage);
+			setMessage($SiteErrorMessage,"ChangeUsernamePage.php");
 		}
 	} else {
-		die ($incomplete);
+		setMessage($incomplete,"ChangeUsernamePage.php");
 	}
 
 } else {

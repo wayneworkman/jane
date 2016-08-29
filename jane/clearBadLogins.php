@@ -3,6 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
+	include 'functions.php';
 	if ($isAdministrator == 1) {
 
 		if (isset($_REQUEST['ConfirmDelete'])) {
@@ -22,11 +23,11 @@ if ($SessionIsVerified == "1") {
 			} else {
 				// Error
 				$link->close();
-				die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"BadLoginAttempts.php");
 			}
 		} else {
 			$link->close();
-			die ($invalidData);
+			setMessage($invalidData,"BadLoginAttempts.php");
 		}
 
 

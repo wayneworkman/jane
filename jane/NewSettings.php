@@ -4,6 +4,7 @@ include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	if ($isAdministrator == 1) {
 		include 'connect2db.php';
+		include 'functions.php';
 		// Do actions here.
 		$JaneSettingsNickName = $link->real_escape_string(trim($_REQUEST['NewSettingsNickName']));
 		//Strip spaces from nickname
@@ -24,12 +25,12 @@ if ($SessionIsVerified == "1") {
 			} else {
 				// Error
 				$link->close();
-				die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"NewSettingsPage.php");
 			}
 		} else {
 			// Not all fields completed.
 			$link->close();
-			die ($incomplete);
+			setMessage($incomplete,"NewSettingsPage.php");
 		}
 	} else {
 		// not an admin, redirect to jane.php

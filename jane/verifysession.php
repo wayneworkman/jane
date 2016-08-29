@@ -79,8 +79,8 @@ if ($result->num_rows == 0) {
 		// Session is not verified or timed out.
 		$SessionIsVerified="0";	
 		//redirect to login screen.
-		session_unset();
 		session_destroy();
+		session_unset();
 		$NextURL="login.php";
 		header("Location: $NextURL");
 	}

@@ -18,8 +18,7 @@ if ($SessionIsVerified == "1") {
 	} else {
 		//NO settings? This should never happen at this point.
 		$link->close();
-		$NextURL="jane.php";
-		header("Location: $NextURL");
+		setMessage("No settings for selection.","jane.php");
 	}
 
 	$sql = "SELECT JaneGroupName FROM janeGroups WHERE JaneGroupID = '$JaneSettingsGroupID' LIMIT 1";
@@ -32,8 +31,7 @@ if ($SessionIsVerified == "1") {
 	} else {
 		//NO Group Name? This should never happen at this point.
 		$link->close();
-		$NextURL="jane.php";
-		header("Location: $NextURL");
+		setMessage("No group for selection.","jane.php");
 	}
 
 

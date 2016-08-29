@@ -3,6 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
+	include 'functions.php';
 
 	// Do actions here.
 	$OldSMBPassword = $link->real_escape_string(trim($_REQUEST['OldSMBPassword']));
@@ -28,7 +29,7 @@ if ($SessionIsVerified == "1") {
 		}
 
 		if (!isset($StoredSMBPassword, $OldSMBPassword, $NewSMBPassword)) {
-			die ($incomplete);
+			setMessage($incomplete,"ChangeSMBPasswordPage.php");
 		}
 
 
@@ -43,13 +44,15 @@ if ($SessionIsVerified == "1") {
 			} else {
 				// Error
 				$link->close();
-				die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"ChangeSMBPasswordPage.php");
 			}
 		} else {
                         //Mistyped password.
                         $link->close();
-                        die ($BadLoginError);
+			setMessage($BadLoginError,"ChangeSMBPasswordPage.php");
                 }
+	} else {
+		setMessage($incomplete,"ChangeSMBPasswordPage.php");
 	}
 
 } else {

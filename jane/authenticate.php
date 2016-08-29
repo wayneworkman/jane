@@ -44,9 +44,14 @@ if ($result->num_rows == 0) {
 					$sql = "INSERT INTO Sessions (REQUEST_TIME,SessionUserID,REMOTE_ADDR,HTTP_USER_AGENT,Random_String,fingerprint) VALUES ('$REQUEST_TIME','$JaneUserID','$REMOTE_ADDR','$HTTP_USER_AGENT','$Random_String','$fingerprint')";
 					if ($link->query($sql)) {
 						$_SESSION['fingerprint'] = $fingerprint;
+
 						// All done, Send user along.
+						unset($_SESSION['ErrorMessage']);
+						unset($_SESSION['badLoginAttempt']);
 						$NextURL="jane.php";
 						header("Location: $NextURL");
+
+
 					} else {
 						// couldn't create session.
 						die ($SiteErrorMessage);

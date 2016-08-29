@@ -3,6 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
+	include 'functions.php';
 	$JaneSettingsID = $link->real_escape_string(htmlspecialchars_decode(trim($_SESSION['JaneSettingsID'])));
 
 	if ($isAdministrator == 1) {
@@ -35,7 +36,7 @@ if ($SessionIsVerified == "1") {
 			} else {
 				// Error
 				$link->close();
-				die ("$SiteErrorMessage");
+				setMessage($SiteErrorMessage,"jane.php");
 			}
 		}
 
@@ -166,9 +167,7 @@ if ($SessionIsVerified == "1") {
 		// Enforce that it is set to something.
 		if ($SamAccountName == "") {
 			unset($SamAccountName);
-		}
-		if (!isset($SamAccountName)) {
-			die ($incomplete);
+			setMessage("SamAccountName is required, no changes made.","jane.php");
 		}
 		
 
@@ -193,7 +192,7 @@ if ($SessionIsVerified == "1") {
 		} else {
 			// Error
 			$link->close();
-			die ("$SiteErrorMessage");
+			setMessage($SiteErrorMessage,"jane.php");
 		}
 	} else {
 		// user has no permisson to manipulate the given ID or Given ID does not exist.

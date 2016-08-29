@@ -121,4 +121,10 @@ echo "  <li><a href=\"logout.php\">Log Out</a></li>\n";
 echo "  </li>\n";
 echo "</ul>\n";
 
+if (isset($_SESSION['ErrorMessage'])) {
+	$ErrorMessage = $link->real_escape_string($_SESSION['ErrorMessage']);
+	unset($_SESSION['ErrorMessage']);
+	echo "<br><font color=\"red\">\n$ErrorMessage\n</font><br><br>\n";
+	unset($ErrorMessage);
+}
 ?>

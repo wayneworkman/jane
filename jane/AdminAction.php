@@ -4,6 +4,7 @@ include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	if ($isAdministrator == 1) {
 		include 'connect2db.php';
+		include 'functions.php';
 
 
 		//Function to do SQL query.
@@ -19,7 +20,7 @@ if ($SessionIsVerified == "1") {
 				header("Location: $NextURL");
 			} else {
 				// Error
-				die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"AdminActionPage.php");
 			}
 		}
 
@@ -65,7 +66,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "INSERT INTO `janeUsers` (`JaneUsername`,`JanePassword`,`JaneSMBPassword`,`JaneUserEnabled`) VALUES ('$adminActionText','$NewPassword','$PasswordDefault','1')";
 					doQuery();
 				} else {
-					die ($incomplete);
+					setMessage($incomplete,"AdminActionPage.php");
 				}
 				break;
 
@@ -78,7 +79,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "DELETE FROM `janeUsers` WHERE `JaneUserID` = '$uID'";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+					setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $EnableSelectedUser:
@@ -86,7 +87,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "UPDATE `janeUsers` SET `JaneUserEnabled` = '1' WHERE `JaneUserID` = '$uID'";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $DisableSelectedUser:
@@ -94,7 +95,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "UPDATE `janeUsers` SET `JaneUserEnabled` = '0' WHERE `JaneUserID` = '$uID'";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $ResetSelectedUsersJanePassword:
@@ -103,7 +104,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "UPDATE `janeUsers` SET `JanePassword` = '$NewPassword' WHERE `JaneUserID` = $uID";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $ResetSelectedUsersSMBPassword:
@@ -111,7 +112,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "UPDATE `janeUsers` SET `JaneSMBPassword` = '$PasswordDefault' WHERE `JaneUserID` = $uID";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $CreateNewGroup:
@@ -119,7 +120,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "INSERT INTO `janeGroups` (`JaneGroupName`) VALUES ('$adminActionText')";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $DeleteSelectedGroup:
@@ -129,7 +130,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "DELETE FROM `janeGroups` WHERE `JaneGroupID` = '$gID'";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $AddSelectedUserToSelectedGroup:
@@ -137,7 +138,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "INSERT INTO janeUserGroupAssociation (uID,gID) VALUES ($uID,$gID)";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $RemoveSelectedUserFromSelectedGroup:
@@ -145,7 +146,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "DELETE FROM `janeUserGroupAssociation` WHERE `uID` = '$uID' AND `gID` = '$gID'";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $BlockIP:
@@ -153,7 +154,7 @@ if ($SessionIsVerified == "1") {
 					$sql = "INSERT INTO `blockedIPs` (`BlockedIP`) VALUES ('$adminActionText')";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
 			case $UnblockIP:
@@ -161,9 +162,11 @@ if ($SessionIsVerified == "1") {
 					$sql = "DELETE FROM `blockedIPs` WHERE `BlockedIP` = '$adminActionText'";
 					doQuery();
 				} else {
-                                        die ($incomplete);
+                                        setMessage($incomplete,"AdminActionPage.php");
                                 }
 				break;
+			default:
+				setMessage($incomplete,"AdminActionPage.php");
 		}
 
 

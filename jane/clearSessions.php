@@ -3,7 +3,9 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
+	include 'functions.php';
 	if ($isAdministrator == 1) {
+		
 
 		if (isset($_REQUEST['ConfirmDelete'])) {
 			$ConfirmDelete = $link->real_escape_string(trim($_REQUEST['ConfirmDelete']));
@@ -22,11 +24,11 @@ if ($SessionIsVerified == "1") {
 			} else {
 				// Error
 				$link->close();
-				die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"showSessions.php");
 			}
 		} else {
 			$link->close();
-			die ($invalidData);
+			setMessage($invalidData,"showSessions.php");
 		}
 
 

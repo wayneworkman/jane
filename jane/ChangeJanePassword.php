@@ -3,6 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
+	include 'functions.php';
 
 
 	// Do actions here.
@@ -39,15 +40,15 @@ if ($SessionIsVerified == "1") {
 			} else {
 				// Error
 				$link->close();
-				die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"ChangeJanePasswordPage.php");
 			}
 		} else {
 			//Mistyped password.
 			$link->close();
-			die ($BadLoginError);
+			setMessage($BadLoginError,"ChangeJanePasswordPage.php");
 		}
 	} else {
-		die ($incomplete);
+		setMessage($incomplete,"ChangeJanePasswordPage.php");
 	}
 } else {
 	$NextURL="login.php";

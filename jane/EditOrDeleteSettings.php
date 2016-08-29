@@ -3,6 +3,7 @@ include 'vars.php';
 include 'verifysession.php';
 if ($SessionIsVerified == "1") {
 	include 'connect2db.php';
+	include 'functions.php';
 	// Do actions here.
 	$Action = $link->real_escape_string(trim($_REQUEST['Action']));
 	$JaneSettingsID = $link->real_escape_string(trim($_REQUEST['SettingsNickName']));
@@ -93,12 +94,12 @@ if ($SessionIsVerified == "1") {
 				} else {
 					// Error
 					$link->close();
-					die ($SiteErrorMessage);
+					setMessage($SiteErrorMessage,"jane.php");
 				}
 			} else {
                                 // Error
                                 $link->close();
-                                die ($SiteErrorMessage);
+				setMessage($SiteErrorMessage,"jane.php");
                         }
 		} else {
 			// Not a valid action, send back to jane.php.
