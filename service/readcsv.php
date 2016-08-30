@@ -56,7 +56,7 @@ while (file_exists($PathToCSV)) {
 
 
 		$sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')";
-		if ($userAction != "Category") { //this check is how the header line is skipped. "Catagory" can be replaced with a word that always appears in the header.
+		if ($userImportedID != "StudentID") { //this check is how the header line is skipped. Can be replaced with different checks, meant to filter out header row.
 			if ($link->query($sql)) {
 				// good
 			} else {
