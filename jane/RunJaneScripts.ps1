@@ -12,9 +12,6 @@ $janeUsername="wayne"
 #Your Jane SMB password:
 $janeSMBPassword="MyAwesomePassword"
 
-#Optional domain, I don't think Samba really cares about this with how Jane uses Samba, but you may want it:
-$domainName="jane"
-
 #Jane settings group name. 
 #This is the group name that the settings sets belong to, and that you belong to.
 #Groups are managed in the web interface. You must be a member of the setting's group
@@ -45,14 +42,14 @@ $log = "C:\Jane.log"
 ########################################################################################################
 
 #Here, check if the drive letter is already in use. If so, delete it.
-if (!(Get-PSDrive $driveLetter)) {New-PSDrive -Name $driveLetter -PSProvider Registry -Root HKLM:\Network}else { 
+if (Get-PSDrive $driveLetter) {
     Get-PSDrive $driveLetter | Remove-PSDrive
 }
 
 #Map the Jane share using the defined settings above.
 $pass=$janeSMBPassword|ConvertTo-SecureString -AsPlainText -Force
-$Cred = New-Object System.Management.Automation.PsCredential($janeUsername + "@" + $domainName,$pass)
-New-PSDrive -name $driveLetter -Root \\$janeHostname\$janeGroupName -Credential $cred -PSProvider filesystem
+$Cred = New-Object System.Management.Automation.PsCredential("$janeUsername",$pass)
+New-PSDrive -name $driveLetter -Root "\\$janeHostname\$janeGroupName" -Credential $cred -PSProvider filesystem
 
 #Begin loop for jane settings nick names. This loops through each one.
 for ($i=0; $i -lt $nickNames.length; $i++) {
@@ -74,9 +71,9 @@ for ($i=0; $i -lt $nickNames.length; $i++) {
 #end loop
 }
 
-
 #Cleanup the share.
-if (!(Get-PSDrive $driveLetter)) {New-PSDrive -Name $driveLetter -PSProvider Registry -Root HKLM:\Network}else {
+if (Get-PSDrive $driveLetter) {
     Get-PSDrive $driveLetter | Remove-PSDrive
 }
+
 
