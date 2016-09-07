@@ -41,6 +41,9 @@ $log = "C:\Jane.log"
 # Do not modify below here unless you know what you're doing - or aren't worried about breaking things.#
 ########################################################################################################
 
+#Make sure we are in the system drive to start with.
+cd $env:SystemDrive
+
 #Here, check if the drive letter is already in use. If so, delete it.
 if (Get-PSDrive $driveLetter) {
     Get-PSDrive $driveLetter | Remove-PSDrive
