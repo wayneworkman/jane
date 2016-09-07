@@ -36,12 +36,11 @@ $nickNames= @("abc","def")
 #Storing on the C:\ drive:
 $log = "C:\Jane.log"
 
-
 ########################################################################################################
 # Do not modify below here unless you know what you're doing - or aren't worried about breaking things.#
 ########################################################################################################
 
-#Make sure we are in the system drive to start with.
+#Change working directory to the system drive.
 cd $env:SystemDrive
 
 #Here, check if the drive letter is already in use. If so, delete it.
@@ -49,7 +48,7 @@ if (Get-PSDrive $driveLetter) {
     Get-PSDrive $driveLetter | Remove-PSDrive
 }
 
-#Map the Jane share using the defined settings above.
+#Gain access to the Jane share using the defined settings above.
 $pass=$janeSMBPassword|ConvertTo-SecureString -AsPlainText -Force
 $Cred = New-Object System.Management.Automation.PsCredential("$janeUsername",$pass)
 New-PSDrive -name $driveLetter -Root "\\$janeHostname\$janeGroupName" -Credential $cred -PSProvider filesystem
@@ -58,25 +57,24 @@ New-PSDrive -name $driveLetter -Root "\\$janeHostname\$janeGroupName" -Credentia
 for ($i=0; $i -lt $nickNames.length; $i++) {
 
     #Build the filename.
-    $file = $driveLetter + ":\Created-" + $(Get-Date -Format yyyy-MM-dd) + "---" + $nickNames[$i] + ".ps1"
+    $file = "\\$janeHostname\$janeGroupName\Created-" + $(Get-Date -Format yyyy-MM-dd) + "---" + $nickNames[$i] + ".ps1"
 
     #Check if file exists. If so, run it and redirect output to log, then delete file and file.signed
     $FileExists = Test-Path $file
     If ($FileExists -eq $True) {
         powershell.exe -executionpolicy bypass -windowstyle hidden -noninteractive -nologo -file $file 2>&1 | Out-File $log -Append
         Remove-Item $file
-        $currentFile = $file + ".signed"
+        $file = $file + ".signed"
         $FileExists = Test-Path $file
         If ($FileExists -eq $True) {
             Remove-Item $file
         }
     }
-#end loop
+    #end loop
 }
 
 #Cleanup the share.
 if (Get-PSDrive $driveLetter) {
     Get-PSDrive $driveLetter | Remove-PSDrive
 }
-
 
