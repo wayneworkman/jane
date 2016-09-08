@@ -76,7 +76,6 @@ if ($isAdministrator == 1) {
     echo "\" style=\"width:600px;\"></br>";
     echo "<br>";
 
-    echo "<a href=\"DownloadScriptExample.php\">Download Automation Script Example</a><br><br>";
     echo "</div>";
 
 
@@ -128,7 +127,6 @@ if ($isAdministrator == 1) {
     echo "\" style=\"width:600px;\" readonly></br>";
     echo "<br>";
 
-    echo "<a href=\"DownloadScriptExample.php\">Download Automation Script Example</a><br><br>";
     echo "</div>";
 
 }

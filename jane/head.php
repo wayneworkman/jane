@@ -114,8 +114,25 @@ if ($isAdministrator == 1) {
     echo "   </li>\n";
 
 }
-echo "  <li><a href=\"ListAbnormalUsers.php\">Abnormal Users</a></li>\n";
-echo "  <li><a href=\"DownloadKey.php\">Jane Public Key</a></li>\n";
+
+
+echo "    <li class=\"dropdown\">\n";
+echo "    <a href=\"#\" class=\"dropbtn\">Managed Usernames</a>\n";
+echo "    <div class=\"dropdown-content\">\n";
+echo "      <a href=\"usernameTracking.php\">Username Tracking</a>\n";
+echo "      <a href=\"ListAbnormalUsers.php\">Abnormal Users</a>\n";
+echo "    </div>\n";
+echo "   </li>\n";
+
+echo "    <li class=\"dropdown\">\n";
+echo "    <a href=\"#\" class=\"dropbtn\">Downloads</a>\n";
+echo "    <div class=\"dropdown-content\">\n";
+echo "    <a href=\"DownloadKey.php\">Jane Public Key</a>\n";
+echo "    <a href=\"DownloadScriptExample.php\">PowerShell Automation Script Template</a>";
+echo "    </div>\n";
+echo "   </li>\n";
+
+
 echo "  <li><a href=\"showLicense.php\">License</a></li>\n";
 echo "  <li><a href=\"logout.php\">Log Out</a></li>\n";
 echo "  </li>\n";
