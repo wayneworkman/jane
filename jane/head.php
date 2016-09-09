@@ -100,6 +100,7 @@ if ($isAdministrator == 1) {
     echo "      <a href=\"ListUsers.php\">List Users</a>\n";
     echo "      <a href=\"BlockedIPs.php\">List Blocked IPs</a>\n";
     echo "      <a href=\"BadLoginAttempts.php\">Bad Login Attempts</a>\n";
+    echo "      <a href=\"usersWithDefaults.php\">Users with Default Passwords</a>\n";
     echo "    </div>\n";
     echo "   </li>\n";
         
