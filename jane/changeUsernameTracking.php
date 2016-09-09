@@ -16,7 +16,7 @@ if ($SessionIsVerified == "1") {
 
 	if ($Confirm == "Confirmed") {
 
-		$sql = "UPDATE `usernameTracking` SET `trackingUserName` = '$newUsername' WHERE `trackingImportedID` = '$trackingImportedID' AND `trackingUserName` = '$oldUsername'";
+		$sql = "UPDATE `usernameTracking` SET `trackingUserName`='$newUsername',`trackingIsAbnormal`='1' WHERE `trackingImportedID` = '$trackingImportedID' AND `trackingUserName` = '$oldUsername'";
 		if ($link->query($sql)) {
 			// good, send back to usernameTracking.
 			$NextURL="usernameTracking.php";
