@@ -19,14 +19,18 @@ if ($SessionIsVerified == "1") {
 			echo " <input type=\"text\" name=\"years\" value=\"15\" style=\"width:20px;\"> years.<br>\n";
 			echo "<input type=\"checkbox\" name=\"ConfirmDelete\" value=\"Confirmed\">Confirm Delete<br>\n";
 			echo "<input type=\"submit\" value=\"Clear Usernames\">\n";
+			echo "</form>\n";
 			echo "<br><br>\n";
 		}
+		echo "<br>\n";
+		echo "Note: Changed usernames will take effect the next time the account ID is marked to be added or updated.<br><br>\n";
 		echo "<table>\n";
 		echo "<tr>\n";
-		echo "<th>trackingImportedID</th>\n";
-		echo "<th>trackingUserName</th>\n";
-		echo "<th>lastSeen</th>\n";
-		echo "<th>userGroup</th>\n";
+		echo "<th>ID</th>\n";
+		echo "<th>Username</th>\n";
+		echo "<th>Change Username</th>\n";
+		echo "<th>Last Seen</th>\n";
+		echo "<th>Group</th>\n";
 		echo "</tr>\n";
 		while($row = $result->fetch_assoc()) {
 
@@ -42,6 +46,17 @@ if ($SessionIsVerified == "1") {
 			echo "<tr>\n";
 			echo "<td>$trackingImportedID</td>\n";
 			echo "<td>$trackingUserName</td>\n";
+
+			echo "<td>\n";
+			echo "<form action=\"changeUsernameTracking.php\" method=\"post\">\n";
+			echo "<input type=\"text\" name=\"newUsername\" value=\"$trackingUserName\" style=\"width:120px;\">\n";
+			echo "<input type=\"text\" name=\"trackingImportedID\" value=\"$trackingImportedID\" hidden>\n";
+			echo "<input type=\"text\" name=\"oldUsername\" value=\"$trackingUserName\" hidden>\n";
+			echo "<input type=\"checkbox\" name=\"Confirm\" value=\"Confirmed\">Confirm \n";
+			echo "<input type=\"submit\" value=\"Update\">\n";
+			echo "</form>\n";
+			echo "</td>\n";
+
 			echo "<td>" . $lastSeen->format("F j, Y, g:i a") . "</td>\n";
 			echo "<td>$userGroup</td>\n";
 			echo "</tr>\n";
