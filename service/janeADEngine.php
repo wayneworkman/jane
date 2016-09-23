@@ -153,7 +153,9 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	//See if the user exists first. If the user does, update it and move it to the right spot. If not, create.
 	$COMMAND = $COMMAND . "\$User = Get-ADUser -LDAPFilter \"(sAMAccountName=$SamAccountName)\"\r\n";
 	
-	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n    echo \"User $SamAccountName already exists, updating it...\"\r\n    Enable-ADAccount -Identity $SamAccountName\r\n";
+	$COMMAND = $COMMAND . "if (-Not (\$User -eq \$Null)) {\r\n";
+        $COMMAND = $COMMAND . "    echo \"User $SamAccountName already exists, updating it...\"\r\n";
+        $COMMAND = $COMMAND . "    Enable-ADAccount -Identity $SamAccountName\r\n";
 
 	 //Here, we move a user to where they should be.
 	$COMMAND = $COMMAND . "    echo \"Moving the account to the designated OU.\"\r\n";
