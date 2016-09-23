@@ -134,6 +134,7 @@ echo "   </li>\n";
 
 
 echo "  <li><a href=\"showLicense.php\">License</a></li>\n";
+echo "  <li><a href=\"documentation.php\">Docs</a></li>\n";
 echo "  <li><a href=\"logout.php\">Log Out</a></li>\n";
 echo "  </li>\n";
 echo "</ul>\n";
