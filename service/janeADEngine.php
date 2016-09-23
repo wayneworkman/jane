@@ -832,7 +832,7 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			} else {
 				$current = $ThisCOMMAND;
 			}
-			$PowerShellScript .= $current
+			$PowerShellScript .= $current;
 		}
 	}
 }
@@ -884,7 +884,7 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			} else {
 				$current = $ThisCOMMAND;
 			}
-			$PowerShellScript .= $current
+			$PowerShellScript .= $current;
 		}
 	}
 }
@@ -934,7 +934,7 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         } else {
                                 $current = $ThisCOMMAND;
                         }
-			$PowerShellScript .= $current
+			$PowerShellScript .= $current;
                 }
 	}
 }
