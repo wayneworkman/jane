@@ -109,6 +109,9 @@ if ($result->num_rows > 0) {
 	$ActionDeleteText = "";
 }
 
+//Put all lines into a single variable to write once at the end instead of for each row.
+$PowerShellScript = "";
+
 
 $file = $PathToSMBShares . "$JaneSettingsGroupName/" . "Created-" . date("Y-m-d---") . $JaneSettingsNickName . ".ps1";
 
@@ -829,9 +832,10 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			} else {
 				$current = $ThisCOMMAND;
 			}
-			file_put_contents($file, $current);
-
+			$PowerShellScript .= $current
 		}
+		file_put_contents($file, $PowerShellScript);
+		$PowerShellScript = "";
 	}
 }
 if ($ActionDisable != "" && $ActionDisableText != "") {
@@ -882,8 +886,10 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			} else {
 				$current = $ThisCOMMAND;
 			}
-			file_put_contents($file, $current);	
+			$PowerShellScript .= $current
 		}
+		file_put_contents($file, $PowerShellScript);
+		$PowerShellScript = "";
 	}
 }
 if ($ActionDelete != "" && $ActionDeleteText != "") {
@@ -932,12 +938,16 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         } else {
                                 $current = $ThisCOMMAND;
                         }
-                        file_put_contents($file, $current);
+			$PowerShellScript .= $current
                 }
+		file_put_contents($file, $PowerShellScript);
+		$PowerShellScript = "";
 	}
 }
-// Sign the resultant script, if it exists, and if the private key exists.
+unset($PowerShellScript);
 
+
+// Sign the resultant script, if it exists, and if the private key exists.
 if (file_exists($file) && file_exists($PrivateKey)) {
 	exec("openssl dgst -sha256 -sign \"$PrivateKey\" -out $file.signed $file > /dev/null");
 }
