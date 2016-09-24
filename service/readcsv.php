@@ -9,44 +9,57 @@ $symbols += range('0', '9');
 array_push($symbols,' ','-'); // Allow spaces and hyphens.
 
 
+//Check for exitence of import file.
 while (file_exists($PathToCSV)) {
-	$rightNow = new DateTime("@" . time());
-	$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-	echo $rightNow->format("F j, Y, g:i a") . " Import file found at: '$PathToCSV'\n";
+	writeLog("Import file found at: '$PathToCSV'");
 
 
+	//Check if the file is currently open or not.
 	$isFileClosed = exec("lsof -- '$PathToCSV';echo $?");
 	if ($isFileClosed != "1") {
-		$rightNow = new DateTime("@" . time());
-		$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-		echo $rightNow->format("F j, Y, g:i a") . " Import file '$PathToCSV' is still open, delaying until next iteration.\n";
+		writeLog("Import file '$PathToCSV' is still open, delaying until next iteration.");
 		break;
 	}
 
 
-	$csv = fopen($PathToCSV,'r') or die(" Failed to open file '$PathToCSV'\n");
-	$rightNow = new DateTime("@" . time());
-	$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-	echo $rightNow->format("F j, Y, g:i a") . " Successfully opened file: '$PathToCSV' - begining import.\n";
+	//Try to open the file.
+	if (!$csv = fopen($PathToCSV,'r')) {
+		writeLog(" Failed to open file '$PathToCSV'");
+	} else {
+		writeLog("Successfully opened file: '$PathToCSV' - begining import.");
+	}
 
+
+	//Begin reading the file line by line.
 	while($csv_line = fgetcsv($csv)) {
+
+
+		//This line defines what variables each field of data goes into, indicated by position - this is one row at a time.
 		list($userAction, $userImportedID, $userFirstName, $userMiddleName, $userLastName, $userPassword, $userGroup) = $csv_line;
+
+		//below line simply takes $userAction from csv file and strips all characters except those in $symbols out.
+		//Same with many below lines.
 		$userAction = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userAction));
 		$userFirstName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userFirstName));
 		$userMiddleName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userMiddleName));
 		$userLastName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userLastName));
-
-		$userPassword = trim(str_replace('/', '', $userPassword));
+		$userPassword = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userPassword));
 		$userGroup = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userGroup));
 
 
+		//Build username from first char in $userFirstName, 
+		//first char in $userMiddleName, 
+		//first char in $userLastName, 
+		//and char 5 through 9 of the ID (last four of 9 digit ID, from char 5 going forward 4 chars).
 		$userUserName = substr($userFirstName, 0, 1) . substr($userMiddleName,0,1) . substr($userLastName,0,1) . substr($userImportedID,5,4);
+
+		//Make username all lowercase.
 		$userUserName = strtolower($userUserName);
 
 
 
-
-		if ($userImportedID != "StudentID") { //this check is how the header line is skipped. Can be replaced with different checks, meant to filter out header row.
+		//this check is how the header line is skipped. Can be replaced with different checks, meant to filter out header row.
+		if ($userImportedID != "StudentID") {
 
 
 			//Ensure every single username is unique.
@@ -57,41 +70,46 @@ while (file_exists($PathToCSV)) {
 			include 'ensureUniqueUsernames.php';
 
 
-
+			//Sql for inserting row of data into userDataToImport table.
 			$sql="INSERT INTO userDataToImport (userAction,userFirstName,userMiddleName,userLastName,userGroup,userUserName,userPassword,userImportedID) VALUES ('$userAction','$userFirstName','$userMiddleName','$userLastName','$userGroup','$userUserName','$userPassword','$userImportedID')";
+
+			//Insert the data.
 			if ($link->query($sql)) {
 				// good
 			} else {
 				// Error
 				$link->close();
-				die (" There was an error inserting data into the DB from the CSV file. SQL query was:\n\n$sql\n\n");
+				writeLog("There was an error inserting data into the DB from the CSV file. SQL query was:");
+				writeLog("$sql");
 			}
 		}
 	}
 
-	$rightNow = new DateTime("@" . time());
-        $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-        echo $rightNow->format("F j, Y, g:i a") . " Import from '$PathToCSV' is complete.\n";
+        writeLog("Import from '$PathToCSV' is complete.");
 
 
-	fclose($csv) or die(" Can't close file '$PathToCSV'\n");
-	$rightNow = new DateTime("@" . time());
-        $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-        echo $rightNow->format("F j, Y, g:i a") . " Successfully closed file '$PathToCSV'\n";
+	//Close the import file.
+	if (!fclose($csv)) {
+		writeLog("Can't close file '$PathToCSV'");
+	} else {
+		writeLog("Successfully closed file '$PathToCSV'");
+	}
 
 
 	// below lines sets aside old import files, can be commented out to not preserve import files.
-	//copy($PathToCSV, $PathToCSV . "." . date('Y-m-d')) or die(" Can't copy file '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'\n";
-	//$rightNow = new DateTime("@" . time());
-        //$rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-        //echo $rightNow->format("F j, Y, g:i a") . " Successfully copied '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'\n";
+	//if (!copy($PathToCSV, $PathToCSV . "." . date('Y-m-d'))) {
+	//	writeLog("Can't copy file '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'";
+	//} else {
+	//	writeLog("Successfully copied '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') ."'");
+	//}
 	
 
 
-	// below lines deletes current import file.
-	unlink($PathToCSV) or die(" Can't delete file '$PathToCSV'\n");
-	$rightNow = new DateTime("@" . time());
-        $rightNow->setTimezone(new DateTimeZone("$TimeZone"));
-        echo $rightNow->format("F j, Y, g:i a") . " Import file '$PathToCSV' successfully deleted.\n";
+	//Delete the import file.
+	if (!unlink($PathToCSV)) {
+		writeLog("Can't delete file '$PathToCSV'");
+	} else {
+		writeLog("Import file '$PathToCSV' successfully deleted.");
+	}
 }
 ?>

@@ -30,7 +30,8 @@ if ($resultTracking1->num_rows > 0) {
 			// good
 		} else {
 			// Error
-			echo " Could not update existing abnormal users userGroup in the usernameTracking table for ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
+			writeLog("Could not update existing abnormal users userGroup in the usernameTracking table for ID '$userImportedID'. Attempted SQL:");
+			writeLog("$sql");
 		}
 	}
 
@@ -41,7 +42,8 @@ if ($resultTracking1->num_rows > 0) {
 		// good
 	} else {
 		// Error
-		echo " Could not update lastSeen field in usernameTracking table for pre-existing ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
+		writeLog("Could not update lastSeen field in usernameTracking table for pre-existing ID '$userImportedID'. Attempted SQL:");
+		writeLog("$sql");
 	}
 
 } else {
@@ -66,7 +68,8 @@ if ($resultTracking1->num_rows > 0) {
 					break;
 				} else {
 					// Error
-					echo " Could not store new user into usernameTracking table for abnormal username with ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
+					writeLog("Could not store new user into usernameTracking table for abnormal username with ID '$userImportedID'. Attempted SQL:");
+					writeLog("$sql");
 				}
 			}
 		}
@@ -80,7 +83,8 @@ if ($resultTracking1->num_rows > 0) {
 			// good
 		} else {
 			// Error
-			echo " Could not store new user into usernameTracking table for ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
+			writeLog("Could not store new user into usernameTracking table for ID '$userImportedID'. Attempted SQL:");
+			writeLog("$sql");
 		}
 	}
 }

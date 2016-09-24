@@ -112,7 +112,7 @@ if ($result->num_rows > 0) {
 //Put all lines into a single variable to write once at the end instead of for each row.
 $PowerShellScript = "";
 
-
+//Define correct path and name of script being produced.
 $file = $PathToSMBShares . "$JaneSettingsGroupName/" . "Created-" . date("Y-m-d---") . $JaneSettingsNickName . ".ps1";
 
 
@@ -790,6 +790,7 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
+		writeLog("For JaneSettings: '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'\" to create or update");
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
 			
@@ -842,15 +843,24 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 	// Echo date.
 	$COMMAND = "Get-Date -Format G\r\n";
 
-
 	//echo system time into comment for record keeping.
 	$COMMAND = $COMMAND . "#These commands were written on: " . date("Y/m/d - h:i:sa") . "\r\n";
 
 	//make sure user exists first (powershell).
-	 $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n    echo \"Disabling user $SamAccountName.\"\r\n    Disable-ADAccount -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
+	$COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n";
+	$COMMAND = $COMMAND . "    echo \"Disabling user $SamAccountName.\"\r\n";
+	$COMMAND = $COMMAND . "    Disable-ADAccount -Identity $SamAccountName\r\n";
+	$COMMAND = $COMMAND . "} else {\r\n";
+	$COMMAND = $COMMAND . "    echo \"This user does not exist.\"\r\n";
+	$COMMAND = $COMMAND . "}\r\n";
+
 	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'";
+
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
+
+		writeLog("For JaneSettings: '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'\" to disable.");
+
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
 			//Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
@@ -897,11 +907,21 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
 	$COMMAND = $COMMAND . "#These commands were written on: " . date("Y/m/d - h:i:sa") . "\r\n";
 
 	//make sure user exists first (powershell).
-         $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n    echo \"Deleting user $SamAccountName\"\r\n    Remove-ADUser -Identity $SamAccountName\r\n} else {\r\n    echo \"This user does not exist.\"\r\n}\r\n";
+        $COMMAND = $COMMAND . "if (Get-aduser $SamAccountName) {\r\n";
+	$COMMAND = $COMMAND . "    echo \"Deleting user $SamAccountName\"\r\n";
+	$COMMAND = $COMMAND . "    Remove-ADUser -Identity $SamAccountName\r\n";
+	$COMMAND = $COMMAND . "} else {\r\n";
+	$COMMAND = $COMMAND . "    echo \"This user does not exist.\"\r\n";
+	$COMMAND = $COMMAND . "}\r\n";
+
         $sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'";
+
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
+
+		writeLog("For JaneSettings: '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'\" to delete.");
                 // output data of each row
+
                 while($row = $result->fetch_assoc()) {
                         //Here is where the custom variables are made. They can come from the DB or be derrived from things in the DB.
                         $userID = trim($row["userID"]);
@@ -938,6 +958,8 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                 }
 	}
 }
+
+//Write the script from variable contents.
 if ($PowerShellScript != "") {
 	file_put_contents($file, $PowerShellScript);
 	$PowerShellScript = "";
