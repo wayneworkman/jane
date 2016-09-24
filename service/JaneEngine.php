@@ -1,6 +1,7 @@
 <?php
 include 'localVars.php';
 include 'connect2db.php';
+include 'functions.php';
 
 while(1) {
 	include 'JaneSambaService.php';

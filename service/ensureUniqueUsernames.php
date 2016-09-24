@@ -9,6 +9,8 @@ If the ID doesn't exist, check if the given username is taken or not. If availab
 $alphas = range('1', '9');
 $lastSeen = time();
 
+
+//See if user's ID exists or not yet.
 $sql = "SELECT `trackingUserName`, `trackingIsAbnormal` FROM `usernameTracking` WHERE `trackingImportedID`='$userImportedID' LIMIT 1";
 $resultTracking1 = $link->query($sql);
 if ($resultTracking1->num_rows > 0) {
@@ -61,6 +63,7 @@ if ($resultTracking1->num_rows > 0) {
 				if ($link->query($sql)) {
 					// good, return new username.
 					$userUserName=$possibleUsername;
+					break;
 				} else {
 					// Error
 					echo " Could not store new user into usernameTracking table for abnormal username with ID '$userImportedID'. Attempted SQL:\n\n$sql\n\n";
