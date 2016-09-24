@@ -790,7 +790,7 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 	$sql = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
 	$result = $link->query($sql);
 	if ($result->num_rows > 0) {
-		writeLog("For settings-set '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'\" to create or update");
+		writeLog("For settings-set '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'\" to create or update.");
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
 			
