@@ -791,7 +791,7 @@ if ($result->num_rows > 0) {
         $sql    = "SELECT `userID`,`userImportedID`,`userAction`,`userFirstName`,`userMiddleName`,`userLastName`,`userGroup`,`userUserName`,`userPassword` FROM `userDataToImport` WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'";
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
-            writeLog("For JaneSettings: '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'\" to create or update");
+            writeLog("For settings-set '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionCreate = '$ActionCreateText'\" to create or update");
             // output data of each row
             while ($row = $result->fetch_assoc()) {
                 
@@ -860,7 +860,7 @@ if ($result->num_rows > 0) {
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
             
-            writeLog("For JaneSettings: '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'\" to disable.");
+            writeLog("For settings-set '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionDisable = '$ActionDisableText'\" to disable.");
             
             // output data of each row
             while ($row = $result->fetch_assoc()) {
@@ -920,7 +920,7 @@ if ($result->num_rows > 0) {
         $result = $link->query($sql);
         if ($result->num_rows > 0) {
             
-            writeLog("For JaneSettings: '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'\" to delete.");
+            writeLog("For settings-set '$JaneSettingsNickName', found $result->num_rows matching records \"WHERE $JaneSettingsWHERE AND $ActionDelete = '$ActionDeleteText'\" to delete.");
             // output data of each row
             
             while ($row = $result->fetch_assoc()) {
