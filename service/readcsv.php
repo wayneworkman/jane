@@ -3,11 +3,10 @@
 
 //Allowed characters within user data:
 $symbols = array();
-$symbols += range('a', 'z');
-$symbols += range('A', 'Z');
-$symbols += range('0', '9');
+array_push($symbols,implode("",range('0', '9')));
+array_push($symbols,implode("",range('a', 'z')));
+array_push($symbols,implode("",range('A', 'Z')));
 array_push($symbols,' ','-'); // Allow spaces and hyphens.
-
 
 //Check for exitence of import file.
 while (file_exists($PathToCSV)) {
