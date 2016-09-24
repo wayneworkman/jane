@@ -38,12 +38,12 @@ while (file_exists($PathToCSV)) {
 
 		//below line simply takes $userAction from csv file and strips all characters except those in $symbols out.
 		//Same with many below lines.
-		$userAction = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userAction));
-		$userFirstName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userFirstName));
-		$userMiddleName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userMiddleName));
-		$userLastName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userLastName));
-		$userPassword = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userPassword));
-		$userGroup = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userGroup));
+		$userAction = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userAction));
+		$userFirstName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userFirstName));
+		$userMiddleName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userMiddleName));
+		$userLastName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userLastName));
+		$userPassword = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userPassword));
+		$userGroup = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userGroup));
 
 
 		//Build username from first char in $userFirstName, 

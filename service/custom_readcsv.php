@@ -36,12 +36,12 @@ while (file_exists($PathToCSV)) {
 		//This line defines what variables each field of data goes into, indicated by position - this is one row at a time.
 		list($userImportedID, $NotSupportedAuth, $userUserName, $userPassword, $NotSupportedEmail, $userFirstName, $userLastName, $NotSupportedCity, $NotSupportedCountry, $NotSupportedLanguage, $NotSupportedInstitution, $NotSupportedDepartment, $userAction, $NotSupportedProfileFieldRelation, $userGroup, $NotSupportedProfileFieldHomeroom, $NotSupportedProfileFieldTeam, $NotSupportedProfileFieldGrade, $NotSupportedProfileFieldStatus) = $csv_line;
 
-		$userAction = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userAction));
-		$userFirstName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userFirstName));
-		$userMiddleName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userMiddleName));
-		$userLastName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userLastName));
-		$userGroup = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userGroup));
-		$userUserName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", $userUserName));
+		$userAction = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userAction));
+		$userFirstName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userFirstName));
+		$userMiddleName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userMiddleName));
+		$userLastName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userLastName));
+		$userGroup = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userGroup));
+		$userUserName = trim(preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", $userUserName));
 
 
 		//this check is how the header line is skipped. Can be replaced with different checks, meant to filter out header row.
