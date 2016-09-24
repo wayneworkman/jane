@@ -96,20 +96,22 @@ if ($isAdministrator == 1) {
     echo "    <div class=\"dropdown-content\">\n";
     echo "      <a href=\"NewSettingsPage.php\">New Settings</a>\n";
     echo "      <a href=\"AdminActionPage.php\">User, Group, and IP Management</a>\n";
+    echo "      <a href=\"exportPage.php\">Export Database</a>\n";
+    echo "      <a href=\"importPage.php\">Import Database</a>\n";
+    echo "    </div>\n";
+    echo "   </li>\n";
+        
+    echo "    <li class=\"dropdown\">\n";
+    echo "    <a href=\"#\" class=\"dropbtn\">Information</a>\n";
+    echo "    <div class=\"dropdown-content\">\n";
+    echo "      <a href=\"serverStatus.php\">Server Status</a>\n";
+    echo "      <a href=\"showSessions.php\">Show Sessions</a>\n";
+    echo "      <a href=\"showJaneEngineLog.php\">Jane Engine Log</a>\n";
     echo "      <a href=\"ListGroups.php\">List Groups</a>\n";
     echo "      <a href=\"ListUsers.php\">List Users</a>\n";
     echo "      <a href=\"BlockedIPs.php\">List Blocked IPs</a>\n";
     echo "      <a href=\"BadLoginAttempts.php\">Bad Login Attempts</a>\n";
     echo "      <a href=\"usersWithDefaults.php\">Users with Default Passwords</a>\n";
-    echo "    </div>\n";
-    echo "   </li>\n";
-        
-    echo "    <li class=\"dropdown\">\n";
-    echo "    <a href=\"#\" class=\"dropbtn\">Server Information</a>\n";
-    echo "    <div class=\"dropdown-content\">\n";
-    echo "      <a href=\"serverStatus.php\">Server Status</a>\n";
-    echo "      <a href=\"showSessions.php\">Show Sessions</a>\n";
-    echo "      <a href=\"showJaneEngineLog.php\">Jane Engine Log</a>\n";
     echo "    </div>\n";
     echo "   </li>\n";
 
