@@ -5,6 +5,9 @@ $servername = 'localhost';
 $username = 'janeWeb';
 $password = 'janewebpassword';
 $database = 'jane';
+$janeSuperUser = 'janeSuperUser';
+$janeSuperUserPassword = 'janesuperuserpassword';
+
 $SessionTimeout = 900; // measured in seconds.
 $PasswordDefault = "changeme";
 $SiteErrorMessage = "ERROR: There was a site problem. Report this to your Jane administrator and try again later.";

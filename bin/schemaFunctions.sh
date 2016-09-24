@@ -1,5 +1,53 @@
-schema4() {
+schema5() {
+    local options="-sN"
+    if [[ $mysqlHost != "" ]]; then
+        local options="$options -h$mysqlHost"
+    fi
+    if [[ $mysqlUser != "" ]]; then
+        local options="$options -u$mysqlUser"
+    fi
+    if [[ $mysqlpass != "" ]]; then
+        local options="$options -p$mysqlPass"
+    fi
+    local options="$options -D jane -e"
 
+    local step1="CREATE USER 'janeSuperUser'@'localhost' IDENTIFIED BY 'janesuperuserpassword';"
+    local step2="GRANT ALL ON jane.* TO 'janeSuperUser'@'localhost';"
+    local step3="UPDATE globalSettings SET settingValue = '6' WHERE settingKey = 'schemaVersion'"
+
+    dots "Going from DB Schema 5 to 6"
+
+    mysql $options "$step1" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step1"
+        echo
+        exit
+    fi
+
+    mysql $options "$step2" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step2"
+        echo
+        exit
+    fi
+
+    mysql $options "$step3" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step3"
+        echo
+        exit
+    fi
+
+    echo "Done"
+}
+
+schema4() {
     local options="-sN"
     if [[ $mysqlHost != "" ]]; then
         local options="$options -h$mysqlHost"
@@ -36,8 +84,6 @@ schema4() {
     fi
 
     echo "Done"
-
-
 }
 
 

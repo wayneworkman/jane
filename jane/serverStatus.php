@@ -5,7 +5,7 @@ if ($SessionIsVerified == "1") {
         if ($isAdministrator == 1) {
 
 		//define file.
-		$serverStatus="/var/www/html/jane/serverStatus.txt";
+		$serverStatus="/jane/apacheTemp/serverStatus.txt";
 
 		//clean file, echo first line and following command outputs.
 		exec("echo \" \" > $serverStatus");

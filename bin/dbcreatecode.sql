@@ -221,7 +221,7 @@ PRIMARY KEY (janeADid)
 );
 
 
-INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','5');
+INSERT INTO globalSettings (settingKey,settingDesc,settingValue) VALUES ('schemaVersion','This is the schema version of the DB. If it is lower than the expected version, conversion automatically happens to bring the DB up to date.','6');
 
 
 INSERT INTO janeUsers (JaneUsername,JanePassword,JaneSMBPassword,JaneUserEnabled) VALUES ('administrator','$2y$10$UivHA1lp.4e7fEDj.C6h9eWCGctGQtV3wlsJqaqTDMTih5ukDTaTi','changeme','1');
@@ -251,7 +251,7 @@ INSERT INTO availableVariables (VariableName,VariableSample) VALUES ('%Password%
 
 CREATE USER 'janeWeb'@'localhost' IDENTIFIED BY 'janewebpassword';
 CREATE USER 'janeSystem'@'localhost' IDENTIFIED BY 'janesystempassword';
-
+CREATE USER 'janeSuperUser'@'localhost' IDENTIFIED BY 'janesuperuserpassword';
 
 GRANT ALL ON jane.blockedIPs TO 'janeWeb'@'localhost';
 GRANT ALL ON jane.Sessions TO 'janeWeb'@'localhost';
@@ -279,5 +279,5 @@ GRANT ALL ON jane.userDataToImport TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.globalSettings TO 'janeSystem'@'localhost';
 GRANT ALL ON jane.usernameTracking TO 'janeSystem'@'localhost';
 
-
+GRANT ALL ON jane.* TO 'janeSuperUser'@'localhost';
 

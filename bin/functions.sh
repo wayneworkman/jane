@@ -293,6 +293,10 @@ createDirectories() {
     fi
     mkdir /jane/service
     cp -R $cwd/../service /jane
+    if [[ ! -d "/jane/apacheTemp" ]]; then
+        mkdir /jane/apacheTemp
+    fi
+    rm -rf /jane/apacheTemp/*
     if [[ -e "/home/localVars.php" ]]; then
         if [[ -e "/jane/service/localVars.php" ]]; then 
             rm -f /jane/service/localVars.php
@@ -319,7 +323,7 @@ createDirectories() {
         rm -rf /var/www/html/jane
     fi
     cp -R $cwd/../jane /var/www/html
-    touch /var/www/html/jane/serverStatus.txt
+    touch /jane/apacheTemp/serverStatus.txt
     if [[ -e "/var/www/html/index.php" ]]; then
         rm -f "/var/www/html/index.php"
     fi
@@ -360,13 +364,15 @@ setPermissions() {
     chown -R root:apache /jane/ssl > /dev/null 2>&1
     chown -R root:apache /jane/service > /dev/null 2>&1
     chown -R root:apache /jane/log > /dev/null 2>&1
+    chown -R root:apache /jane/apacheTemp > /dev/null 2>&1
     chmod -R 777 /jane > /dev/null 2>&1
     chmod -R 770 /jane/* > /dev/null 2>&1
     chown -R apache:apache /var/www/html/jane > /dev/null 2>&1
     chmod -R 555 /var/www/html/jane > /dev/null 2>&1
     chown apache:apache /var/www/html/index.php > /dev/null 2>&1
     chmod 555 /var/www/html/index.php > /dev/null 2>&1
-    chmod 775 /var/www/html/jane/serverStatus.txt
+    chmod 770 /jane/apacheTemp/serverStatus.txt
+    chmod -R 770 /jane/apacheTemp > /dev/null 2>&1
     echo "Ok"
 }
 setSELinuxToPermissive() {

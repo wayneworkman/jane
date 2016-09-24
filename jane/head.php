@@ -96,8 +96,8 @@ if ($isAdministrator == 1) {
     echo "    <div class=\"dropdown-content\">\n";
     echo "      <a href=\"NewSettingsPage.php\">New Settings</a>\n";
     echo "      <a href=\"AdminActionPage.php\">User, Group, and IP Management</a>\n";
-    echo "      <a href=\"exportPage.php\">Export Database</a>\n";
-    echo "      <a href=\"importPage.php\">Import Database</a>\n";
+    echo "      <a href=\"exportDBPage.php\">Export Database</a>\n";
+    echo "      <a href=\"importDBPage.php\">Import Database</a>\n";
     echo "    </div>\n";
     echo "   </li>\n";
         
