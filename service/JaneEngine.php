@@ -1,12 +1,11 @@
 <?php
+include 'functions.php';
 include 'localVars.php';
 include 'connect2db.php';
-include 'functions.php';
 
 while(1) {
 	include 'JaneSambaService.php';
 	include 'readcsv.php';
-
 
 	$sql = "SELECT SettingsTypeID,SettingsTableName FROM janeSettingsTypes";
 	$result0 = $link->query($sql);
@@ -22,7 +21,6 @@ while(1) {
 						$JaneSettingsID = trim($row1["JaneSettingsID"]);
 
 						//Here, you filter out each setting type and send the JaneSettingsID to each respective settings type script.
-
 						//Active Directory
 						if ($SettingsTableName = "janeAD") {
 							include('janeADEngine.php');

@@ -383,14 +383,14 @@ startJaneOnBoot() {
         echo "No /etc/rc.d directory"
         exit
     fi
-    janeEnabled=$(cat /etc/rc.d/rc.local | grep "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &")    
+    janeEnabled=$(cat /etc/rc.d/rc.local | grep "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php &")    
     if [[ -z $janeEnabled ]]; then
         hasShaBang=$(cat /etc/rc.d/rc.local | grep "#!/bin/bash")
         if [[ -z $hasShaBang ]]; then
             echo "#!/bin/bash" >> /etc/rc.d/rc.local
         fi
         echo "sleep 30" >> /etc/rc.d/rc.local
-        echo "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &" >> /etc/rc.d/rc.local
+        echo "/usr/bin/nohup /usr/bin/php /jane/service/JaneEngine.php &" >> /etc/rc.d/rc.local
         echo "exit 0" >> /etc/rc.d/rc.local
         chmod +x /etc/rc.d/rc.local
         echo "Enabled"

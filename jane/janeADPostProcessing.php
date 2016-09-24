@@ -42,18 +42,20 @@ if ($SessionIsVerified == "1") {
 
 
 
+		//Allowed characters within user data:
 		$symbols = array();
-		$symbols += range('a', 'z');
-		$symbols += range('A', 'Z');
-		$symbols += range('0', '9');
+		array_push($symbols,implode("",range('0', '9')));
+		array_push($symbols,implode("",range('a', 'z')));
+		array_push($symbols,implode("",range('A', 'Z')));
+		array_push($symbols,'-','_'); // Allow hyphens and underscores.
 
                 //Strip user inputs of everything not in $symbols for injection protection.
-		$ActionCreate = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionCreate'])));
-		$ActionDisable = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionDisable'])));
-		$ActionDelete = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionDelete'])));
-		$ActionCreateText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionCreateText'])));
-                $ActionDisableText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionDisableText'])));
-                $ActionDeleteText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/i", "", htmlspecialchars_decode(trim($_REQUEST['ActionDeleteText'])));
+		$ActionCreate = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", htmlspecialchars_decode(trim($_REQUEST['ActionCreate'])));
+		$ActionDisable = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", htmlspecialchars_decode(trim($_REQUEST['ActionDisable'])));
+		$ActionDelete = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", htmlspecialchars_decode(trim($_REQUEST['ActionDelete'])));
+		$ActionCreateText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", htmlspecialchars_decode(trim($_REQUEST['ActionCreateText'])));
+                $ActionDisableText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", htmlspecialchars_decode(trim($_REQUEST['ActionDisableText'])));
+                $ActionDeleteText = preg_replace("/[^" . preg_quote(implode('',$symbols), '/') . "]/", "", htmlspecialchars_decode(trim($_REQUEST['ActionDeleteText'])));
 		
 
 

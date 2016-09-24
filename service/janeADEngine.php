@@ -110,6 +110,7 @@ if ($result->num_rows > 0) {
     $ActionDeleteText  = "";
 }
 
+
 //Put all lines into a single variable to write once at the end instead of for each row.
 $PowerShellScript = "";
 
@@ -959,7 +960,6 @@ if ($result->num_rows > 0) {
             }
         }
     }
-    
     //Write the script from variable contents.
     if ($PowerShellScript != "") {
         file_put_contents($file, $PowerShellScript);
@@ -974,5 +974,4 @@ if ($result->num_rows > 0) {
     }
     
 }
-
 ?> 
