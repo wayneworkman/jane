@@ -135,8 +135,14 @@ echo "    </div>\n";
 echo "   </li>\n";
 
 
-echo "  <li><a href=\"showLicense.php\">License</a></li>\n";
-echo "  <li><a href=\"documentation.php\">Docs</a></li>\n";
+echo "    <li class=\"dropdown\">\n";
+echo "    <a href=\"#\" class=\"dropbtn\">Docs</a>\n";
+echo "    <div class=\"dropdown-content\">\n";
+echo "    <a href=\"showLicense.php\">License</a>\n";
+echo "    </div>\n";
+echo "   </li>\n";
+
+
 echo "  <li><a href=\"logout.php\">Log Out</a></li>\n";
 echo "  </li>\n";
 echo "</ul>\n";

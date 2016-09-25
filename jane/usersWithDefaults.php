@@ -18,7 +18,7 @@ if ($SessionIsVerified == "1") {
 		echo "<tr>\n";
 		echo "<th>Username</th>\n";
 		echo "<th>Jane password is default?</th>\n";
-		echo "<th>Jane SMB Passowrd is default?</th>\n";
+		echo "<th>SMB Passowrd is default?</th>\n";
 		echo "</tr>\n";
 			while($row = $result->fetch_assoc()) {
 				$user = trim($row["JaneUsername"]);
