@@ -17,6 +17,7 @@ $incomplete = "ERROR: Not all fields completed.";
 $invalidData = "ERROR: Invalid data in one or more fields.";
 $PublicKey = "Jane.crt";
 $ScriptExample = "RunJaneScripts.ps1";
+$tempDir = "/jane/apacheTemp";
 
 //Timezone info.
 $TimeZone="America/Chicago";

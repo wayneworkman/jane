@@ -5,7 +5,7 @@ if ($SessionIsVerified == "1") {
         if ($isAdministrator == 1) {
 
 		//define file.
-		$serverStatus="/jane/apacheTemp/serverStatus.txt";
+		$serverStatus="$tempDir/serverStatus.txt";
 
 		//clean file, echo first line and following command outputs.
 		exec("echo \" \" > $serverStatus");
@@ -46,6 +46,9 @@ if ($SessionIsVerified == "1") {
 
 		//blank out file when done.
 		exec("echo \" \" > $serverStatus");
+
+		//Delete file.
+		unlink($serverStatus);
 
         } else {
                 // not an admin, redirect to jane.php
