@@ -751,9 +751,9 @@ if ($SessionIsVerified == 1) {
             -HomeDrive &quot;D:&quot;
             Default Value:
             Data Type: string">
-            HomeDrive
+            HomeDrive (4 character max, two character value. Example: "H:")
         </span><br>
-        <input type="text" name="HomeDrive" value="<?php echo htmlspecialchars($_SESSION['HomeDrive']); ?>" style="width:600px;"><br>
+        <input type="text" name="HomeDrive" value="<?php echo htmlspecialchars($_SESSION['HomeDrive']); ?>" style="width:40px;"><br>
     </div>
     <div>
         <span style="color:blue;" title="HomePage
