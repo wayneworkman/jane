@@ -112,21 +112,18 @@ installRemiAndEpel() {
             dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-${VERSION_ID}.noarch.rpm -y > /dev/null 2>&1
             dnf install http://rpms.remirepo.net/enterprise/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            sleep 3
         elif [[ -e "$useYum" ]]; then
             yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-${VERSION_ID}.noarch.rpm -y > /dev/null 2>&1
             yum install http://rpms.remirepo.net/enterprise/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             checkOrInstallPackage "yum-utils" "1"
             yum-config-manager --enable remi-php70 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            sleep 3
         fi
     elif [[ "$ID" == "rhel" ]]; then
         if [[ -e "$useDnf" ]]; then
             dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-${VERSION_ID}.noarch.rpm -y > /dev/null 2>&1
             dnf install http://rpms.remirepo.net/enterprise/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            sleep 3
         elif [[ -e "$useYum" ]]; then
             yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-${VERSION_ID}.noarch.rpm -y > /dev/null 2>&1
             yum install http://rpms.remirepo.net/enterprise/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
@@ -134,7 +131,6 @@ installRemiAndEpel() {
             subscription-manager repos --enable=rhel-${VERSION_ID}-server-optional-rpms > /dev/null 2>&1
             yum-config-manager --enable remi-php70 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
-            sleep 3
         fi
     fi
 }
@@ -343,6 +339,42 @@ createDirectories() {
         rm -f /home/Jane.crt
     fi
     echo "Ok"
+}
+copyMysqlConfigFile() {
+dots "Copying jane.cnf to mysql configuration directory"
+if [[ "$ID" == "centos" ]]; then
+    if [[ -d "/etc/my.cnf.d" ]]; then
+        if [[ -e "/etc/my.cnf.d/jane.cnf" ]]; then
+            rm -f "/etc/my.cnf.d/jane.cnf"
+        fi
+        cp $cwd/jane.cnf /etc/my.cnf.d/jane.cnf
+        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+    else
+        echo "Directory /etc/my.cnf.d does not exist!"
+    fi
+elif [[ "$ID" == "fedora" ]]; then
+    if [[ -d "/etc/my.cnf.d" ]]; then
+        if [[ -e "/etc/my.cnf.d/jane.cnf" ]]; then
+            rm -f "/etc/my.cnf.d/jane.cnf"
+        fi
+        cp $cwd/jane.cnf /etc/my.cnf.d/jane.cnf
+        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+    else
+        echo "Directory /etc/my.cnf.d does not exist!"
+    fi
+elif [[ "$ID" == "rhel" ]]; then
+    if [[ -d "/etc/my.cnf.d" ]]; then
+        if [[ -e "/etc/my.cnf.d/jane.cnf" ]]; then
+            rm -f "/etc/my.cnf.d/jane.cnf"
+        fi
+        cp $cwd/jane.cnf /etc/my.cnf.d/jane.cnf
+        [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+    else
+        echo "Directory /etc/my.cnf.d does not exist!"
+    fi
+else
+    echo "MySql config directory unknown on this OS."
+fi
 }
 checkCert() {
     dots "Checking for certificates"

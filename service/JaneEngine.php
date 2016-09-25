@@ -4,6 +4,7 @@ include 'localVars.php';
 include 'connect2db.php';
 
 while(1) {
+	include 'checkDBConnection.php';
 	include 'JaneSambaService.php';
 	include 'readcsv.php';
 

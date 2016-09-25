@@ -31,6 +31,7 @@ startAndEnableService "ntpd"
 #setTimezone "America/Chicago"
 startAndEnableService "httpd"
 startAndEnableService "smb"
+copyMysqlConfigFile
 startAndEnableService "mysql"
 createUserJane
 setupDB
