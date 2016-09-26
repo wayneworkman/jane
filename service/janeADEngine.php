@@ -179,6 +179,9 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 	$COMMAND = $COMMAND . "\r\n";
 
 
+	//Here, we update the object's name.
+	$COMMAND = $COMMAND . "    echo \"Renaming account object.\"\r\n";
+	$COMMAND = $COMMAND . "    Get-ADUser -Identity $SamAccountName | Rename-ADObject -NewName $Name\r\n";
 
 	
 	//Here, for existing users, update their information according to the settings set.

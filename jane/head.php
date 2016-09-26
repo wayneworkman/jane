@@ -104,9 +104,9 @@ if ($isAdministrator == 1) {
     echo "    <li class=\"dropdown\">\n";
     echo "    <a href=\"#\" class=\"dropbtn\">Information</a>\n";
     echo "    <div class=\"dropdown-content\">\n";
+    echo "      <a href=\"showJaneEngineLog.php\">Jane Engine Log</a>\n";
     echo "      <a href=\"serverStatus.php\">Server Status</a>\n";
     echo "      <a href=\"showSessions.php\">Show Sessions</a>\n";
-    echo "      <a href=\"showJaneEngineLog.php\">Jane Engine Log</a>\n";
     echo "      <a href=\"ListGroups.php\">List Groups</a>\n";
     echo "      <a href=\"ListUsers.php\">List Users</a>\n";
     echo "      <a href=\"BlockedIPs.php\">List Blocked IPs</a>\n";

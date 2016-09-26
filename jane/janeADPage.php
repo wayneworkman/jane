@@ -373,7 +373,7 @@ if ($SessionIsVerified == 1) {
             -Name &quot;SaraDavis&quot;
             Default Value:
             Data Type: string">
-            Name
+            Name (Must be unique per account)
         </span><br>
         <input type="text" name="Name" value="<?php echo htmlspecialchars($_SESSION['Name']); ?>" style="width:600px;"></br>
     </div>
@@ -1052,7 +1052,7 @@ if ($SessionIsVerified == 1) {
             Note: If the string value provided is not terminated with a '$' character, the system adds one if needed.
             Default Value:
             Data Type: string">
-            <font color="red">*</font>SamAccountName
+            <font color="red">*</font>SamAccountName (Required, must be unique. Recommended: %UserName%)
         </span><br>
         <input type="text" name="SamAccountName" value="<?php echo htmlspecialchars($_SESSION['SamAccountName']); ?>" style="width:600px;"><br>
     </div>
