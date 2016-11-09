@@ -477,22 +477,22 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 		}
 
 		// Common settings every folder gets go here.
-		$COMMAND = $COMMAND . "    echo \"Setting user's permissions on folder.\"\r\n";
+		$COMMAND = $COMMAND . "    echo \"Setting user's acl permissions.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
-		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
+		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 
 		if ($aclAdministrators == 1) {
-			$COMMAND = $COMMAND . "    echo \"Setting Administrators to acl.\"\r\n";
-			$COMMAND = $COMMAND . "    \$permission = \"Administrators\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    echo \"Setting Administrators acl permissions.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"Administrators\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
 
 		if ($aclSystem == 1) {
-			$COMMAND = $COMMAND . "    echo \"Setting System to acl.\"\r\n";
-			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    echo \"Setting System acl permissions.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
@@ -501,7 +501,7 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			$OtherAcls = explode(",", $aclOther);
 			foreach ($OtherAcls as $OtherAcl) {
 				$COMMAND = $COMMAND . "    echo \"Adding other acl permissions.\"\r\n";
-				$COMMAND = $COMMAND . "    \$permission = \"$OtherAcl\",\"FullControl\",\"Allow\"\r\n";
+				$COMMAND = $COMMAND . "    \$permission = \"$OtherAcl\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 				$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 				$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 			}
@@ -512,10 +512,9 @@ if ($ActionCreate != "" && $ActionCreateText != "") {
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
 		}
 
-		$COMMAND = $COMMAND . "    echo \"Applying acl to the new share.\"\r\n";
+		$COMMAND = $COMMAND . "    echo \"Applying acl to the directory.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$FolderName\r\n";
 		
-
 	}
 
 
@@ -733,30 +732,30 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 	if ($CreateFolder == 1) {
 		$COMMAND = $COMMAND . "    echo \"Creating directory for folder\"\r\n";
 		$COMMAND = $COMMAND . "    New-Item \"$BaseDirectory\\$FolderName\" -type directory -Force\r\n";
-		
+
 
 		if ($ShareThisFolder == 1) {
 			$COMMAND = $COMMAND . "    echo \"Setting sharing.\"\r\n";
 			$COMMAND = $COMMAND . "    New-SMBShare -Name \"$FolderName\" -Path \"$BaseDirectory\\$FolderName\" -FullAccess $SamAccountName\r\n";
 		}
 
-		// Permissions that every folder gets go here.
-		$COMMAND = $COMMAND . "    echo \"Setting user's permissions on folder.\"\r\n";
+		// Common settings every folder gets go here.
+		$COMMAND = $COMMAND . "    echo \"Setting user's acl permissions.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl = New-Object System.Security.AccessControl.DirectorySecurity\r\n";
-		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"Allow\"\r\n";
+		$COMMAND = $COMMAND . "    \$permission = \"$SamAccountName\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 		$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 		$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 
 		if ($aclAdministrators == 1) {
-			$COMMAND = $COMMAND . "    echo \"Setting Administrators to acl.\"\r\n";
-			$COMMAND = $COMMAND . "    \$permission = \"Administrators\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    echo \"Setting Administrators acl permissions.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"Administrators\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
 
 		if ($aclSystem == 1) {
-			$COMMAND = $COMMAND . "    echo \"Setting System to acl.\"\r\n";
-			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"Allow\"\r\n";
+			$COMMAND = $COMMAND . "    echo \"Setting System acl permissions.\"\r\n";
+			$COMMAND = $COMMAND . "    \$permission = \"System\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 			$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 		}
@@ -765,7 +764,7 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			$OtherAcls = explode(",", $aclOther);
 			foreach ($OtherAcls as $OtherAcl) {
 				$COMMAND = $COMMAND . "    echo \"Adding other acl permissions.\"\r\n";
-				$COMMAND = $COMMAND . "    \$permission = \"$OtherAcl\",\"FullControl\",\"Allow\"\r\n";
+				$COMMAND = $COMMAND . "    \$permission = \"$OtherAcl\",\"FullControl\",\"ContainerInherit,ObjectInherit\",\"None\",\"Allow\"\r\n";
 				$COMMAND = $COMMAND . "    \$accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule \$permission\r\n";
 				$COMMAND = $COMMAND . "    \$acl.SetAccessRule(\$accessRule)\r\n";
 			}
@@ -776,13 +775,10 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			$COMMAND = $COMMAND . "    \$acl.SetAccessRuleProtection(\$True, \$True)\r\n";
 		}
 
-		$COMMAND = $COMMAND . "    echo \"Applying acl to the new share.\"\r\n";
+		$COMMAND = $COMMAND . "    echo \"Applying acl to the directory.\"\r\n";
 		$COMMAND = $COMMAND . "    \$acl | Set-Acl $BaseDirectory\\$FolderName\r\n";
-		
 
 	}
-
-
 
 	
 
