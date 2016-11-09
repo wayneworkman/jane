@@ -97,7 +97,7 @@ while (file_exists($PathToCSV)) {
 
 	// below lines sets aside old import files, can be commented out to not preserve import files.
 	//if (!copy($PathToCSV, $PathToCSV . "." . date('Y-m-d'))) {
-	//	writeLog("Can't copy file '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'";
+	//	writeLog("Can't copy file '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') . "'");
 	//} else {
 	//	writeLog("Successfully copied '$PathToCSV' to destination '$PathToCSV" . "." . date('Y-m-d') ."'");
 	//}
