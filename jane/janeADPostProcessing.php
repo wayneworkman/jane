@@ -69,16 +69,33 @@ if ($SessionIsVerified == "1") {
 		
 
 
-
-
 		$Group1Name = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['Group1Name'])));
 		$Group2Name = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['Group2Name'])));
 		$Group3Name = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['Group3Name'])));
 		$RemoveFromGroups = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['RemoveFromGroups'])));
+
+
+
+
+
 		
 		$CreateFolder = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['CreateFolder'])));
-		$BaseDirectory = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['BaseDirectory'])));
-		$FolderName = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['FolderName'])));
+
+		//These two below lines are the base directory and folder name if you want folders created automatically when accounts are made.
+		// It's coded to remove trailing backslahses from the base directory, and leading with trailing backslashes from the folder name. 
+		// This is because Windows uses backslashes. If the storage server were
+		// Linux / Samba based, these would need to be forward slashes but not double ones, just a single one - because a backslash is an escape character in PHP.
+		$BaseDirectory = $link->real_escape_string(rtrim(htmlspecialchars_decode(trim($_REQUEST['BaseDirectory'])), '\\'));
+		$FolderName = $link->real_escape_string(trim(htmlspecialchars_decode(trim($_REQUEST['FolderName'])), '\\'));
+
+
+		//Below if statement checks if CreateFolder is marked to true. If it's true, and either basedirectory or foldername is blank, CreateFolder gets set to zero.
+		if ($CreateFolder == '1' && ( $BaseDirectory == '' || $FolderName == '')) {
+			$CreateFolder = "0";
+		}
+
+		// These if statements are to set a value for an unchecked checkbox. Because when they are not checked, they literally do not show up in the page submit,
+		// And this causes errors.
 		if (isset($_REQUEST['ShareThisFolder'])) {
 			$ShareThisFolder = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['ShareThisFolder'])));
 		} else {
@@ -104,6 +121,9 @@ if ($SessionIsVerified == "1") {
 		} else {
 			$DisableInheritance = "0";
 		}
+		
+
+
 
 
 		$Name = $link->real_escape_string(htmlspecialchars_decode(trim($_REQUEST['Name'])));
