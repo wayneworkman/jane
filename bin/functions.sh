@@ -413,6 +413,15 @@ setSELinuxToPermissive() {
     sed -i.bak 's/^.*\SELINUX=enforcing\b.*$/SELINUX=permissive/' /etc/selinux/config > /dev/null 2>&1
     [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
+setupJaneSentinel() {
+dots "Configuring Jane Sentinel"
+crontab -l -u root | grep -v JaneSentinel.sh | crontab -u root -
+# */5 for every three minutes.
+newline="*/5 * * * * /jane/service/janeSentinel.sh"
+(crontab -l -u root; echo "$newline") | crontab - >/dev/null 2>&1
+[[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+
+}
 startJaneOnBoot() {
     dots "Enable JaneEngine on boot"
     if [[ -d "/etc/rc.d" ]]; then

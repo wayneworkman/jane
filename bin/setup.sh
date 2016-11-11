@@ -42,4 +42,5 @@ setPermissions
 setSELinuxToPermissive
 startJaneOnBoot
 startJaneEngine
+setupJaneSentinel
 completed
