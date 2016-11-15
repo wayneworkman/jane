@@ -13,6 +13,7 @@ systemctl=$(command -v systemctl)
 pkill=$(command -v pkill)
 reboot=$(command -v reboot)
 sleep=$(command -v sleep)
+rebootWait="1800" #Default is 30 minutes, 1800 seconds.
 
 $ps -aux | $grep "[J]aneEngine.php" > /dev/null 2>&1
 if [[ "$?" == "0" ]]; then
@@ -65,33 +66,38 @@ else
     $systemctl start firewalld  >> $log
     if [[ $? != "0" ]]; then
         $echo "Failed to start firewalld. This is not a mission-critical problem but is a security-critical problem." >> $log
+        $sleep $rebootwait
     fi
     $echo "Starting mariadb..." >> $log
     $systemctl start mariadb >> $log
     if [[ $? != "0" ]]; then
-        $echo "Failed to start mariadb. This is a mission-critical problem. Waiting for 30 minutes, then attempting a system reboot." >> $log
-        $sleep 1800
+        $echo "Failed to start mariadb. This is a mission-critical problem. Waiting for $rebootWait seconds, then attempting a system reboot." >> $log
+        $sleep $rebootWait
         $reboot
     fi
     $echo "Starting smb..." >> $log
     $systemctl start smb >> $log
     if [[ $? != "0" ]]; then
-        $echo "Failed to start smb. This is a mission-critical problem. Waiting for 30 minutes, then attempting a system reboot." >> $log
-        $sleep 1800
+        $echo "Failed to start smb. This is a mission-critical problem. Waiting for $rebootWait seconds, then attempting a system reboot." >> $log
+        $sleep $rebootWait
         $reboot
     fi
     $echo "Starting httpd..." >> $log
     $systemctl start httpd >> $log
     if [[ $? != "0" ]]; then
-        $echo "Failed to start httpd. This is a mission-critical problem. Waiting for 30 minutes, then attempting a system reboot." >> $log
-        $sleep 1800
+        $echo "Failed to start httpd. This is a mission-critical problem. Waiting for $rebootWait seconds, then attempting a system reboot." >> $log
+        $sleep $rebootWait
         $reboot
     fi
     $echo "Starting Jane Engine..." >> $log
     $nohup $php $janeEngine >> $log &
     if [[ $? != "0" ]]; then
-        $echo "Failed to start Jane Engine. This is a mission-critical problem. Waiting for 30 minutes, then attempting a system reboot." >> $log
-        $sleep 1800
+        $echo "Failed to start Jane Engine. This is a mission-critical problem. Waiting for $rebootWait, then attempting a system reboot." >> $log
+        $sleep $rebootWait
         $reboot
+    fi
+    $ps -aux | $grep "[J]aneEngine.php" > /dev/null 2>&1
+    if [[ "$?" == "0" ]]; then
+        $echo "JaneEngine.php is running again." > /dev/null 2>&1
     fi
 fi

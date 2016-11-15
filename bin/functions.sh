@@ -415,12 +415,19 @@ setSELinuxToPermissive() {
 }
 setupJaneSentinel() {
 dots "Configuring Jane Sentinel"
-crontab -l -u root | grep -v JaneSentinel.sh | crontab -u root -
+crontab -l -u root | grep -v janeSentinel.sh | crontab -u root -
 # */5 for every three minutes.
 newline="*/5 * * * * /jane/service/janeSentinel.sh"
 (crontab -l -u root; echo "$newline") | crontab - >/dev/null 2>&1
 [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
-
+}
+setupJaneLogArchiver() {
+dots "Configuring Jane Log Archiver"
+crontab -l -u root | grep -v archiveLog.sh | crontab -u root -
+# 0 0 1 * * for the first of each month at 1 PM.
+newline="0 13 1 * * /jane/service/archiveLog.sh"
+(crontab -l -u root; echo "$newline") | crontab - >/dev/null 2>&1
+[[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
 startJaneOnBoot() {
     dots "Enable JaneEngine on boot"

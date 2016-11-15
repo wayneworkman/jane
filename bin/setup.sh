@@ -43,4 +43,5 @@ setSELinuxToPermissive
 startJaneOnBoot
 startJaneEngine
 setupJaneSentinel
+setupJaneLogArchiver
 completed
