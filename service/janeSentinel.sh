@@ -41,7 +41,7 @@ else
     $echo "# systemctl status mariadb -l               #" >> $log
     $echo "# uptime                                    #" >> $log
     $echo "# df -h                                     #" >> $log
-    $echo "# ps -aux | grep \"[J]aneEngine.php\"       #" >> $log
+    $echo "# ps -aux | grep \"[J]aneEngine.php\"         #" >> $log
     $echo "#                                           #" >> $log
     $echo "# Beginning service restarts...             #" >> $log
     $echo "#                                           #" >> $log
@@ -98,6 +98,6 @@ else
     fi
     $ps -aux | $grep "[J]aneEngine.php" > /dev/null 2>&1
     if [[ "$?" == "0" ]]; then
-        $echo "JaneEngine.php is running again." > /dev/null 2>&1
+        $echo "JaneEngine.php is running again." >> $log
     fi
 fi
