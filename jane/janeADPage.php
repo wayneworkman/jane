@@ -224,10 +224,14 @@ if ($SessionIsVerified == 1) {
 	If the above setting is enabled, the below fields "Base Directory" and "Folder Name" must be completed.<br><br>
 	<span style="color:blue;" title="Base Directory
             This is the directory where folders are to be created.
-            For example, C:\HomeDirectories or C:\UserFiles or C:\UserShare$
+            For example, C:\HomeDirectories or \\192.168.1.5\G$\UserDocuments
+            For remote paths, the server executing the script must have rights
+            to create the folders and set the desired permissions. Remote
+            systems should follow the syntax:
+            \\server name or address\Driver letter followed by dollar sign\full case-sensitive path
 
             Trailing slashes should be excluded.
-            This path does not need to previously exist. 
+            This path does not need to previously exist.
             If the entire path does not exist, it will be created.">
         Base Directory
         </span><br>
