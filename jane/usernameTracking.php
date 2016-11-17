@@ -32,6 +32,9 @@ if ($SessionIsVerified == "1") {
 		echo "<th>Last Seen</th>\n";
 		echo "<th>Group</th>\n";
 		echo "</tr>\n";
+
+
+                $recordList="";
 		while($row = $result->fetch_assoc()) {
 
 			$trackingImportedID = trim($row["trackingImportedID"]);
@@ -42,26 +45,27 @@ if ($SessionIsVerified == "1") {
 			$lastSeen = new DateTime("@$lastSeen");
 			$lastSeen->setTimezone(new DateTimeZone("$TimeZone"));
 
+			$recordList .= "<tr>\n";
+			$recordList .= "<td>$trackingImportedID</td>\n";
+			$recordList .= "<td>$trackingUserName</td>\n";
 
-			echo "<tr>\n";
-			echo "<td>$trackingImportedID</td>\n";
-			echo "<td>$trackingUserName</td>\n";
+			$recordList .= "<td>\n";
+			$recordList .= "<form action=\"changeUsernameTracking.php\" method=\"post\">\n";
+			$recordList .= "<input type=\"text\" name=\"newUsername\" value=\"$trackingUserName\" style=\"width:120px;\">\n";
+			$recordList .= "<input type=\"text\" name=\"trackingImportedID\" value=\"$trackingImportedID\" hidden>\n";
+			$recordList .= "<input type=\"text\" name=\"oldUsername\" value=\"$trackingUserName\" hidden>\n";
+			$recordList .= "<input type=\"checkbox\" name=\"Confirm\" value=\"Confirmed\">Confirm \n";
+			$recordList .= "<input type=\"submit\" value=\"Update\">\n";
+			$recordList .= "</form>\n";
+			$recordList .= "</td>\n";
 
-			echo "<td>\n";
-			echo "<form action=\"changeUsernameTracking.php\" method=\"post\">\n";
-			echo "<input type=\"text\" name=\"newUsername\" value=\"$trackingUserName\" style=\"width:120px;\">\n";
-			echo "<input type=\"text\" name=\"trackingImportedID\" value=\"$trackingImportedID\" hidden>\n";
-			echo "<input type=\"text\" name=\"oldUsername\" value=\"$trackingUserName\" hidden>\n";
-			echo "<input type=\"checkbox\" name=\"Confirm\" value=\"Confirmed\">Confirm \n";
-			echo "<input type=\"submit\" value=\"Update\">\n";
-			echo "</form>\n";
-			echo "</td>\n";
-
-			echo "<td>" . $lastSeen->format("F j, Y, g:i a") . "</td>\n";
-			echo "<td>$userGroup</td>\n";
-			echo "</tr>\n";
+			$recordList .= "<td>" . $lastSeen->format("F j, Y, g:i a") . "</td>\n";
+			$recordList .= "<td>$userGroup</td>\n";
+			$recordList .= "</tr>\n";
 
 		}
+		echo $recordList;
+		unset($recordList);
 		echo "</table>\n";
 	}
 
