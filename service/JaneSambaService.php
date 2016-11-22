@@ -470,7 +470,8 @@ if ($modifyUsersAllowed == "1" && $modifyGroupsAllowed == "1") {
 
 	if ($Current_SMB_Checksum != $New_SMB_Checksum) {
 		if ($New_SMB_Checksum != "1" && $Current_SMB_Checksum != "0") {
-			writeLog("The newly generated SMB files checksum does not match the checksum of the currently in use SMB file.\n Attempting to move the current file to \"$SMB_TO_USE.old\" and attempting to place the newly generated file \"$tmpFile\" in it's place.");
+			writeLog("Configuration changes detected, updating the Samba configuration file.");
+			writeLog("Moving \"$SMB_TO_USE\" to \"$SMB_TO_USE.old\", then moving \"$tmpFile\" to \"$SMB_TO_USE\"");
 			// Move old file.
 			if (file_exists($SMB_TO_USE)) {
 				// Delete pre-existing old file.
@@ -490,7 +491,7 @@ if ($modifyUsersAllowed == "1" && $modifyGroupsAllowed == "1") {
 	}
 
 } else {
-	writeLog("Because a user or group query failed, not touching local directories or current samba configurations.");
+	writeLog("Because a user or group query failed, not touching local directories or current Samba configurations.");
 
 }
 
