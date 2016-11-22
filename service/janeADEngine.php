@@ -806,6 +806,8 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			$Password = trim($row["userPassword"]);
 			if ($MiddleName != "") {
 				$MiddleInitial = substr($MiddleName, 0, 1);
+			} else {
+				$MiddleInitial = "";
 			}
 
 
