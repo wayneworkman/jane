@@ -1,11 +1,11 @@
 # Jane
 
-Jane is a LAMP plus Samba based and open source account provisioning solution designed to use personell information from one or many sources to create & maintain accounts for those personell automatically.
+Jane is a LAMP plus Samba based and open source account provisioning solution designed to use personell information from one or many sources to create & maintain accounts for those personnel automatically.
 
 Jane is designed with scale and flexibility in mind. It is well-suited for small or large school districts, universities, and companies. Jane is designed to work along-side an established SIS (student information system) or EIS (employee information system).
 
   - Simple web-based interface
-  - Provisions & maintains personell/student/staff Active Directory accounts
+  - Provisions & maintains personnel/student/staff Active Directory accounts
   - Granular user controls for higher & lower tier support staff for managing Jane
   - Supports an unlimited number of Active Directory domains
   - Supports an unlimited number of setting-sets per domain
@@ -29,13 +29,9 @@ Jane is designed with scale and flexibility in mind. It is well-suited for small
  - Install CentOS 7
  - During installation, **Do not** create an account called `jane`
  - Recommended during installation to create a `/jane` partition of at least 5GB
- - After OS installation completes, install git:
- -- `yum install git -y`
- - Clone the Jane repository:
- -- `git clone https://github.com/wayneworkman/jane.git /root/jane`
- - Install Jane:
- -- `cd /root/jane/bin`
- -- `./setup.sh`
+ - After OS installation completes, install git: `yum install git -y`
+ - Clone the Jane repository: `git clone https://github.com/wayneworkman/jane.git /root/jane`
+ - Install Jane: `cd /root/jane/bin;./setup.sh`
 
 ### Configuration
 
