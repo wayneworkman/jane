@@ -1,6 +1,6 @@
 # Jane
 
-Jane is a LAMP plus Samba based and open source account provisioning solution designed to use personell information from one or many sources to create & maintain accounts for those personnel automatically.
+Jane is a LAMP plus Samba based and open source account provisioning solution designed to use personnel information from one or many sources to create & maintain accounts for those personnel automatically.
 
 Jane is designed with scale and flexibility in mind. It is well-suited for small or large school districts, universities, and companies. Jane is designed to work along-side an established SIS (student information system) or EIS (employee information system).
 
