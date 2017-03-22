@@ -56,6 +56,50 @@ while (file_exists($PathToCSV)) {
 		$userUserName = strtolower($userUserName);
 
 
+		//Check ID isn't empty.
+		if (!isset($userImportedID) || trim($userImportedID)==='') {
+			writeLog("User data did not have an ID, skipping.");
+			continue;
+		}
+
+		//Check if action is empty.
+                if (!isset($userAction) || trim($userAction)==='') {
+                        writeLog("ID \"$userImportedID\" did not have an action in it's data, skipping.");
+                        continue;
+                }
+
+		//Check if first name is empty.
+		if (!isset($userFirstName) || trim($userFirstName)==='') {
+			writeLog("ID \"$userImportedID\" did not have a first name in it's data, skipping.");
+			continue;
+		}
+
+		//Check if last name is empty.
+		if (!isset($userLastName) || trim($userLastName)==='') {
+			writeLog("ID \"$userImportedID\" did not have a last name in it's data, skipping.");
+			continue;
+		}
+
+		
+		//Check if password is empty.
+		if (!isset($userPassword) || trim($userPassword)==='') {
+			writeLog("ID \"$userImportedID\" did not have a password in it's data, skipping.");
+			continue;
+		}
+
+		//Check if group is empty.
+		if (!isset($userGroup) || trim($userGroup)==='') {
+			writeLog("ID \"$userImportedID\" did not have a group in it's data, skipping.");
+			continue;
+		}
+
+		//Check that there are seven items in the line array.
+		
+		if (count($csv_line) < 7) {
+			writeLog("ID \"$userImportedID\" did not have at least seven items in it's data, skipping.");
+			continue;
+		}
+
 
 		//this check is how the header line is skipped. Can be replaced with different checks, meant to filter out header row.
 		if ($userImportedID != "StudentID") {
