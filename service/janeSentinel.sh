@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#check if JaneEngine is running
+#Check if JaneEngine is running.
+#Check if log file exists.
 
 ps=$(command -v ps)
 grep=$(command -v grep)
@@ -13,7 +14,20 @@ systemctl=$(command -v systemctl)
 pkill=$(command -v pkill)
 reboot=$(command -v reboot)
 sleep=$(command -v sleep)
+touch=$(command -v touch)
+mkdir=$(command -v mkdir)
 rebootWait="1800" #Default is 30 minutes, 1800 seconds.
+date=$(command -v date)
+
+#Check to see if the log file exists or not.
+if [[ ! -e $log ]]; then
+    #If the log does not exist, make it's directory and the log file.
+    $mkdir -p $(dirname "${log}")
+    $touch $log
+    #Log the event.
+    $echo "$(date) Log file \"$log\" was found to not exist, created it." >> $log
+fi
+
 
 $ps -aux | $grep "[J]aneEngine.php" > /dev/null 2>&1
 if [[ "$?" == "0" ]]; then
