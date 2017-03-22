@@ -33,6 +33,12 @@ Jane is designed with scale and flexibility in mind. It is well-suited for small
  - Clone the Jane repository: `git clone https://github.com/wayneworkman/jane.git /root/jane`
  - Install Jane: `cd /root/jane/bin;./setup.sh`
 
+### Updating
+
+ - Change to the jane repository location: `cd /root/jane`
+ - Pull the latest code: `git pull`
+ - Install Jane: `cd bin;./setup.sh`
+
 ### Configuration
 
  - Visit the web interface via a web browser using the server IP address
