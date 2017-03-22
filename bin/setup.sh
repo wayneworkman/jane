@@ -9,6 +9,7 @@ banner
 checkForRoot
 checkOS
 stopJaneEngine
+backupDB
 installRemiAndEpel
 updateServer
 checkOrInstallPackage "mariadb" "0"

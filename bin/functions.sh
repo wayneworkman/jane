@@ -28,6 +28,22 @@ echo "   Version $janeVersion"
 echo
 echo
 }
+backupDB() {
+    dots "Backing up Jane database"
+    mkdir -p /jane/dbBackups
+    local now=$(date +%Y-%m-%d_%H-%M-%S)
+    if [[ -z $(command -v mysqldump) ]]; then
+        echo "mysqldump not installed, cannot backup db."
+        return 0
+    fi
+    mysqldump -B jane > /jane/dbBackups/${now}_janeDB.sql
+    local result=$?
+    if [[ "$result" == "0" ]]; then
+        echo "Success"
+    else
+        echo "Failed"
+    fi
+}
 updateSchema() {
     dots "Checking for schema updates"
 
