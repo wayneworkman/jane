@@ -589,8 +589,9 @@ if ($SessionIsVerified == 1) {
             -Country &quot;IN&quot;
             Default Value:
             Data Type: string">
-            Country  (4 character max, two character value. Example: "US")
+            Country
         </span><br>
+        Four character max, two character value. Example: <font color="red">"US"</font><br>
         <input type="text" name="Country" value="<?php echo htmlspecialchars($_SESSION['Country']); ?>" style="width:40px;"><br>
     </div>
     <div>
