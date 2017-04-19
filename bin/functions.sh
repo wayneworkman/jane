@@ -437,6 +437,11 @@ newline="*/5 * * * * /jane/service/janeSentinel.sh"
 (crontab -l -u root; echo "$newline") | crontab - >/dev/null 2>&1
 [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
+disableJaneSentinel() {
+    dots "Disabling Jane Sentinel temporarily"
+    rm -f /jane/service/janeSentinel.sh
+    [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
+}
 setupJaneLogArchiver() {
 dots "Configuring Jane Log Archiver"
 crontab -l -u root | grep -v archiveLog.sh | crontab -u root -
@@ -476,7 +481,7 @@ stopJaneEngine() {
 startJaneEngine() {
     dots "Starting JaneEngine"
     pkill -f JaneEngine.php > /dev/null 2>&1
-    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log &
+    nohup php /jane/service/JaneEngine.php >> /jane/log/JaneEngine.log > /dev/null 2>&1 &
     [[ $? -eq 0 ]] && echo "Ok" || echo "Failed"
 }
 completed() {

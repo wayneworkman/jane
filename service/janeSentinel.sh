@@ -57,11 +57,11 @@ else
     $echo "# df -h                                     #" >> $log
     $echo "# ps -aux | grep \"[J]aneEngine.php\"         #" >> $log
     $echo "#                                           #" >> $log
-    $echo "# Beginning service restarts...             #" >> $log
     $echo "#                                           #" >> $log
     $echo "#############################################" >> $log
     $echo " " >> $log
-
+    $echo "Beginning service restarts..." >> $log
+    $echo " " >> $log
     $echo "Stopping httpd..." >> $log
     $systemctl stop httpd >> $log
     $echo "Stopping mariadb..." >> $log
@@ -104,7 +104,7 @@ else
         $reboot
     fi
     $echo "Starting Jane Engine..." >> $log
-    $nohup $php $janeEngine >> $log &
+    $nohup $php $janeEngine >> $log > /dev/null 2>&1 &
     if [[ $? != "0" ]]; then
         $echo "Failed to start Jane Engine. This is a mission-critical problem. Waiting for $rebootWait, then attempting a system reboot." >> $log
         $sleep $rebootWait

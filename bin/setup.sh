@@ -8,6 +8,7 @@ currentSchemaVersion="7"
 banner
 checkForRoot
 checkOS
+disableJaneSentinel
 stopJaneEngine
 backupDB
 installRemiAndEpel
