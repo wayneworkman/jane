@@ -210,7 +210,7 @@ if ($SessionIsVerified == 1) {
                to belong to. What this means is other users in the domain will not have
                privilages to view other uses folders in a large user share.
 
-            2. This prevents Cryptowall from spreading through various users files by,
+            2. This prevents Cryptowall from spreading through various users files
                by confining SMB and ACL permissions tightly to each individual user, and
                to other specified users and groups.
 
