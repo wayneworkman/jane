@@ -810,7 +810,7 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			if ($MiddleName != "") {
 				$MiddleInitial = substr($MiddleName, 0, 1);
 			} else {
-				$MiddleInitial = "";
+				$MiddleInitial = '';
 			}
 
 
@@ -821,6 +821,10 @@ $COMMAND = $COMMAND . "    echo \"User $SamAccountName does not exist, Creating 
 			$ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+                        //Have to put in null for initial if middle initial is blank.
+			if ($MiddleInitial == "") {
+                        	$ThisCOMMAND = str_replace('-Initials %MiddleInitial%','-Initials $null',$ThisCOMMAND);
+			}
 			$ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
@@ -878,13 +882,21 @@ if ($ActionDisable != "" && $ActionDisableText != "") {
 			$UserName = trim($row["userUserName"]);
 			$Password = trim($row["userPassword"]);
 			if ($MiddleName != "") {
-				$MiddleInitial = substr($MiddleName, 0, 1);
-			}
+                                $MiddleInitial = substr($MiddleName, 0, 1);
+                        } else {
+                                $MiddleInitial = '';
+                        }
+
+
 			// Replace variables with corresponding custom data.			
 			$ThisCOMMAND = $COMMAND;
 			$ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+			//Have to put in null for initial if middle initial is blank.
+                        if ($MiddleInitial == "") {
+                                $ThisCOMMAND = str_replace('-Initials %MiddleInitial%','-Initials $null',$ThisCOMMAND);
+                        }
 			$ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
 			$ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
@@ -939,12 +951,20 @@ if ($ActionDelete != "" && $ActionDeleteText != "") {
                         $Password = trim($row["userPassword"]);
                         if ($MiddleName != "") {
                                 $MiddleInitial = substr($MiddleName, 0, 1);
+                        } else {
+                                $MiddleInitial = '';
                         }
+
+
                         // Replace variables with corresponding custom data.
                         $ThisCOMMAND = $COMMAND;
                         $ThisCOMMAND = str_replace("%Action%",$Action,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%FirstName%",$FirstName,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%LastName%",$LastName,$ThisCOMMAND);
+			//Have to put in null for initial if middle initial is blank.
+                        if ($MiddleInitial == "") {
+                                $ThisCOMMAND = str_replace('-Initials %MiddleInitial%','-Initials $null',$ThisCOMMAND);
+                        }
                         $ThisCOMMAND = str_replace("%MiddleInitial%",$MiddleInitial,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%MiddleName%",$MiddleName,$ThisCOMMAND);
                         $ThisCOMMAND = str_replace("%Password%",$Password,$ThisCOMMAND);
