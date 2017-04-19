@@ -104,7 +104,7 @@ else
         $reboot
     fi
     $echo "Starting Jane Engine..." >> $log
-    $nohup $php $janeEngine >> $log > /dev/null 2>&1 &
+    $nohup $php $janeEngine >> $log &
     if [[ $? != "0" ]]; then
         $echo "Failed to start Jane Engine. This is a mission-critical problem. Waiting for $rebootWait, then attempting a system reboot." >> $log
         $sleep $rebootWait
