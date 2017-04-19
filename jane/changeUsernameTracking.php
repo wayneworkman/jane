@@ -28,7 +28,7 @@ if ($SessionIsVerified == "1") {
 	}
 
 
-		$sql = "UPDATE `usernameTracking` SET `trackingUserName`='$newUsername',`trackingIsAbnormal`='1',`abnormalReason`='Username changed by Jane user \"$JaneUsername\"' WHERE `trackingImportedID` = '$trackingImportedID' AND `trackingUserName` = '$oldUsername'";
+		$sql = "UPDATE `usernameTracking` SET `trackingUserName`='$newUsername',`trackingIsAbnormal`='1',`abnormalReason`='Username changed from \"$oldUsername\" to \"$newUsername\" by Jane user \"$JaneUsername\".' WHERE `trackingImportedID` = '$trackingImportedID' AND `trackingUserName` = '$oldUsername'";
 		if ($link->query($sql)) {
 			// good, send back to usernameTracking.
 			$NextURL="usernameTracking.php";
