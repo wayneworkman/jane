@@ -61,7 +61,7 @@ if ($resultTracking1->num_rows > 0) {
 			$resultTracking3 = $link->query($sql);
 			if ($resultTracking3->num_rows == 0) { //Note:  num_rows == 0 to check for no rows returned.
 				//Abnormal username is available. Store it and exit.
-				$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`abnormalReason`,`userGroup`,`lastSeen`) VALUES ('$userImportedID','$possibleUsername','$isAbnormal','During initial import, \"$userUserName\" was already taken, so \"$possibleUsername\" was assigned.','$userGroup','$lastSeen')";
+				$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`abnormalReason`,`userGroup`,`lastSeen`) VALUES ('$userImportedID','$possibleUsername','$isAbnormal','During initial import \"$userUserName\" was already taken; so \"$possibleUsername\" was assigned.','$userGroup','$lastSeen')";
 				if ($link->query($sql)) {
 					// good, return new username.
 					$userUserName=$possibleUsername;
