@@ -70,7 +70,7 @@ else
     $systemctl stop smb >> $log
     $echo "Stopping firewalld..." >> $log
     $systemctl stop firewalld >> $log
-    $echo "Stopping any existing Jane Engine processes..."
+    $echo "Stopping any existing Jane Engine processes..." >> $log
     $pkill -f JaneEngine.php >> $log
     $echo "Sleeping for 10 seconds" >> $log
     $sleep 10 >> $log
