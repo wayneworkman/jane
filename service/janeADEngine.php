@@ -69,6 +69,9 @@ if ($result->num_rows > 0) {
 		$HomePage = trim($row["HomePage"]);
 		$HomePhone = trim($row["HomePhone"]);
 		$Initials = trim($row["Initials"]);
+		//Remove double and single quotes from Initials if they are present.
+		$Initials = str_replace("\"","",$Initials);
+		$Initials = str_replace("'","",$Initials);
 		$Instance = trim($row["Instance"]);
 		$LogonWorkstations = trim($row["LogonWorkstations"]);
 		$Manager = trim($row["Manager"]);
