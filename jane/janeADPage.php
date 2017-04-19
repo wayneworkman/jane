@@ -445,8 +445,9 @@ if ($SessionIsVerified == 1) {
             -AccountPassword (Read-Host -AsSecureString &quot;AccountPassword&quot;)
             Default Value:
             ">
-            AccountPassword
-        </span><br>
+            AccountPassword<br>
+        </span>
+        Recommended value: <font color="red">(ConvertTo-SecureString %Password% -AsPlainText -force)</font><br>
         <input type="text" name="AccountPassword" value="<?php echo htmlspecialchars($_SESSION['AccountPassword']); ?>" style="width:600px;"><br>
     </div>
     <div>
