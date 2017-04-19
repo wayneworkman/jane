@@ -1062,7 +1062,7 @@ if ($SessionIsVerified == 1) {
             Data Type: string">
             <font color="red">*</font>SamAccountName
         </span><br>
-        Required, must be unique. Recommended: <font color="red">%UserName%</font>
+        Required, must be unique. Recommended: <font color="red">%UserName%</font><br>
         <input type="text" name="SamAccountName" value="<?php echo htmlspecialchars($_SESSION['SamAccountName']); ?>" style="width:600px;"><br>
     </div>
     <div>
