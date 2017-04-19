@@ -3,7 +3,7 @@ cwd="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$cwd/functions.sh"
 source "$cwd/schemaFunctions.sh"
 source "$cwd/mysqlCredentials.sh"
-janeVersion="0.02"
+janeVersion="0.03"
 currentSchemaVersion="6"
 banner
 checkForRoot
