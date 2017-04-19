@@ -377,8 +377,9 @@ if ($SessionIsVerified == 1) {
             -Name &quot;SaraDavis&quot;
             Default Value:
             Data Type: string">
-            Name (Must be unique per account)
+            Name
         </span><br>
+        Must be unique. Recommended: <font color="red">"%FirstName% %MiddleInitial% %LastName% %UserName%"</font><br>
         <input type="text" name="Name" value="<?php echo htmlspecialchars($_SESSION['Name']); ?>" style="width:600px;"></br>
     </div>
     <div>
