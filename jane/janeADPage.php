@@ -1060,8 +1060,9 @@ if ($SessionIsVerified == 1) {
             Note: If the string value provided is not terminated with a '$' character, the system adds one if needed.
             Default Value:
             Data Type: string">
-            <font color="red">*</font>SamAccountName (Required, must be unique. Recommended: %UserName%)
+            <font color="red">*</font>SamAccountName
         </span><br>
+        Required, must be unique. Recommended: <font color="red">%UserName%</font>
         <input type="text" name="SamAccountName" value="<?php echo htmlspecialchars($_SESSION['SamAccountName']); ?>" style="width:600px;"><br>
     </div>
     <div>
