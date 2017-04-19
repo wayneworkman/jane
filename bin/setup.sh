@@ -4,7 +4,7 @@ source "$cwd/functions.sh"
 source "$cwd/schemaFunctions.sh"
 source "$cwd/mysqlCredentials.sh"
 janeVersion="0.03"
-currentSchemaVersion="6"
+currentSchemaVersion="7"
 banner
 checkForRoot
 checkOS
