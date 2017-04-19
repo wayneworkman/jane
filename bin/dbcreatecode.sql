@@ -22,6 +22,7 @@ trackingUserName VARCHAR(255) UNIQUE,
 trackingIsAbnormal VARCHAR(1),
 userGroup VARCHAR(255),
 lastSeen int,
+abnormalReason VARCHAR(255),
 PRIMARY KEY (trackingID)
 );
 

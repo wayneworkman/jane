@@ -1,3 +1,43 @@
+schema6() {
+
+    local options="-sN"
+    if [[ $mysqlHost != "" ]]; then
+        local options="$options -h$mysqlHost"
+    fi
+    if [[ $mysqlUser != "" ]]; then
+        local options="$options -u$mysqlUser"
+    fi
+    if [[ $mysqlpass != "" ]]; then
+        local options="$options -p$mysqlPass"
+    fi
+    local options="$options -D jane -e"
+
+    local step1="ALTER TABLE usernameTracking ADD abnormalReason VARCHAR(255);"
+    local step2="UPDATE globalSettings SET settingValue = '7' WHERE settingKey = 'schemaVersion'"
+
+    dots "Going from DB Schema 6 to 7"
+
+    mysql $options "$step1" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step1"
+        echo
+        exit
+    fi
+
+    mysql $options "$step2" > /dev/null 2>&1
+    if [[ "$?" -ne 0 ]]; then
+        echo "Failed"
+        echo "   Failure attempting:"
+        echo "   $step2"
+        echo
+        exit
+    fi
+
+    echo "Done"
+
+}
 schema5() {
     local options="-sN"
     if [[ $mysqlHost != "" ]]; then
