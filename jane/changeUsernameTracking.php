@@ -16,7 +16,19 @@ if ($SessionIsVerified == "1") {
 
 	if ($Confirm == "Confirmed") {
 
-		$sql = "UPDATE `usernameTracking` SET `trackingUserName`='$newUsername',`trackingIsAbnormal`='1' WHERE `trackingImportedID` = '$trackingImportedID' AND `trackingUserName` = '$oldUsername'";
+
+	$sql = "SELECT `JaneUsername` FROM `janeUsers` WHERE `JaneUserID` = '$JaneUserID' LIMIT 1";
+	$result = $link->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$JaneUsername = $row["JaneUsername"];
+		}
+	} else {
+		$JaneUsername = $JaneUserID;
+	}
+
+
+		$sql = "UPDATE `usernameTracking` SET `trackingUserName`='$newUsername',`trackingIsAbnormal`='1',`abnormalReason`='Username changed by Jane user \"$JaneUsername\"' WHERE `trackingImportedID` = '$trackingImportedID' AND `trackingUserName` = '$oldUsername'";
 		if ($link->query($sql)) {
 			// good, send back to usernameTracking.
 			$NextURL="usernameTracking.php";
