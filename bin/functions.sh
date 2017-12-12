@@ -256,7 +256,7 @@ createUserJane() {
     doesJaneExist=$(getent passwd jane)
 
     [[ -z "$janePass" ]] && janePass="changeme"
-    echo "janePass=\"$janePass\"" > /jane/ssl/janePass
+    echo "janePass=\"$janePass\"" > /jane/ssl/.janePass
 
     if [[ -z "$doesJaneExist" ]]; then
         useradd jane > /dev/null 2>&1

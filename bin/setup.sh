@@ -4,7 +4,7 @@ source "$cwd/functions.sh"
 source "$cwd/schemaFunctions.sh"
 source "$cwd/mysqlCredentials.sh"
 if [[ -f /jane/ssl/janePass ]]; then
-    source /jane/ssl/janePass
+    source /jane/ssl/.janePass
 fi
 janeVersion="0.03"
 currentSchemaVersion="7"
