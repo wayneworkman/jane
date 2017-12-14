@@ -114,7 +114,7 @@ while (file_exists($PathToCSV)) {
 
 
 		//this check is how the header line is skipped. Can be replaced with different checks, meant to filter out header row.
-		if ($userImportedID != "Studenti ID") {
+		if ($userImportedID != "Student ID") {
 
 
 			//Ensure every single username is unique.
