@@ -44,7 +44,7 @@ Jane is designed with scale and flexibility in mind. It is well-suited for small
  - Visit the web interface via a web browser using the server IP address
  - Default credentials are `administrator` and `changeme`
  - Create a settings-set, configure it as desired.
- ..* During settings-set configuration, it's important to set the correct IP address for the system that will be placing the CSV file, as the jane server configures itself to not allow access from other IP addresses to this share.
+ -- During settings-set configuration, it's important to set the correct IP address for the system that will be placing the CSV file, as the jane server configures itself to not allow access from other IP addresses to this share.
  - Configure your data source to place a CSV onto the Jane server via the provided SMB Share.
  -- via Windows at `\\x.x.x.x\imports\` Recommended to use a persistent map-drive.
  -- via Linux at `smb://x.x.x.x/imports/`
