@@ -116,11 +116,11 @@ installRemiAndEpel() {
     if [[ "$ID" == "fedora" ]]; then
         if [[ -e "$useDnf" ]]; then
             dnf install http://rpms.remirepo.net/fedora/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
-            dnf config-manager --set-enabled remi-php70 > /dev/null 2>&1
+            dnf config-manager --set-enabled remi-php72 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
         elif [[ -e "$useYum" ]]; then
             yum install http://rpms.remirepo.net/fedora/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
-            yum config-manager --set-enabled remi-php70 > /dev/null 2>&1
+            yum config-manager --set-enabled remi-php72 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
         fi
     elif [[ "$ID" == "centos" ]]; then
@@ -132,7 +132,7 @@ installRemiAndEpel() {
             yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-${VERSION_ID}.noarch.rpm -y > /dev/null 2>&1
             yum install http://rpms.remirepo.net/enterprise/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             checkOrInstallPackage "yum-utils" "1"
-            yum-config-manager --enable remi-php70 > /dev/null 2>&1
+            yum-config-manager --enable remi-php72 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
         fi
     elif [[ "$ID" == "rhel" ]]; then
@@ -145,7 +145,7 @@ installRemiAndEpel() {
             yum install http://rpms.remirepo.net/enterprise/remi-release-${VERSION_ID}.rpm -y > /dev/null 2>&1
             checkOrInstallPackage "yum-utils" "1"
             subscription-manager repos --enable=rhel-${VERSION_ID}-server-optional-rpms > /dev/null 2>&1
-            yum-config-manager --enable remi-php70 > /dev/null 2>&1
+            yum-config-manager --enable remi-php72 > /dev/null 2>&1
             [[ $? -eq 0 ]] && echo "Installed" || echo "Failed"
         fi
     fi
