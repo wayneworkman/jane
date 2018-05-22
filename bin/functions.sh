@@ -36,7 +36,7 @@ backupDB() {
         echo "mysqldump not installed, cannot backup db."
         return 0
     fi
-    mysqldump -B jane > /jane/dbBackups/${now}_janeDB.sql
+    mysqldump --databases jane > /jane/dbBackups/${now}_janeDB.sql
     local result=$?
     if [[ "$result" == "0" ]]; then
         echo "Success"
