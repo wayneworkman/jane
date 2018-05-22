@@ -32,7 +32,6 @@ while (file_exists($PathToCSV)) {
 	//Begin reading the file line by line.
 	while($csv_line = fgetcsv($csv)) {
 
-ID Number,First Name,Middle Name,Last Name,Grade,Site Number,Address,City,State,ZIP Code,Homeroom,Teacher Name,Birthdate,State ID,Active Status
 
 		//This line defines what variables each field of data goes into, indicated by position - this is one row at a time.
 		//list($userAction, $userImportedID, $userFirstName, $userMiddleName, $userLastName, $userPassword, $userGroup) = $csv_line;
