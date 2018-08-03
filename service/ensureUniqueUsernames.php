@@ -23,16 +23,14 @@ if ($resultTracking1->num_rows > 0) {
 	unset($rowTracking1);
 	unset($resultTracking1);
 
-	//if abnormal, update usergroup.
-	if ($isAbnormal == "1") {
-		$sql = "UPDATE `usernameTracking` SET `userGroup` = '$userGroup' WHERE `trackingImportedID`='$userImportedID'";
-		if ($link->query($sql)) {
-			// good
-		} else {
-			// Error
-			writeLog("Could not update existing abnormal users userGroup in the usernameTracking table for ID '$userImportedID'. Attempted SQL:");
-			writeLog("$sql");
-		}
+	//update usergroup.
+	$sql = "UPDATE `usernameTracking` SET `userGroup` = '$userGroup' WHERE `trackingImportedID`='$userImportedID'";
+	if ($link->query($sql)) {
+		// good
+	} else {
+		// Error
+		writeLog("Could not update existing abnormal users userGroup in the usernameTracking table for ID '$userImportedID'. Attempted SQL:");
+		writeLog("$sql");
 	}
 
 
@@ -78,7 +76,7 @@ if ($resultTracking1->num_rows > 0) {
 	} else {
 
 		//Username is available. Store only necessary user information and exit.
-		$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`lastSeen`) VALUES ('$userImportedID','$userUserName','$isAbnormal','$lastSeen')";
+		$sql = "INSERT INTO `usernameTracking` (`trackingImportedID`,`trackingUserName`,`trackingIsAbnormal`,`lastSeen`,`userGroup`) VALUES ('$userImportedID','$userUserName','$isAbnormal','$lastSeen','$userGroup')";
 		if ($link->query($sql)) {
 			// good
 		} else {
