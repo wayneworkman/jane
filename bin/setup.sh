@@ -6,7 +6,7 @@ source "$cwd/mysqlCredentials.sh"
 if [[ -f /jane/ssl/janePass ]]; then
     source /jane/ssl/.janePass
 fi
-janeVersion="0.0.4"
+janeVersion="0.0.5"
 currentSchemaVersion="7"
 banner
 checkForRoot
